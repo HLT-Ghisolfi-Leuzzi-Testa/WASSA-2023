@@ -122,7 +122,7 @@ def compute_EMO_metrics_trainer(p: EvalPrediction):
     # compute metrics
     metrics = {}
     metrics['sklearn_accuracy'] = accuracy_score(y_true=golds, y_pred=predictions)
-    metrics['roc_auc_micro'] = roc_auc_score(y_true=golds, y_pred=predictions, average = 'micro')
+    metrics['roc_auc_micro'] = roc_auc_score(y_true=golds, y_score=predictions, average = 'micro')
     metrics['accuracy'] = jaccard_score(y_true=golds, y_pred=predictions, average='micro')
     prf_micro = precision_recall_fscore_support(y_true=golds, y_pred=predictions, average='micro')
     metrics['micro_precision'] = prf_micro[0]
