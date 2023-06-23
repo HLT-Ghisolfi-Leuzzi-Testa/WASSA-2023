@@ -6,7 +6,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from evaluation import calculatePRF_MLabel
 from sklearn.metrics import confusion_matrix
-from sklearn.metrics import f1_score, roc_auc_score, accuracy_score
+from sklearn.metrics import roc_auc_score, accuracy_score, jaccard_score, precision_recall_fscore_support
 from sklearn.preprocessing import MultiLabelBinarizer
 from torch.utils.data import Dataset
 from transformers import BertForSequenceClassification, EvalPrediction
@@ -117,13 +117,21 @@ def compute_EMO_metrics_trainer(p: EvalPrediction):
     # probs = sigmoid(torch.Tensor(predictions))
 
     # use a threshold to turn prediction into 0/1 values
-    predictions = np.where(predictions >= 0.5, 1, 0) # TODO: works with tensors?
+    predictions = np.where(predictions >= 0.5, 1, 0)
 
     # compute metrics
-    metrics = compute_EMO_metrics(golds=golds, predictions=predictions) # TODO: testa...
-    metrics['accuracy'] = accuracy_score(y_true=golds, y_pred=predictions)
+    metrics = {}
+    metrics['sklearn_accuracy'] = accuracy_score(y_true=golds, y_pred=predictions)
     metrics['roc_auc_micro'] = roc_auc_score(y_true=golds, y_pred=predictions, average = 'micro')
-    
+    metrics['accuracy'] = jaccard_score(y_true=golds, y_pred=predictions, average='micro')
+    prf_micro = precision_recall_fscore_support(y_true=golds, y_pred=predictions, average='micro')
+    metrics['micro_precision'] = prf_micro[0]
+    metrics['micro_recall'] = prf_micro[1]
+    metrics['micro_f'] = prf_micro[2]
+    prf_macro = precision_recall_fscore_support(y_true=golds, y_pred=predictions, average='macro')
+    metrics['macro_precision'] = prf_macro[0]
+    metrics['macro_recall'] = prf_macro[1]
+    metrics['macro_f'] = prf_macro[2]
     return metrics
 
 # TODO: sistemare restore del modello
