@@ -188,7 +188,7 @@ class EMODataset(Dataset):
             'input_ids': inputs['input_ids'].flatten(),
             'attention_mask': inputs['attention_mask'].flatten(),
             'token_type_ids': inputs["token_type_ids"].flatten(),
-            'labels': torch.FloatTensor(self.targets[index])
+            'label': torch.FloatTensor(self.targets[index])
         }
 
 class EmotionsLabelEncoder():
