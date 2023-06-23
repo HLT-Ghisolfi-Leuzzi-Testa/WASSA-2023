@@ -5,15 +5,17 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 from evaluation import calculatePRF_MLabel
+from sklearn.metrics import confusion_matrix
 from torch.utils.data import Dataset
 
-def plot_loss_curve(training_loss, validatin_loss, path):
+def plot_loss_curve(training_loss, validatin_loss, path, title):
     '''
     This function saves the plot of the training and validation loss curves.
     
     :param training_loss: list of training loss values
     :param validatin_loss: list of validation loss values
     :param path: path where to save the plot
+    :param title: title of the plot
     '''
     
     sns.set(style='darkgrid')
@@ -24,7 +26,9 @@ def plot_loss_curve(training_loss, validatin_loss, path):
     plt.xlabel("Epoch")
     plt.ylabel("Loss")
     plt.legend()
+    plt.title(title)
     plt.xticks(np.arange(1, len(training_loss) + 1, 1))
+    plt.tight_layout()
     plt.savefig(path)
     plt.show()
 
@@ -69,6 +73,28 @@ def compute_EMO_metrics(golds, predictions):
     'accuracy': scores_val[6]
     }
     return scores
+
+def plot_confusion_matrix(golds, predictions, path, title):
+    '''
+    This function plots the confusion matrix given gold and predicted labels.
+    
+    :param golds: list of gold labels
+    :param predictions: list of predicted labels
+    :param path: path where to save the plot
+    :param title: title of the plot
+    '''
+
+    labels = np.unique(golds)
+    cm_df = pd.DataFrame(confusion_matrix(golds, predictions, labels=labels),index=labels, columns=labels)
+    plt.figure(figsize = (10,7))
+    sns.heatmap(cm_df, annot=True, cmap="Blues", fmt='g')
+    plt.title("Confusion Matrix")
+    plt.xlabel("Predicted")
+    plt.ylabel("Actual")
+    plt.title(title)
+    plt.tight_layout()
+    plt.savefig(path)
+    plt.show()
 
 class EMODataset(Dataset):
     '''
