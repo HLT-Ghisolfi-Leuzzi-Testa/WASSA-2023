@@ -191,7 +191,7 @@ class EMODataset(Dataset):
             'targets': torch.FloatTensor(self.targets[index])
         }
 
-class EmotionLabelEncoder():
+class EmotionsLabelEncoder():
     def __init__(self):
         self.mlb = MultiLabelBinarizer()
 
@@ -200,6 +200,7 @@ class EmotionLabelEncoder():
         self.mlb.fit(emotions)
 
     def encode(self, emotions):
+        emotions = [emotion.split('/') for emotion in emotions]
         encoded_emotions = self.mlb.transform(emotions)
         return encoded_emotions
 
