@@ -3,3 +3,5 @@ __pycache__
 __pycache__
 glove.6B.zip
 data
+.DS_Store
+**/.DS_Store
