@@ -99,68 +99,46 @@ def plot_confusion_matrix(golds, predictions, path, title):
     plt.savefig(path)
     plt.show()
 
-def multi_label_metrics(predictions, labels, threshold=0.5):
-    """https://colab.research.google.com/github/NielsRogge/Transformers-Tutorials/blob/master/BERT/Fine
-    _tuning_BERT_(and_friends)_for_multi_label_text_classification.ipynb#scrollTo=797b2WHJqUgZ"""
+def compute_EMO_metrics_trainer(p: EvalPrediction):
+    '''
+    This function is called by Trainer to compute the metrics for the EMO task.
 
-    # apply sigmoid on predictions which are of shape (batch_size, num_labels)
-    sigmoid = torch.nn.Sigmoid()
-    probs = sigmoid(torch.Tensor(predictions))
+    :param p: EvalPrediction object
+    :return: dictionary of metrics
+    '''
 
-    # use threshold to turn them into integer predictions
-    y_pred = np.zeros(probs.shape)
-    y_pred[np.where(probs >= threshold)] = 1
+    predictions = p.predictions[0] if isinstance(p.predictions, tuple) else p.predictions # TODO: ?
+    golds = p.label_ids
+
+    # NOTE: not needed if using multilabel
+    # https://szuyuchu.medium.com/multi-label-text-classification-with-bert-52fa78eddb9
+    # apply sigmoid on predictions
+    # sigmoid = torch.nn.Sigmoid()
+    # probs = sigmoid(torch.Tensor(predictions))
+
+    # use a threshold to turn prediction into 0/1 values
+    predictions = np.where(predictions >= 0.5, 1, 0) # TODO: works with tensors?
 
     # compute metrics
-    f1_micro_average = f1_score(y_true=labels, y_pred=y_pred, average='micro')
-    roc_auc = roc_auc_score(labels, y_pred, average = 'micro')
-    accuracy = accuracy_score(labels, y_pred)
-    # return as dictionary
-    metrics = {'f1': f1_micro_average,
-               'roc_auc': roc_auc,
-               'accuracy': accuracy}
-    """metrics = compute_EMO_metrics(labels, y_pred)
-
-    # return as dictionary
-    metrics_dict = {
-      'micro_recall': metrics[0],
-      'micro_precision': metrics[1],
-      'micro_fscore': metrics[2],
-      'macro_recall': metrics[3],
-      'macro_precision': metrics[4],
-      'macro_fscore': metrics[5],
-      'accuracy': metrics[6]}"""
+    metrics = compute_EMO_metrics(golds=golds, predictions=predictions) # TODO: testa...
+    metrics['accuracy'] = accuracy_score(y_true=golds, y_pred=predictions)
+    metrics['roc_auc_micro'] = roc_auc_score(y_true=golds, y_pred=predictions, average = 'micro')
+    
     return metrics
 
-def compute_metrics(p: EvalPrediction):
-    preds = p.predictions[0] if isinstance(p.predictions, 
-            tuple) else p.predictions
-    result = multi_label_metrics(
-        predictions=preds, 
-        labels=p.label_ids)
-    return result
-
-def save_best_weights(model, MODEL_NAME):
+# TODO: sistemare restore del modello
+"""def save_best_weights(model, MODEL_NAME):
   torch.save(model.state_dict(), 'checkpoints/model_weights_'+MODEL_NAME+'.pt')
 
 def restore_model(MODEL_NAME, device, num_labels=8): #TODO: MODELLO auto
   model = BertForSequenceClassification.from_pretrained(MODEL_NAME, num_labels=num_labels)
   model.load_state_dict(torch.load('checkpoints/model_weights_'+MODEL_NAME+'.pt'))
   model.to(device)
-  return model
-
-"""def prediction_from_model(model, test_dataloader, mlb, device):
-  with torch.no_grad():
-    input_ids = test_dataloader['input_ids'].to(device)
-    attention_mask = test_dataloader['attention_mask'].to(device)
-    outputs = model(input_ids=input_ids, attention_mask=attention_mask)
-  logits = outputs.logits.detach().cpu().numpy()
-  predictions = encoded2string(logits2encoded(logits), mlb)
-  return predictions"""
+  return model"""
 
 class EMODataset(Dataset):
     '''
-    This class is used to create a dataset for the EMO task.
+    This class is used to create a pytorch dataset for the EMO task.
     '''
 
     def __init__(
@@ -168,7 +146,7 @@ class EMODataset(Dataset):
         tokenizer,
         essay,
         targets,
-        max_len=None # better leaving it to None
+        max_len=None
         ):
         self.tokenizer = tokenizer
         self.max_len = max_len
@@ -198,19 +176,43 @@ class EMODataset(Dataset):
         }
 
 class EmotionsLabelEncoder():
+    '''
+    This class is used to one-hot encode and decode the emotions labels.
+    '''
+
     def __init__(self):
         self.mlb = MultiLabelBinarizer()
 
     def fit(self, emotions):
+        '''
+        This function fits the encoder to the emotions passed as parameters.
+
+        :param emotions: list of emotions
+        '''
+
         emotions = [emotion.split('/') for emotion in emotions]
         self.mlb.fit(emotions)
 
     def encode(self, emotions):
+        '''
+        This method one-hot encodes the emotions passed as parameters.
+
+        :param emotions: list of emotions
+        :return: numpy array with encoded emotions
+        '''
+
         emotions = [emotion.split('/') for emotion in emotions]
         encoded_emotions = self.mlb.transform(emotions)
         return encoded_emotions
 
     def decode(self, encoded_emotions):
+        '''
+        This method decodes the one-hot encoded emotions passed as parameters.
+
+        :param encoded_emotions: list of one-hot encoded emotions
+        :return: strings list of decoded emotions
+        '''
+
         labels = self.mlb.inverse_transform(np.array(encoded_emotions))
         emotions = ["/".join(emotion) for emotion in labels]
         return emotions
