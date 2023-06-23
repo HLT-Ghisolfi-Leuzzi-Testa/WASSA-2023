@@ -112,7 +112,14 @@ def multi_label_metrics(predictions, labels, threshold=0.5):
     y_pred[np.where(probs >= threshold)] = 1
 
     # compute metrics
-    metrics = compute_EMO_metrics(labels, y_pred)
+    f1_micro_average = f1_score(y_true=labels, y_pred=y_pred, average='micro')
+    roc_auc = roc_auc_score(labels, y_pred, average = 'micro')
+    accuracy = accuracy_score(labels, y_pred)
+    # return as dictionary
+    metrics = {'f1': f1_micro_average,
+               'roc_auc': roc_auc,
+               'accuracy': accuracy}
+    """metrics = compute_EMO_metrics(labels, y_pred)
 
     # return as dictionary
     metrics_dict = {
@@ -122,9 +129,8 @@ def multi_label_metrics(predictions, labels, threshold=0.5):
       'macro_recall': metrics[3],
       'macro_precision': metrics[4],
       'macro_fscore': metrics[5],
-      'accuracy': metrics[6]
-  }
-    return metrics_dict
+      'accuracy': metrics[6]}"""
+    return metrics
 
 def compute_metrics(p: EvalPrediction):
     preds = p.predictions[0] if isinstance(p.predictions, 
