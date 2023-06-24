@@ -143,7 +143,12 @@ def compute_EMO_metrics_trainer(p: EvalPrediction):
     # probs = sigmoid(torch.Tensor(predictions))
 
     # use a threshold to turn prediction into 0/1 values
-    predictions = np.where(predictions >= 0.5, 1, 0)
+    bin_predictions = np.where(predictions >= 0.5, 1, 0)
+    # TODO: if no emotion is predicted, set the one with highest activation
+    # for i, bin_pred in enumerate(bin_predictions):
+    #     if np.all(bin_pred==0):
+    #         bin_predictions[i][np.argmax(predictions[i])] = 1
+    predictions = bin_predictions
 
     # compute metrics
     metrics = {}
