@@ -1,5 +1,5 @@
 import json
-import torch
+#import torch
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -9,7 +9,33 @@ from sklearn.metrics import confusion_matrix
 from sklearn.metrics import roc_auc_score, accuracy_score, jaccard_score, precision_recall_fscore_support
 from sklearn.preprocessing import MultiLabelBinarizer
 from torch.utils.data import Dataset
-from transformers import BertForSequenceClassification, EvalPrediction
+from transformers import EvalPrediction
+from torchsummary import summary
+from torchview import draw_graph
+
+def save_model_summary(model, path):
+    '''
+    This function saves a textual summary of the pytorch model passed as input.
+
+    :param model: pytorch model
+    :param path: path where to save the summary
+    '''
+
+    model_summary = str(summary(model, dtypes=['torch.IntTensor']))
+    file = open(path, "w")
+    file.write(model_summary)
+    file.close()
+
+def save_model_graph(model, input_data, path):
+    '''
+    This function saves the graph of the pytorch model passed as input.
+
+    :param model: pytorch model
+    :param input_data: input data to the model
+    :param path: path where to save the graph (no need to specify the extension)
+    '''
+    model_graph = draw_graph(model, input_data=input_data)
+    model_graph.visual_graph.render(filename=path)
 
 def plot_loss_curve(training_loss, validatin_loss, path, title):
     '''
@@ -133,16 +159,6 @@ def compute_EMO_metrics_trainer(p: EvalPrediction):
     metrics['macro_recall'] = prf_macro[1]
     metrics['macro_f'] = prf_macro[2]
     return metrics
-
-# TODO: sistemare restore del modello
-"""def save_best_weights(model, MODEL_NAME):
-  torch.save(model.state_dict(), 'checkpoints/model_weights_'+MODEL_NAME+'.pt')
-
-def restore_model(MODEL_NAME, device, num_labels=8): #TODO: MODELLO auto
-  model = BertForSequenceClassification.from_pretrained(MODEL_NAME, num_labels=num_labels)
-  model.load_state_dict(torch.load('checkpoints/model_weights_'+MODEL_NAME+'.pt'))
-  model.to(device)
-  return model"""
 
 class EMODataset(Dataset):
     '''
