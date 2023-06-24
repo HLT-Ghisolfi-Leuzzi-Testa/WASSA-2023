@@ -72,7 +72,7 @@ def write_dict_to_json(dict, path):
     with open(path, 'w') as fp:
         json.dump(dict, fp)
 
-def write_EMO_prediction(predictions, path):
+def write_EMO_predictions(predictions, path):
     '''
     This function saves the predictions of the EMO task to a tsv file.
     
