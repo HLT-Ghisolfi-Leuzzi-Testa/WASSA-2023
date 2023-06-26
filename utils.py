@@ -16,7 +16,7 @@ from torchsummary import summary
 from torchview import draw_graph
 from bertviz import model_view
 
-def save_model_summary(model, path):
+def print_model_summary(model, path):
     '''
     This function saves a textual summary of the pytorch model passed as input.
 
@@ -29,7 +29,7 @@ def save_model_summary(model, path):
     file.write(model_summary)
     file.close()
 
-def save_model_graph(model, input_data, path):
+def plot_model_graph(model, input_data, path):
     '''
     This function saves the graph of the pytorch model passed as input.
 
@@ -39,6 +39,7 @@ def save_model_graph(model, input_data, path):
     '''
     model_graph = draw_graph(model, input_data=input_data)
     model_graph.visual_graph.render(filename=path)
+    model_graph.visual_graph.view()
 
 def plot_loss_curve(training_loss, validatin_loss, path, title):
     '''
@@ -102,7 +103,7 @@ def plot_attentions(input_str, model, tokenizer, title, path):
     plt.savefig(path)
     plt.show()
 
-def show_model_view(
+def plot_model_view(
         model,
         tokenizer,
         sentence_a,
@@ -140,6 +141,28 @@ def show_model_view(
                     layer_attn[0, :, i, :] = 0
                     layer_attn[0, :, :, i] = 0
     model_view(attention, tokens, sentence_b_start, display_mode=display_mode)
+
+def plot_confusion_matrix(golds, predictions, path, title):
+    '''
+    This function plots the confusion matrix given gold and predicted labels.
+    
+    :param golds: list of gold labels
+    :param predictions: list of predicted labels
+    :param path: path where to save the plot
+    :param title: title of the plot
+    '''
+
+    labels = np.unique(golds)
+    cm_df = pd.DataFrame(confusion_matrix(golds, predictions, labels=labels),index=labels, columns=labels)
+    plt.figure(figsize = (10,7))
+    sns.heatmap(cm_df, annot=True, cmap="Blues", fmt='g')
+    plt.title("Confusion Matrix")
+    plt.xlabel("Predicted")
+    plt.ylabel("Actual")
+    plt.title(title)
+    plt.tight_layout()
+    plt.savefig(path)
+    plt.show()
 
 def write_dict_to_json(dict, path):
     '''
@@ -182,28 +205,6 @@ def compute_EMO_metrics(golds, predictions):
     'accuracy': scores_val[6]
     }
     return scores
-
-def plot_confusion_matrix(golds, predictions, path, title):
-    '''
-    This function plots the confusion matrix given gold and predicted labels.
-    
-    :param golds: list of gold labels
-    :param predictions: list of predicted labels
-    :param path: path where to save the plot
-    :param title: title of the plot
-    '''
-
-    labels = np.unique(golds)
-    cm_df = pd.DataFrame(confusion_matrix(golds, predictions, labels=labels),index=labels, columns=labels)
-    plt.figure(figsize = (10,7))
-    sns.heatmap(cm_df, annot=True, cmap="Blues", fmt='g')
-    plt.title("Confusion Matrix")
-    plt.xlabel("Predicted")
-    plt.ylabel("Actual")
-    plt.title(title)
-    plt.tight_layout()
-    plt.savefig(path)
-    plt.show()
 
 def compute_EMO_metrics_trainer(p: EvalPrediction):
     '''
