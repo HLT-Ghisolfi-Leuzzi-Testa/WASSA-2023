@@ -386,26 +386,26 @@ class FeaturesEncoder():
             concat_features = genders
         if self.education:
             educations = self.education_encoder.transform(dataframe.education).reshape(-1,1)
-        if concat_features is None:
-            concat_features = educations
-        else:
-            concat_features = np.concatenate((concat_features, educations), axis=1)
+            if concat_features is None:
+                concat_features = educations
+            else:
+                concat_features = np.concatenate((concat_features, educations), axis=1)
         if self.race:
             races = self.race_encoder.transform(dataframe.race)
-        if concat_features is None:
-            concat_features = races
-        else:
-            concat_features = np.concatenate((concat_features, races), axis=1)
+            if concat_features is None:
+                concat_features = races
+            else:
+                concat_features = np.concatenate((concat_features, races), axis=1)
         if self.age:
             ages = dataframe.age.to_numpy().reshape(-1,1)
-        if concat_features is None:
-            concat_features = ages
-        else:
-            concat_features = np.concatenate((concat_features, ages), axis=1)
+            if concat_features is None:
+                concat_features = ages
+            else:
+                concat_features = np.concatenate((concat_features, ages), axis=1)
         if self.income:
             incomes = dataframe.income.to_numpy().reshape(-1,1)
-        if concat_features is None:
-            concat_features = incomes
-        else:
-            concat_features = np.concatenate((concat_features, incomes), axis=1)
+            if concat_features is None:
+                concat_features = incomes
+            else:
+                concat_features = np.concatenate((concat_features, incomes), axis=1)
         return concat_features
