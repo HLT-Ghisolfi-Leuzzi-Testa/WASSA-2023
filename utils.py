@@ -5,13 +5,16 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 from evaluation import calculatePRF_MLabel
-from sklearn.metrics import confusion_matrix
-from sklearn.metrics import roc_auc_score, accuracy_score, jaccard_score, precision_recall_fscore_support
-from sklearn.preprocessing import MultiLabelBinarizer
+from sklearn.metrics import (
+    confusion_matrix, roc_auc_score, accuracy_score, jaccard_score, 
+    precision_recall_fscore_support
+    )
+from sklearn.preprocessing import MultiLabelBinarizer, LabelEncoder, LabelBinarizer
 from torch.utils.data import Dataset
 from transformers import EvalPrediction
 from torchsummary import summary
 from torchview import draw_graph
+from bertviz import model_view
 
 def save_model_summary(model, path):
     '''
@@ -60,6 +63,83 @@ def plot_loss_curve(training_loss, validatin_loss, path, title):
     plt.tight_layout()
     plt.savefig(path)
     plt.show()
+
+def plot_attentions(input_str, model, tokenizer, title, path):
+    '''
+    This function plots the attention weights for the string passed as parameter.
+
+    :param input_str: string for which to plot the attention weights
+    :param model: model
+    :param tokenizer: tokenizer
+    :param title: title of the plot
+    :param path: path where to save the plot
+    '''
+
+    model_inputs = tokenizer(input_str, return_tensors="pt")
+    with torch.no_grad():
+        model_output = model(**model_inputs)
+    tokens = tokenizer.convert_ids_to_tokens(model_inputs.input_ids[0])
+    n_tokens = len(tokens)
+    n_layers = len(model_output.attentions)
+    n_heads = len(model_output.attentions[0][0])
+    fig, axes = plt.subplots(n_layers, n_heads)
+    fig.set_size_inches(18.5*2, 10.5*4)
+    for layer in range(n_layers):
+        for i in range(n_heads):
+            axes[layer, i].imshow(model_output.attentions[layer][0, i])
+            axes[layer][i].set_xticks(list(range(n_tokens)))
+            axes[layer][i].set_xticklabels(labels=tokens, rotation="vertical")
+            axes[layer][i].set_yticks(list(range(n_tokens)))
+            axes[layer][i].set_yticklabels(labels=tokens)
+
+            if layer == 5:
+                axes[layer, i].set(xlabel=f"head={i}")
+            if i == 0:
+                axes[layer, i].set(ylabel=f"layer={layer}") 
+    plt.subplots_adjust(wspace=0.3)
+    plt.title(title)
+    plt.tight_layout()
+    plt.savefig(path)
+    plt.show()
+
+def show_model_view(
+        model,
+        tokenizer,
+        sentence_a,
+        sentence_b=None,
+        hide_delimiter_attn=False,
+        display_mode="dark"):
+    '''
+    This function visualizes the attention weights produced by model on
+    sentence_a. If sentence_b is provided, the two sentences are concatenated
+    with separator token in between.
+    '''
+    
+    inputs = tokenizer.encode_plus(
+        sentence_a,
+        sentence_b,
+        return_tensors='pt',
+        add_special_tokens=True)
+    input_ids = inputs['input_ids']
+    if sentence_b:
+        token_type_ids = inputs['token_type_ids'] # 0 for first sentence, 1 for second
+        attention = model(
+            input_ids,
+            token_type_ids=token_type_ids,
+            attention_mask=inputs.attention_mask).attentions # if not customed, need to set output_attentions=True
+        sentence_b_start = token_type_ids[0].tolist().index(1)
+    else:
+        attention = model(input_ids).attentions
+        sentence_b_start = None
+    input_id_list = input_ids[0].tolist() # Batch index 0
+    tokens = tokenizer.convert_ids_to_tokens(input_id_list)  
+    if hide_delimiter_attn:
+        for i, t in enumerate(tokens):
+            if t in ("[SEP]", "[CLS]"):
+                for layer_attn in attention:
+                    layer_attn[0, :, i, :] = 0
+                    layer_attn[0, :, :, i] = 0
+    model_view(attention, tokens, sentence_b_start, display_mode=display_mode)
 
 def write_dict_to_json(dict, path):
     '''
@@ -175,12 +255,14 @@ class EMODataset(Dataset):
         tokenizer,
         essay,
         targets,
+        features=None, # additional numerical features (n_features for each sample)
         max_len=None
         ):
         self.tokenizer = tokenizer
         self.max_len = max_len
         self.essay = essay
         self.targets = targets
+        self.features = features
 
     def __len__(self):
         return len(self.essay)
@@ -197,12 +279,15 @@ class EMODataset(Dataset):
             return_tensors='pt'
         )
 
-        return {
-            'input_ids': inputs['input_ids'].flatten(),
-            'attention_mask': inputs['attention_mask'].flatten(),
-            'token_type_ids': inputs["token_type_ids"].flatten(),
-            'label': torch.FloatTensor(self.targets[index])
+        item = {
+          'input_ids': inputs['input_ids'].flatten(),
+          'attention_mask': inputs['attention_mask'].flatten(),
+          'token_type_ids': inputs["token_type_ids"].flatten(),
+          'labels': torch.FloatTensor(self.targets[index])
         }
+        if self.features is not None:
+          item['features'] = torch.FloatTensor(self.features[index])
+        return item
 
 class EmotionsLabelEncoder():
     '''
@@ -245,3 +330,82 @@ class EmotionsLabelEncoder():
         labels = self.mlb.inverse_transform(np.array(encoded_emotions))
         emotions = ["/".join(emotion) for emotion in labels]
         return emotions
+
+class FeaturesEncoder():
+    '''
+    This class is used to encode the additional features.
+    '''
+
+    def __init__(self):
+        self.gender_encoder = LabelBinarizer() # disentagled
+        self.race_encoder = LabelBinarizer() # disentagled
+        self.education_encoder = LabelEncoder() # ordinal values
+
+    def fit(self, dataframe):
+        '''
+        This function fits the encoder to the dataframe passed as parameter.
+
+        :param dataframe: dataset dataframe
+        '''
+        if 'gender' in dataframe.columns:
+            self.gender_encoder.fit(dataframe.gender)
+            self.gender = True
+        else:
+            self.gender = False
+        if 'race' in dataframe.columns:
+            self.race_encoder.fit(dataframe.race)
+            self.race = True
+        else:
+            self.race = False
+        if 'education' in dataframe.columns:
+            self.education_encoder.fit(dataframe.education)
+            self.education = True
+        else:
+            self.education = False
+        if 'age' in dataframe.columns:
+            self.age = True
+        else:
+            self.age = False
+        if 'income' in dataframe.columns:
+            self.income = True
+        else:
+            self.income = False
+
+    # decode non needed?
+
+    def encode(self, dataframe):
+        '''
+        This method encodes the dataframe passed as parameter.
+
+        :param dataframe: dataset dataframe
+        :return: numpy array with encoded features
+        '''
+        concat_features = None
+        if self.gender:
+            genders = self.gender_encoder.transform(dataframe.gender)
+            concat_features = genders
+        if self.education:
+            educations = self.education_encoder.transform(dataframe.education).reshape(-1,1)
+        if concat_features is None:
+            concat_features = educations
+        else:
+            concat_features = np.concatenate((concat_features, educations), axis=1)
+        if self.race:
+            races = self.race_encoder.transform(dataframe.race)
+        if concat_features is None:
+            concat_features = races
+        else:
+            concat_features = np.concatenate((concat_features, races), axis=1)
+        if self.age:
+            ages = dataframe.age.to_numpy().reshape(-1,1)
+        if concat_features is None:
+            concat_features = ages
+        else:
+            concat_features = np.concatenate((concat_features, ages), axis=1)
+        if self.income:
+            incomes = dataframe.income.to_numpy().reshape(-1,1)
+        if concat_features is None:
+            concat_features = incomes
+        else:
+            concat_features = np.concatenate((concat_features, incomes), axis=1)
+        return concat_features
