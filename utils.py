@@ -277,7 +277,8 @@ class EMODataset(Dataset):
             padding='max_length',
             truncation=True,
             return_attention_mask=True,
-            return_tensors='pt'
+            return_tensors='pt',
+            return_token_type_ids=True
         )
 
         item = {
