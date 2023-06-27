@@ -11,7 +11,7 @@ DEV_COL_NAMES = [ # TODO: check!
     "distress",
     "emotion",
     "personality_conscientiousness",
-    "personality_openes",
+    "personality_openess", # TODO: ATTENZIONE, era scritto male!
     "personality_extraversion",
     "personality_agreeableness",
     "personality_stability",
