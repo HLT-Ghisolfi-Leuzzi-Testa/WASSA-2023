@@ -285,10 +285,11 @@ class EMODataset(Dataset):
           'input_ids': inputs['input_ids'].flatten(),
           'attention_mask': inputs['attention_mask'].flatten(),
           'token_type_ids': inputs["token_type_ids"].flatten(),
-          'labels': torch.FloatTensor(self.targets[index])
         }
         if self.features is not None:
           item['features'] = torch.FloatTensor(self.features[index])
+        if self.targets is not None:
+            item['labels'] = torch.FloatTensor(self.targets[index])
         return item
 
 class EmotionsLabelEncoder():
