@@ -5,11 +5,41 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 from evaluation import calculatePRF_MLabel
-from sklearn.metrics import confusion_matrix
-from sklearn.metrics import f1_score, roc_auc_score, accuracy_score
-from sklearn.preprocessing import MultiLabelBinarizer
+from sklearn.metrics import (
+    confusion_matrix, roc_auc_score, accuracy_score, jaccard_score, 
+    precision_recall_fscore_support
+    )
+from sklearn.preprocessing import MultiLabelBinarizer, LabelEncoder, LabelBinarizer
 from torch.utils.data import Dataset
-from transformers import BertForSequenceClassification, EvalPrediction
+from transformers import EvalPrediction
+from torchsummary import summary
+from torchview import draw_graph
+from bertviz import model_view
+
+def print_model_summary(model, path):
+    '''
+    This function saves a textual summary of the pytorch model passed as input.
+
+    :param model: pytorch model
+    :param path: path where to save the summary
+    '''
+
+    model_summary = str(summary(model, dtypes=['torch.IntTensor']))
+    file = open(path, "w")
+    file.write(model_summary)
+    file.close()
+
+def plot_model_graph(model, input_data, path):
+    '''
+    This function saves the graph of the pytorch model passed as input.
+
+    :param model: pytorch model
+    :param input_data: input data to the model
+    :param path: path where to save the graph (no need to specify the extension)
+    '''
+    model_graph = draw_graph(model, input_data=input_data)
+    model_graph.visual_graph.render(filename=path)
+    model_graph.visual_graph.view()
 
 def plot_loss_curve(training_loss, validatin_loss, path, title):
     '''
@@ -35,6 +65,105 @@ def plot_loss_curve(training_loss, validatin_loss, path, title):
     plt.savefig(path)
     plt.show()
 
+def plot_attentions(input_str, model, tokenizer, title, path):
+    '''
+    This function plots the attention weights for the string passed as parameter.
+
+    :param input_str: string for which to plot the attention weights
+    :param model: model
+    :param tokenizer: tokenizer
+    :param title: title of the plot
+    :param path: path where to save the plot
+    '''
+
+    model_inputs = tokenizer(input_str, return_tensors="pt")
+    with torch.no_grad():
+        model_output = model(**model_inputs)
+    tokens = tokenizer.convert_ids_to_tokens(model_inputs.input_ids[0])
+    n_tokens = len(tokens)
+    n_layers = len(model_output.attentions)
+    n_heads = len(model_output.attentions[0][0])
+    fig, axes = plt.subplots(n_layers, n_heads)
+    fig.set_size_inches(18.5*2, 10.5*4)
+    for layer in range(n_layers):
+        for i in range(n_heads):
+            axes[layer, i].imshow(model_output.attentions[layer][0, i])
+            axes[layer][i].set_xticks(list(range(n_tokens)))
+            axes[layer][i].set_xticklabels(labels=tokens, rotation="vertical")
+            axes[layer][i].set_yticks(list(range(n_tokens)))
+            axes[layer][i].set_yticklabels(labels=tokens)
+
+            if layer == 5:
+                axes[layer, i].set(xlabel=f"head={i}")
+            if i == 0:
+                axes[layer, i].set(ylabel=f"layer={layer}") 
+    plt.subplots_adjust(wspace=0.3)
+    plt.title(title)
+    plt.tight_layout()
+    plt.savefig(path)
+    plt.show()
+
+def plot_model_view(
+        model,
+        tokenizer,
+        sentence_a,
+        sentence_b=None,
+        hide_delimiter_attn=False,
+        display_mode="dark"):
+    '''
+    This function visualizes the attention weights produced by model on
+    sentence_a. If sentence_b is provided, the two sentences are concatenated
+    with separator token in between.
+    '''
+    
+    inputs = tokenizer.encode_plus(
+        sentence_a,
+        sentence_b,
+        return_tensors='pt',
+        add_special_tokens=True)
+    input_ids = inputs['input_ids']
+    if sentence_b:
+        token_type_ids = inputs['token_type_ids'] # 0 for first sentence, 1 for second
+        attention = model(
+            input_ids,
+            token_type_ids=token_type_ids,
+            attention_mask=inputs.attention_mask).attentions # if not customed, need to set output_attentions=True
+        sentence_b_start = token_type_ids[0].tolist().index(1)
+    else:
+        attention = model(input_ids).attentions
+        sentence_b_start = None
+    input_id_list = input_ids[0].tolist() # Batch index 0
+    tokens = tokenizer.convert_ids_to_tokens(input_id_list)  
+    if hide_delimiter_attn:
+        for i, t in enumerate(tokens):
+            if t in ("[SEP]", "[CLS]"):
+                for layer_attn in attention:
+                    layer_attn[0, :, i, :] = 0
+                    layer_attn[0, :, :, i] = 0
+    model_view(attention, tokens, sentence_b_start, display_mode=display_mode)
+
+def plot_confusion_matrix(golds, predictions, path, title):
+    '''
+    This function plots the confusion matrix given gold and predicted labels.
+    
+    :param golds: list of gold labels
+    :param predictions: list of predicted labels
+    :param path: path where to save the plot
+    :param title: title of the plot
+    '''
+
+    labels = np.unique(golds)
+    cm_df = pd.DataFrame(confusion_matrix(golds, predictions, labels=labels),index=labels, columns=labels)
+    plt.figure(figsize = (10,7))
+    sns.heatmap(cm_df, annot=True, cmap="Blues", fmt='g')
+    plt.title("Confusion Matrix")
+    plt.xlabel("Predicted")
+    plt.ylabel("Actual")
+    plt.title(title)
+    plt.tight_layout()
+    plt.savefig(path)
+    plt.show()
+
 def write_dict_to_json(dict, path):
     '''
     This function saves a dictionary to a json file.
@@ -46,7 +175,7 @@ def write_dict_to_json(dict, path):
     with open(path, 'w') as fp:
         json.dump(dict, fp)
 
-def write_EMO_prediction(predictions, path):
+def write_EMO_predictions(predictions, path):
     '''
     This function saves the predictions of the EMO task to a tsv file.
     
@@ -77,90 +206,49 @@ def compute_EMO_metrics(golds, predictions):
     }
     return scores
 
-def plot_confusion_matrix(golds, predictions, path, title):
+def compute_EMO_metrics_trainer(p: EvalPrediction):
     '''
-    This function plots the confusion matrix given gold and predicted labels.
-    
-    :param golds: list of gold labels
-    :param predictions: list of predicted labels
-    :param path: path where to save the plot
-    :param title: title of the plot
+    This function is called by Trainer to compute the metrics for the EMO task.
+
+    :param p: EvalPrediction object
+    :return: dictionary of metrics
     '''
 
-    labels = np.unique(golds)
-    cm_df = pd.DataFrame(confusion_matrix(golds, predictions, labels=labels),index=labels, columns=labels)
-    plt.figure(figsize = (10,7))
-    sns.heatmap(cm_df, annot=True, cmap="Blues", fmt='g')
-    plt.title("Confusion Matrix")
-    plt.xlabel("Predicted")
-    plt.ylabel("Actual")
-    plt.title(title)
-    plt.tight_layout()
-    plt.savefig(path)
-    plt.show()
+    predictions = p.predictions[0] if isinstance(p.predictions, tuple) else p.predictions # TODO: ?
+    golds = p.label_ids
 
-def multi_label_metrics(predictions, labels, threshold=0.5):
-    """https://colab.research.google.com/github/NielsRogge/Transformers-Tutorials/blob/master/BERT/Fine
-    _tuning_BERT_(and_friends)_for_multi_label_text_classification.ipynb#scrollTo=797b2WHJqUgZ"""
+    # NOTE: not needed if using multilabel
+    # https://szuyuchu.medium.com/multi-label-text-classification-with-bert-52fa78eddb9
+    # apply sigmoid on predictions
+    # sigmoid = torch.nn.Sigmoid()
+    # probs = sigmoid(torch.Tensor(predictions))
 
-    # apply sigmoid on predictions which are of shape (batch_size, num_labels)
-    sigmoid = torch.nn.Sigmoid()
-    probs = sigmoid(torch.Tensor(predictions))
-
-    # use threshold to turn them into integer predictions
-    y_pred = np.zeros(probs.shape)
-    y_pred[np.where(probs >= threshold)] = 1
+    # use a threshold to turn prediction into 0/1 values
+    bin_predictions = np.where(predictions >= 0.5, 1, 0)
+    # TODO: if no emotion is predicted, set the one with highest activation
+    # for i, bin_pred in enumerate(bin_predictions):
+    #     if np.all(bin_pred==0):
+    #         bin_predictions[i][np.argmax(predictions[i])] = 1
+    predictions = bin_predictions
 
     # compute metrics
-    f1_micro_average = f1_score(y_true=labels, y_pred=y_pred, average='micro')
-    roc_auc = roc_auc_score(labels, y_pred, average = 'micro')
-    accuracy = accuracy_score(labels, y_pred)
-    # return as dictionary
-    metrics = {'f1': f1_micro_average,
-               'roc_auc': roc_auc,
-               'accuracy': accuracy}
-    """metrics = compute_EMO_metrics(labels, y_pred)
-
-    # return as dictionary
-    metrics_dict = {
-      'micro_recall': metrics[0],
-      'micro_precision': metrics[1],
-      'micro_fscore': metrics[2],
-      'macro_recall': metrics[3],
-      'macro_precision': metrics[4],
-      'macro_fscore': metrics[5],
-      'accuracy': metrics[6]}"""
+    metrics = {}
+    metrics['sklearn_accuracy'] = accuracy_score(y_true=golds, y_pred=predictions)
+    metrics['roc_auc_micro'] = roc_auc_score(y_true=golds, y_score=predictions, average = 'micro')
+    metrics['accuracy'] = jaccard_score(y_true=golds, y_pred=predictions, average='micro')
+    prf_micro = precision_recall_fscore_support(y_true=golds, y_pred=predictions, average='micro')
+    metrics['micro_precision'] = prf_micro[0]
+    metrics['micro_recall'] = prf_micro[1]
+    metrics['micro_f'] = prf_micro[2]
+    prf_macro = precision_recall_fscore_support(y_true=golds, y_pred=predictions, average='macro')
+    metrics['macro_precision'] = prf_macro[0]
+    metrics['macro_recall'] = prf_macro[1]
+    metrics['macro_f'] = prf_macro[2]
     return metrics
-
-def compute_metrics(p: EvalPrediction):
-    preds = p.predictions[0] if isinstance(p.predictions, 
-            tuple) else p.predictions
-    result = multi_label_metrics(
-        predictions=preds, 
-        labels=p.label_ids)
-    return result
-
-def save_best_weights(model, MODEL_NAME):
-  torch.save(model.state_dict(), 'checkpoints/model_weights_'+MODEL_NAME+'.pt')
-
-def restore_model(MODEL_NAME, device, num_labels=8): #TODO: MODELLO auto
-  model = BertForSequenceClassification.from_pretrained(MODEL_NAME, num_labels=num_labels)
-  model.load_state_dict(torch.load('checkpoints/model_weights_'+MODEL_NAME+'.pt'))
-  model.to(device)
-  return model
-
-"""def prediction_from_model(model, test_dataloader, mlb, device):
-  with torch.no_grad():
-    input_ids = test_dataloader['input_ids'].to(device)
-    attention_mask = test_dataloader['attention_mask'].to(device)
-    outputs = model(input_ids=input_ids, attention_mask=attention_mask)
-  logits = outputs.logits.detach().cpu().numpy()
-  predictions = encoded2string(logits2encoded(logits), mlb)
-  return predictions"""
 
 class EMODataset(Dataset):
     '''
-    This class is used to create a dataset for the EMO task.
+    This class is used to create a pytorch dataset for the EMO task.
     '''
 
     def __init__(
@@ -168,12 +256,14 @@ class EMODataset(Dataset):
         tokenizer,
         essay,
         targets,
-        max_len=None # better leaving it to None
+        features=None, # additional numerical features (n_features for each sample)
+        max_len=None
         ):
         self.tokenizer = tokenizer
         self.max_len = max_len
         self.essay = essay
         self.targets = targets
+        self.features = features
 
     def __len__(self):
         return len(self.essay)
@@ -187,30 +277,138 @@ class EMODataset(Dataset):
             padding='max_length',
             truncation=True,
             return_attention_mask=True,
-            return_tensors='pt'
+            return_tensors='pt',
+            return_token_type_ids=True
         )
 
-        return {
-            'input_ids': inputs['input_ids'].flatten(),
-            'attention_mask': inputs['attention_mask'].flatten(),
-            'token_type_ids': inputs["token_type_ids"].flatten(),
-            'label': torch.FloatTensor(self.targets[index])
+        item = {
+          'input_ids': inputs['input_ids'].flatten(),
+          'attention_mask': inputs['attention_mask'].flatten(),
+          'token_type_ids': inputs["token_type_ids"].flatten()
         }
+        if self.features is not None:
+          item['features'] = torch.FloatTensor(self.features[index])
+        if self.targets is not None:
+            item['labels'] = torch.FloatTensor(self.targets[index])
+        return item
 
 class EmotionsLabelEncoder():
+    '''
+    This class is used to one-hot encode and decode the emotions labels.
+    '''
+
     def __init__(self):
         self.mlb = MultiLabelBinarizer()
 
     def fit(self, emotions):
+        '''
+        This function fits the encoder to the emotions passed as parameters.
+
+        :param emotions: list of emotions
+        '''
+
         emotions = [emotion.split('/') for emotion in emotions]
         self.mlb.fit(emotions)
 
     def encode(self, emotions):
+        '''
+        This method one-hot encodes the emotions passed as parameters.
+
+        :param emotions: list of emotions
+        :return: numpy array with encoded emotions
+        '''
+
         emotions = [emotion.split('/') for emotion in emotions]
         encoded_emotions = self.mlb.transform(emotions)
         return encoded_emotions
 
     def decode(self, encoded_emotions):
+        '''
+        This method decodes the one-hot encoded emotions passed as parameters.
+
+        :param encoded_emotions: list of one-hot encoded emotions
+        :return: strings list of decoded emotions
+        '''
+
         labels = self.mlb.inverse_transform(np.array(encoded_emotions))
         emotions = ["/".join(emotion) for emotion in labels]
         return emotions
+
+class FeaturesEncoder():
+    '''
+    This class is used to encode the additional features.
+    '''
+
+    def __init__(self):
+        self.gender_encoder = LabelBinarizer() # disentagled
+        self.race_encoder = LabelBinarizer() # disentagled
+        self.education_encoder = LabelEncoder() # ordinal values
+
+    def fit(self, dataframe):
+        '''
+        This function fits the encoder to the dataframe passed as parameter.
+
+        :param dataframe: dataset dataframe
+        '''
+        if 'gender' in dataframe.columns:
+            self.gender_encoder.fit(dataframe.gender)
+            self.gender = True
+        else:
+            self.gender = False
+        if 'race' in dataframe.columns:
+            self.race_encoder.fit(dataframe.race)
+            self.race = True
+        else:
+            self.race = False
+        if 'education' in dataframe.columns:
+            self.education_encoder.fit(dataframe.education)
+            self.education = True
+        else:
+            self.education = False
+        if 'age' in dataframe.columns:
+            self.age = True
+        else:
+            self.age = False
+        if 'income' in dataframe.columns:
+            self.income = True
+        else:
+            self.income = False
+
+    # decode non needed?
+
+    def encode(self, dataframe):
+        '''
+        This method encodes the dataframe passed as parameter.
+
+        :param dataframe: dataset dataframe
+        :return: numpy array with encoded features
+        '''
+        concat_features = None
+        if self.gender:
+            genders = self.gender_encoder.transform(dataframe.gender)
+            concat_features = genders
+        if self.education:
+            educations = self.education_encoder.transform(dataframe.education).reshape(-1,1)
+            if concat_features is None:
+                concat_features = educations
+            else:
+                concat_features = np.concatenate((concat_features, educations), axis=1)
+        if self.race:
+            races = self.race_encoder.transform(dataframe.race)
+            if concat_features is None:
+                concat_features = races
+            else:
+                concat_features = np.concatenate((concat_features, races), axis=1)
+        if self.age:
+            ages = dataframe.age.to_numpy().reshape(-1,1)
+            if concat_features is None:
+                concat_features = ages
+            else:
+                concat_features = np.concatenate((concat_features, ages), axis=1)
+        if self.income:
+            incomes = dataframe.income.to_numpy().reshape(-1,1)
+            if concat_features is None:
+                concat_features = incomes
+            else:
+                concat_features = np.concatenate((concat_features, incomes), axis=1)
+        return concat_features
