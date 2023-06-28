@@ -122,7 +122,11 @@ for emotion in emotions:
 # merging dev labels with data
 dev_df = dev_df.merge(dev_lbl_df, left_index=True, right_index=True, how='outer')
 
+# get all train data ordered by new_train and val
+train_df = pd.concat([new_train_df, val_df])
+
 # saving pre-processed data
-new_train_df.to_csv("datasets/WASSA23_essay_level_train_preproc.tsv", index=False, sep='\t') 
+train_df.to_csv("datasets/WASSA23_essay_level_full_train_preproc.tsv", index=False, sep='\t')
+new_train_df.to_csv("datasets/WASSA23_essay_level_train_preproc.tsv", index=False, sep='\t')
 val_df.to_csv("datasets/WASSA23_essay_level_val_preproc.tsv", index=False, sep='\t')
 dev_df.to_csv("datasets/WASSA23_essay_level_dev_preproc.tsv", index=False, sep='\t')
