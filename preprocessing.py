@@ -5,6 +5,7 @@ from sklearn.model_selection import train_test_split
 
 TRAIN_DATA_PATH = "https://raw.githubusercontent.com/HLT-Ghisolfi-Leuzzi-Testa/WASSA-2023/main/datasets/WASSA23_essay_level_with_labels_train.tsv"
 DEV_DATA_PATH = "https://raw.githubusercontent.com/HLT-Ghisolfi-Leuzzi-Testa/WASSA-2023/main/datasets/WASSA23_essay_level_dev.tsv"
+TEST_DATA_PATH = "https://raw.githubusercontent.com/HLT-Ghisolfi-Leuzzi-Testa/WASSA-2023/main/datasets/WASSA23_essay_level_test.tsv"
 DEV_LABELS = "https://raw.githubusercontent.com/HLT-Ghisolfi-Leuzzi-Testa/WASSA-2023/main/datasets/goldstandard_dev.tsv"
 DEV_COL_NAMES = [ # TODO: check!
     "empathy",
@@ -96,6 +97,7 @@ def expand_contractions(text):
 
 train_df = pd.read_csv(TRAIN_DATA_PATH, sep='\t')
 dev_df = pd.read_csv(DEV_DATA_PATH, sep='\t')
+test_df = pd.read_csv (TEST_DATA_PATH, sep='\t')
 dev_lbl_df = pd.read_csv(DEV_LABELS, sep='\t', names=DEV_COL_NAMES)
 
 # TODO: not needed?
@@ -105,6 +107,7 @@ dev_lbl_df = pd.read_csv(DEV_LABELS, sep='\t', names=DEV_COL_NAMES)
 # text cleaning
 train_df["essay"] = train_df["essay"].apply(clean_text)
 dev_df["essay"] = dev_df["essay"].apply(clean_text)
+test_df["essay"] = test_df["essay"].apply(clean_text)
 
 # splitting train data into train and validation with a stratified approach
 emotions = train_df['emotion'].unique().tolist()
@@ -130,3 +133,4 @@ train_df.to_csv("datasets/WASSA23_essay_level_full_train_preproc.tsv", index=Fal
 new_train_df.to_csv("datasets/WASSA23_essay_level_train_preproc.tsv", index=False, sep='\t')
 val_df.to_csv("datasets/WASSA23_essay_level_val_preproc.tsv", index=False, sep='\t')
 dev_df.to_csv("datasets/WASSA23_essay_level_dev_preproc.tsv", index=False, sep='\t')
+test_df.to_csv("datasets/WASSA23_essay_level_test_preproc.tsv", index=False, sep='\t')
