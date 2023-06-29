@@ -12,7 +12,7 @@ DEV_COL_NAMES = [ # TODO: check!
     "distress",
     "emotion",
     "personality_conscientiousness",
-    "personality_openess", # TODO: ATTENZIONE, era scritto male!
+    "personality_openess",
     "personality_extraversion",
     "personality_agreeableness",
     "personality_stability",
@@ -24,7 +24,7 @@ DEV_COL_NAMES = [ # TODO: check!
 VAL_SIZE = 0.2 # fraction of train data to be used as validation, TODO: 0.1?
 RANDOM_STATE = 42
 
-def one_hot_encode_emotions(df): # TODO: not needed?
+def one_hot_encode_emotions(df):
     emotions = set()
     for perceived_emotion in df['emotion'].unique():
         for emotion in perceived_emotion.split('/'):
@@ -95,14 +95,22 @@ def expand_contractions(text):
     '''
     return ' '.join(contractions.fix(word) for word in text.split())
 
+def drop_rows_with_unknown(dataframe):
+    '''
+    This function drops the rows with 'unknow' value in the dataframe passed as parameter.
+
+    :param dataframe: pandas dataframe
+    :return: pandas dataframe without rows with 'unknow' value
+    '''
+
+    for column in dataframe.columns:
+        dataframe = dataframe[dataframe[column] != 'unknown']
+    return dataframe
+
 train_df = pd.read_csv(TRAIN_DATA_PATH, sep='\t')
 dev_df = pd.read_csv(DEV_DATA_PATH, sep='\t')
 test_df = pd.read_csv (TEST_DATA_PATH, sep='\t')
 dev_lbl_df = pd.read_csv(DEV_LABELS, sep='\t', names=DEV_COL_NAMES)
-
-# TODO: not needed?
-# train_df = one_hot_encode_emotions(train_df)
-# dev_lbl_df = one_hot_encode_emotions(dev_lbl_df)
 
 # text cleaning
 train_df["essay"] = train_df["essay"].apply(clean_text)
@@ -111,26 +119,38 @@ test_df["essay"] = test_df["essay"].apply(clean_text)
 
 # splitting train data into train and validation with a stratified approach
 emotions = train_df['emotion'].unique().tolist()
-new_train_df = pd.DataFrame()
-val_df = pd.DataFrame()
+internal_train_df = pd.DataFrame()
+internal_val_df = pd.DataFrame()
 for emotion in emotions:
     emotion_df = train_df.loc[train_df['emotion']==emotion]
     if emotion_df.shape[0] < 2 : # if a class has a single sample it is added to the train set
-        new_train_df = pd.concat([new_train_df, emotion_df])
+        internal_train_df = pd.concat([internal_train_df, emotion_df])
     else:
         t_df, v_df = train_test_split(emotion_df, test_size=VAL_SIZE, stratify=emotion_df['emotion'], shuffle=True)
-        new_train_df = pd.concat([new_train_df, t_df])
-        val_df = pd.concat([val_df, v_df])
+        internal_train_df = pd.concat([internal_train_df, t_df])
+        internal_val_df = pd.concat([internal_val_df, v_df])
 
 # merging dev labels with data
 dev_df = dev_df.merge(dev_lbl_df, left_index=True, right_index=True, how='outer')
 
-# get all train data ordered by new_train and val
-train_df = pd.concat([new_train_df, val_df])
+# get pre-processed train data (ordered by internal_train and internal_val)
+train_df = pd.concat([internal_train_df, internal_val_df])
+
+# drop unknown values
+train_known_df = drop_rows_with_unknown(train_df)
+internal_train_known_df = drop_rows_with_unknown(internal_train_df)
+internal_val_known_df = drop_rows_with_unknown(internal_val_df)
+
+# merge train and dev data (to perform the final training)
+essay_level_df = pd.concat([train_df, dev_df])
+essay_level_known = pd.concat([train_known_df, dev_df])
 
 # saving pre-processed data
-train_df.to_csv("datasets/WASSA23_essay_level_full_train_preproc.tsv", index=False, sep='\t')
-new_train_df.to_csv("datasets/WASSA23_essay_level_train_preproc.tsv", index=False, sep='\t')
-val_df.to_csv("datasets/WASSA23_essay_level_val_preproc.tsv", index=False, sep='\t')
+train_df.to_csv("datasets/WASSA23_essay_level_train_preproc.tsv", index=False, sep='\t')
+train_known_df.to_csv("datasets/WASSA23_essay_level_train_known_preproc.tsv", index=False, sep='\t')
+internal_train_df.to_csv("datasets/WASSA23_essay_level_internal_train_preproc.tsv", index=False, sep='\t')
+internal_val_df.to_csv("datasets/WASSA23_essay_level_internal_val_preproc.tsv", index=False, sep='\t')
 dev_df.to_csv("datasets/WASSA23_essay_level_dev_preproc.tsv", index=False, sep='\t')
 test_df.to_csv("datasets/WASSA23_essay_level_test_preproc.tsv", index=False, sep='\t')
+essay_level_df.to_csv("datasets/WASSA23_essay_level_preproc.tsv", index=False, sep='\t')
+essay_level_known.to_csv("datasets/WASSA23_essay_level_known_preproc.tsv", index=False, sep='\t')
