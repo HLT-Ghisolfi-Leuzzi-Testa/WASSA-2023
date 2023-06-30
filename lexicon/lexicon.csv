@@ -87,7 +87,7 @@ accidentally,0,0,0,0,0,1,0,accident
 accolade,0,0,0,1,0,1,1,accolad
 accommodate,0,0,0,0,0,0,0,accommod
 accommodation,0,0,0,0,0,0,0,accommod
-accompaniment,0,0,0,1,0,0,1,accompani
+accompaniment,0,0,0,1,0,0,0,accompani
 accompany,0,0,0,0,0,0,0,accompani
 accompanying,0,0,0,0,0,0,0,accompani
 accomplice,0,0,0,0,0,0,0,accomplic
@@ -137,7 +137,7 @@ acquaintance,0,0,0,0,0,0,0,acquaint
 acquainted,0,0,0,0,0,0,0,acquaint
 acquiescence,0,0,0,0,0,0,0,acquiesc
 acquire,0,0,0,0,0,0,0,acquir
-acquiring,0,0,0,0,0,0,1,acquir
+acquiring,0,0,0,0,0,0,0,acquir
 acquisition,0,0,0,0,0,0,0,acquisit
 acquisitions,0,0,0,0,0,0,0,acquisit
 acreage,0,0,0,0,0,0,0,acreag
@@ -171,7 +171,7 @@ additional,0,0,0,0,0,0,0,addit
 additive,0,0,0,0,0,0,0,addit
 address,0,0,0,0,0,0,0,address
 addressee,0,0,0,0,0,0,0,addresse
-addresses,0,0,0,0,0,0,1,address
+addresses,0,0,0,0,0,0,0,address
 adept,0,0,0,0,0,0,0,adept
 adequacy,0,0,0,0,0,0,0,adequaci
 adequate,0,0,0,0,0,0,0,adequ
@@ -228,13 +228,13 @@ adrift,0,0,1,0,1,0,0,adrift
 adult,0,0,0,0,0,0,0,adult
 adulterated,0,0,0,0,0,0,0,adulter
 adultery,0,1,0,0,1,0,0,adulteri
-advance,0,0,1,1,0,1,1,advanc
+advance,0,0,1,1,0,1,0,advanc
 advanced,0,0,0,0,0,0,0,advanc
 advancement,0,0,0,0,0,0,0,advanc
 advancing,0,0,0,0,0,0,0,advanc
 advantage,0,0,0,0,0,0,0,advantag
 advantageous,0,0,0,0,0,0,0,advantag
-advent,0,0,0,1,0,0,1,advent
+advent,0,0,0,1,0,0,0,advent
 adventure,0,0,0,0,0,0,1,adventur
 adventurer,0,0,0,0,0,0,0,adventur
 adventurous,0,0,0,0,0,0,0,adventur
@@ -359,7 +359,7 @@ alcohol,0,0,0,0,0,0,0,alcohol
 alcoholism,1,1,1,0,1,0,0,alcohol
 alcove,0,0,0,0,0,0,0,alcov
 alert,0,0,0,0,0,0,0,alert
-alertness,0,0,1,0,0,1,1,alert
+alertness,0,0,1,0,0,1,0,alert
 alerts,0,0,1,0,0,1,0,alert
 alfalfa,0,0,0,0,0,0,0,alfalfa
 algebra,0,0,0,0,0,0,0,algebra
@@ -377,7 +377,7 @@ alike,0,0,0,0,0,0,0,alik
 alimentation,0,0,0,0,0,0,0,aliment
 alimony,0,0,0,0,0,0,0,alimoni
 aliquot,0,0,0,0,0,0,0,aliquot
-alive,0,0,0,1,0,0,1,aliv
+alive,0,0,0,1,0,0,0,aliv
 alkali,0,0,0,0,0,0,0,alkali
 alkaloids,0,0,0,0,0,0,0,alkaloid
 allay,0,0,0,0,0,0,0,allay
@@ -410,7 +410,7 @@ ally,0,0,0,0,0,0,0,alli
 almanac,0,0,0,0,0,0,0,almanac
 almighty,0,0,0,0,0,0,0,almighti
 aloft,0,0,0,0,0,0,0,aloft
-aloha,0,0,0,1,0,0,1,aloha
+aloha,0,0,0,1,0,0,0,aloha
 alongside,0,0,0,0,0,0,0,alongsid
 aloof,0,0,0,0,0,0,0,aloof
 aloud,0,0,0,0,0,0,0,aloud
@@ -441,7 +441,7 @@ ambient,0,0,0,0,0,0,0,ambient
 ambiguity,0,0,0,0,0,0,0,ambigu
 ambiguous,0,0,0,0,0,0,0,ambigu
 ambit,0,0,0,0,0,0,0,ambit
-ambition,0,0,0,1,0,0,1,ambit
+ambition,0,0,0,1,0,0,0,ambit
 ambitious,0,0,0,0,0,0,0,ambiti
 ambulance,0,0,1,0,0,0,0,ambul
 ambush,1,0,1,0,0,1,0,ambush
@@ -490,7 +490,7 @@ analogous,0,0,0,0,0,0,0,analog
 analogue,0,0,0,0,0,0,0,analogu
 analogy,0,0,0,0,0,0,0,analog
 analysis,0,0,0,0,0,0,0,analysi
-analyst,0,0,0,0,0,0,1,analyst
+analyst,0,0,0,0,0,0,0,analyst
 analytic,0,0,0,0,0,0,0,analyt
 analyze,0,0,0,0,0,0,0,analyz
 analyzer,0,0,0,0,0,0,0,analyz
@@ -574,7 +574,7 @@ antibiotics,0,0,0,0,0,0,0,antibiot
 antichrist,1,1,1,0,0,0,0,antichrist
 anticipation,0,0,0,0,0,0,0,anticip
 anticipatory,0,0,0,0,0,0,0,anticipatori
-antidote,0,0,0,0,0,0,1,antidot
+antidote,0,0,0,0,0,0,0,antidot
 antifungal,0,0,0,0,0,0,0,antifung
 antimony,0,0,0,0,0,0,0,antimoni
 antipathy,1,1,0,0,0,0,0,antipathi
@@ -682,7 +682,7 @@ arcade,0,0,0,0,0,0,0,arcad
 arch,0,0,0,0,0,0,0,arch
 archaeological,0,0,0,0,0,0,0,archaeolog
 archaeologist,0,0,0,0,0,0,0,archaeologist
-archaeology,0,0,0,0,0,0,1,archaeolog
+archaeology,0,0,0,0,0,0,0,archaeolog
 archaic,0,0,0,0,0,0,0,archaic
 archbishop,0,0,0,0,0,0,0,archbishop
 arched,0,0,0,0,0,0,0,arch
@@ -741,7 +741,7 @@ arrow,0,0,0,0,0,0,0,arrow
 arsenal,0,0,0,0,0,0,0,arsen
 arsenic,0,1,1,0,1,0,0,arsen
 arson,1,0,1,0,0,0,0,arson
-art,0,0,0,1,1,1,1,art
+art,0,0,0,1,1,1,0,art
 artery,0,0,0,0,0,0,0,arteri
 artful,0,0,0,0,0,0,0,art
 arthropod,0,0,0,0,0,0,0,arthropod
@@ -775,7 +775,7 @@ aspects,0,0,0,0,0,0,0,aspect
 asphalt,0,0,0,0,0,0,0,asphalt
 aspiration,0,0,0,1,0,1,1,aspir
 aspire,0,0,0,1,0,0,1,aspir
-aspiring,0,0,0,1,0,0,1,aspir
+aspiring,0,0,0,1,0,0,0,aspir
 ass,0,0,0,0,0,0,0,as
 assail,1,0,1,0,0,1,0,assail
 assailant,1,0,1,0,1,0,0,assail
@@ -825,10 +825,10 @@ astonishment,0,0,0,1,0,1,0,astonish
 astral,0,0,0,0,0,0,0,astral
 astray,0,0,1,0,0,0,0,astray
 astringent,0,0,0,0,0,0,0,astring
-astrologer,0,0,0,0,0,0,1,astrolog
+astrologer,0,0,0,0,0,0,0,astrolog
 astrology,0,0,0,0,0,0,0,astrolog
 astronaut,0,0,0,0,0,0,0,astronaut
-astronomer,0,0,0,0,0,0,1,astronom
+astronomer,0,0,0,0,0,0,0,astronom
 astronomy,0,0,0,0,0,0,0,astronomi
 astute,0,0,0,0,0,0,0,astut
 asunder,0,0,0,0,0,0,0,asund
@@ -850,7 +850,7 @@ atmospheric,0,0,0,0,0,0,0,atmospher
 atoll,0,0,0,0,0,0,0,atol
 atom,0,0,0,0,0,0,0,atom
 atomic,0,0,0,0,0,0,0,atom
-atone,0,0,0,1,0,0,1,aton
+atone,0,0,0,1,0,0,0,aton
 atonement,0,0,0,0,0,0,0,aton
 atrium,0,0,0,0,0,0,0,atrium
 atrocious,1,1,0,0,0,0,0,atroci
@@ -1014,9 +1014,9 @@ ballad,0,0,0,0,0,0,0,ballad
 ballast,0,0,0,0,0,0,0,ballast
 ballet,0,0,0,0,0,0,0,ballet
 balloon,0,0,0,0,0,0,0,balloon
-ballot,0,0,0,0,0,0,1,ballot
+ballot,0,0,0,0,0,0,0,ballot
 ballroom,0,0,0,0,0,0,0,ballroom
-balm,0,0,0,1,0,0,1,balm
+balm,0,0,0,1,0,0,0,balm
 balmy,0,0,0,0,0,0,0,balmi
 balsam,0,0,0,0,0,0,0,balsam
 balsamic,0,0,0,0,0,0,0,balsam
@@ -1038,7 +1038,7 @@ banker,0,0,0,0,0,0,0,banker
 bankrupt,0,0,1,0,1,0,0,bankrupt
 bankruptcy,1,1,1,0,1,0,0,bankruptci
 banner,0,0,0,0,0,0,0,banner
-banquet,0,0,0,1,0,0,1,banquet
+banquet,0,0,0,1,0,0,0,banquet
 banshee,1,1,1,0,1,0,0,banshe
 banter,0,0,0,0,0,0,0,banter
 baptism,0,0,0,0,0,0,0,baptism
@@ -1085,7 +1085,7 @@ basin,0,0,0,0,0,0,0,basin
 basis,0,0,0,0,0,0,0,basi
 bask,0,0,0,0,0,0,0,bask
 basket,0,0,0,0,0,0,0,basket
-basketball,0,0,0,1,0,0,1,basketbal
+basketball,0,0,0,1,0,0,0,basketbal
 bass,0,0,0,0,0,0,0,bass
 basso,0,0,0,0,0,0,0,basso
 bassoon,0,0,0,0,0,0,0,bassoon
@@ -1121,7 +1121,7 @@ beagle,0,0,0,0,0,0,0,beagl
 beak,0,0,0,0,0,0,0,beak
 beaker,0,0,0,0,0,0,0,beaker
 beam,0,0,0,1,0,0,0,beam
-beaming,0,0,0,1,0,0,1,beam
+beaming,0,0,0,1,0,0,0,beam
 bear,1,0,1,0,0,0,0,bear
 beard,0,0,0,0,0,0,0,beard
 bearded,0,0,0,0,0,0,0,beard
@@ -1211,7 +1211,7 @@ bestow,0,0,0,0,0,0,0,bestow
 bet,0,0,0,0,0,0,0,bet
 betray,1,1,0,0,1,1,0,betray
 betrayal,1,1,0,0,1,0,0,betray
-betrothed,0,0,0,1,0,0,1,betroth
+betrothed,0,0,0,1,0,0,0,betroth
 betterment,0,0,0,0,0,0,0,better
 betting,0,0,0,0,0,0,0,bet
 betty,0,0,0,0,0,0,0,betti
@@ -1268,8 +1268,8 @@ biosphere,0,0,0,0,0,0,0,biospher
 bipartite,0,0,0,0,0,0,0,bipartit
 birch,1,1,1,0,0,0,0,birch
 bird,0,0,0,0,0,0,0,bird
-birth,0,0,1,1,0,0,1,birth
-birthday,0,0,0,1,0,1,1,birthday
+birth,0,0,1,1,0,0,0,birth
+birthday,0,0,0,1,0,1,0,birthday
 birthplace,1,0,0,0,0,0,0,birthplac
 birthright,0,0,0,0,0,0,0,birthright
 bis,0,0,0,0,0,0,0,bi
@@ -1312,7 +1312,7 @@ blending,0,0,0,0,0,0,0,blend
 bless,0,0,0,1,0,0,1,bless
 blessed,0,0,0,1,0,0,0,bless
 blessing,0,0,0,1,0,0,1,bless
-blessings,0,0,0,1,0,1,1,bless
+blessings,0,0,0,1,0,1,0,bless
 blight,0,1,1,0,1,0,0,blight
 blighted,0,1,0,0,1,0,0,blight
 blinded,0,0,0,0,0,0,0,blind
@@ -1453,7 +1453,7 @@ boundary,0,0,0,0,0,0,0,boundari
 boundless,0,0,0,0,0,0,0,boundless
 bounds,0,0,0,0,0,0,0,bound
 bountiful,0,0,0,1,0,0,1,bounti
-bounty,0,0,0,1,0,0,1,bounti
+bounty,0,0,0,1,0,0,0,bounti
 bouquet,0,0,0,1,0,0,0,bouquet
 bourgeois,0,0,0,0,0,0,0,bourgeoi
 bourgeoisie,0,0,0,0,0,0,0,bourgeoisi
@@ -1521,9 +1521,9 @@ brewing,0,0,0,0,0,0,0,brew
 bribe,0,0,0,0,0,0,0,bribe
 bribery,0,1,0,0,0,0,0,briberi
 brick,0,0,0,0,0,0,0,brick
-bridal,0,0,0,1,0,0,1,bridal
-bride,0,0,0,1,0,0,1,bride
-bridegroom,0,0,0,1,0,0,1,bridegroom
+bridal,0,0,0,1,0,0,0,bridal
+bride,0,0,0,1,0,0,0,bride
+bridegroom,0,0,0,1,0,0,0,bridegroom
 bridesmaid,0,0,0,1,0,0,0,bridesmaid
 bridge,0,0,0,0,0,0,0,bridg
 bridle,0,0,0,0,0,0,0,bridl
@@ -1578,7 +1578,7 @@ bucket,0,0,0,0,0,0,0,bucket
 buckle,0,0,0,0,0,0,0,buckl
 buckled,0,0,0,0,0,0,0,buckl
 bud,0,0,0,0,0,0,0,bud
-buddy,0,0,0,1,0,0,1,buddi
+buddy,0,0,0,1,0,0,0,buddi
 budge,0,0,0,0,0,0,0,budg
 budget,0,0,0,0,0,0,0,budget
 buffalo,0,0,0,0,0,0,0,buffalo
@@ -1668,7 +1668,7 @@ buxom,0,0,0,0,0,0,0,buxom
 buy,0,0,0,0,0,0,0,buy
 buyer,0,0,0,0,0,0,0,buyer
 buying,0,0,0,0,0,0,0,buy
-buzz,0,0,1,0,0,0,1,buzz
+buzz,0,0,1,0,0,0,0,buzz
 buzzed,0,0,0,0,0,0,0,buzz
 buzzer,0,0,0,0,0,0,0,buzzer
 bye,0,0,0,0,0,0,0,bye
@@ -1805,7 +1805,7 @@ cardinal,0,0,0,0,0,0,0,cardin
 cardiomyopathy,0,0,1,0,1,0,0,cardiomyopathi
 cards,0,0,0,0,0,0,0,card
 care,0,0,0,0,0,0,0,care
-career,0,0,0,0,0,0,1,career
+career,0,0,0,0,0,0,0,career
 careful,0,0,0,0,0,0,0,care
 carefully,0,0,0,0,0,0,0,care
 carelessness,1,1,0,0,0,0,0,careless
@@ -1843,7 +1843,7 @@ carving,0,0,0,0,0,0,0,carv
 cascade,0,0,0,0,0,0,0,cascad
 case,0,0,1,0,1,0,0,case
 casein,0,0,0,0,0,0,0,casein
-cash,1,0,1,1,0,0,1,cash
+cash,1,0,1,1,0,0,0,cash
 cashier,0,0,0,0,0,0,0,cashier
 cashmere,0,0,0,0,0,0,0,cashmer
 casing,0,0,0,0,0,0,0,case
@@ -1907,10 +1907,10 @@ cede,0,0,0,0,0,0,0,cede
 ceiling,0,0,0,0,0,0,0,ceil
 celebrant,0,0,0,0,0,0,0,celebr
 celebrated,0,0,0,1,0,0,1,celebr
-celebrating,0,0,0,1,0,0,1,celebr
+celebrating,0,0,0,1,0,0,0,celebr
 celebration,0,0,0,1,0,1,1,celebr
 celebrity,1,1,0,1,0,1,1,celebr
-celestial,0,0,0,1,0,0,1,celesti
+celestial,0,0,0,1,0,0,0,celesti
 celibacy,0,0,0,0,0,0,0,celibaci
 cell,0,0,0,0,0,0,0,cell
 cellar,0,0,0,0,0,0,0,cellar
@@ -2006,7 +2006,7 @@ chartered,0,0,0,0,0,0,0,charter
 chase,0,0,0,0,0,0,0,chase
 chasm,0,0,1,0,0,0,0,chasm
 chastisement,0,0,0,0,0,0,0,chastis
-chastity,0,0,0,0,0,0,1,chastiti
+chastity,0,0,0,0,0,0,0,chastiti
 chat,0,0,0,0,0,0,0,chat
 chateau,0,0,0,0,0,0,0,chateau
 chatter,0,0,0,0,0,0,0,chatter
@@ -2025,7 +2025,7 @@ cheeks,0,0,0,0,0,0,0,cheek
 cheep,0,0,0,0,0,0,0,cheep
 cheer,0,0,0,1,0,1,1,cheer
 cheerful,0,0,0,1,0,1,0,cheer
-cheerfulness,0,0,0,1,0,0,1,cheer
+cheerfulness,0,0,0,1,0,0,0,cheer
 cheering,0,0,0,1,0,0,0,cheer
 cheery,0,0,0,1,0,0,1,cheeri
 cheesecake,0,0,0,0,0,0,0,cheesecak
@@ -2047,7 +2047,7 @@ chicken,0,0,1,0,0,0,0,chicken
 chief,0,0,0,0,0,0,0,chief
 chiefly,0,0,0,0,0,0,0,chiefli
 chieftain,0,0,0,0,0,0,0,chieftain
-child,0,0,0,1,0,0,1,child
+child,0,0,0,1,0,0,0,child
 childbirth,0,0,0,0,0,0,0,childbirth
 childhood,0,0,0,1,0,0,0,childhood
 childish,0,0,0,0,0,0,0,childish
@@ -2067,7 +2067,7 @@ chisel,0,0,0,0,0,0,0,chisel
 chit,0,0,0,0,0,0,0,chit
 chivalry,0,0,0,0,0,0,0,chivalri
 chloroform,0,0,0,0,0,0,0,chloroform
-chocolate,0,0,0,1,0,0,1,chocol
+chocolate,0,0,0,1,0,0,0,chocol
 choice,0,0,0,0,0,0,0,choic
 choir,0,0,0,1,0,0,0,choir
 choke,1,0,0,0,1,0,0,choke
@@ -2092,10 +2092,10 @@ chronicle,0,0,0,0,0,0,0,chronicl
 chronograph,0,0,0,0,0,0,0,chronograph
 chronological,0,0,0,0,0,0,0,chronolog
 chuck,0,0,0,0,0,0,0,chuck
-chuckle,0,0,0,1,0,1,1,chuckl
+chuckle,0,0,0,1,0,1,0,chuckl
 chunk,0,0,0,0,0,0,0,chunk
 chunky,0,0,0,0,0,0,0,chunki
-church,0,0,0,1,0,0,1,church
+church,0,0,0,1,0,0,0,church
 churchyard,0,0,0,0,0,0,0,churchyard
 churn,0,0,0,0,0,0,0,churn
 chute,0,0,0,0,0,0,0,chute
@@ -2147,7 +2147,7 @@ clamor,1,1,0,0,0,1,0,clamor
 clamp,0,0,0,0,0,0,0,clamp
 clan,0,0,0,0,0,0,0,clan
 clandestine,0,0,0,0,0,0,0,clandestin
-clap,0,0,0,1,0,0,1,clap
+clap,0,0,0,1,0,0,0,clap
 clarify,0,0,0,0,0,0,0,clarifi
 clarinet,0,0,0,0,0,0,0,clarinet
 clarion,0,0,0,0,0,0,0,clarion
@@ -2195,7 +2195,7 @@ clientele,0,0,0,0,0,0,0,clientel
 cliff,0,0,1,0,0,0,0,cliff
 climate,0,0,0,0,0,0,0,climat
 climatology,0,0,0,0,0,0,0,climatolog
-climax,0,0,0,1,0,1,1,climax
+climax,0,0,0,1,0,1,0,climax
 climb,0,0,0,0,0,0,0,climb
 cling,0,0,0,0,0,0,0,cling
 clip,0,0,0,0,0,0,0,clip
@@ -2211,7 +2211,7 @@ close,0,0,0,0,0,0,0,close
 closed,0,0,0,0,0,0,0,close
 closeness,0,0,0,1,0,0,0,close
 closet,0,0,0,0,0,0,0,closet
-closure,0,0,0,1,1,0,1,closur
+closure,0,0,0,1,1,0,0,closur
 clot,0,0,0,0,0,0,0,clot
 cloth,0,0,0,0,0,0,0,cloth
 clothe,0,0,0,0,0,0,0,cloth
@@ -2224,7 +2224,7 @@ cloudiness,0,0,1,0,0,0,0,cloudi
 cloudy,0,0,0,0,1,0,0,cloudi
 clover,0,0,0,0,0,0,0,clover
 cloves,0,0,0,0,0,0,0,clove
-clown,0,0,0,1,0,1,1,clown
+clown,0,0,0,1,0,1,0,clown
 club,0,0,0,0,0,0,0,club
 clubhouse,0,0,0,0,0,0,0,clubhous
 clubs,0,0,0,0,0,0,0,club
@@ -2354,9 +2354,9 @@ command,0,0,0,0,0,0,0,command
 commandant,0,0,0,0,0,0,0,command
 commander,0,0,0,0,0,0,0,command
 commanding,0,0,0,0,0,0,0,command
-commemorate,0,0,0,1,1,0,1,commemor
-commemoration,0,0,0,1,0,0,1,commemor
-commemorative,0,0,0,0,0,0,1,commemor
+commemorate,0,0,0,1,1,0,0,commemor
+commemoration,0,0,0,1,0,0,0,commemor
+commemorative,0,0,0,0,0,0,0,commemor
 commence,0,0,0,0,0,0,0,commenc
 commend,0,0,0,0,0,0,0,commend
 commendable,0,0,0,1,0,0,0,commend
@@ -2434,8 +2434,8 @@ complementary,0,0,0,0,0,0,0,complementari
 completed,0,0,0,0,0,0,0,complet
 completely,0,0,0,0,0,0,0,complet
 completeness,0,0,0,0,0,0,0,complet
-completing,0,0,0,1,0,0,1,complet
-completion,0,0,0,1,0,0,1,complet
+completing,0,0,0,1,0,0,0,complet
+completion,0,0,0,1,0,0,0,complet
 complex,0,0,0,0,0,0,0,complex
 complexed,0,0,0,0,0,0,0,complex
 complexion,0,0,0,0,0,0,0,complexion
@@ -2603,13 +2603,13 @@ conscience,0,0,0,0,0,0,0,conscienc
 conscientious,0,0,0,0,0,0,0,conscienti
 consciousness,0,0,0,0,0,0,0,conscious
 conscription,0,0,0,0,0,0,0,conscript
-consecration,0,0,0,1,1,0,1,consecr
+consecration,0,0,0,1,1,0,0,consecr
 consecutive,0,0,0,0,0,0,0,consecut
 consent,0,0,0,0,0,0,0,consent
 consenting,0,0,0,0,0,0,0,consent
 consequence,0,0,0,0,0,0,0,consequ
 consequent,0,0,0,0,0,0,0,consequ
-conservation,0,0,0,0,0,0,1,conserv
+conservation,0,0,0,0,0,0,0,conserv
 conservatism,0,0,0,0,0,0,0,conservat
 conservative,0,0,0,0,0,0,0,conserv
 conservatory,0,0,0,0,0,0,0,conservatori
@@ -2688,7 +2688,7 @@ continual,0,0,0,0,0,0,0,continu
 continually,0,0,0,0,0,0,0,continu
 continuance,0,0,0,0,0,0,0,continu
 continuation,0,0,0,0,0,0,0,continu
-continue,0,0,0,0,0,0,1,continu
+continue,0,0,0,0,0,0,0,continu
 continued,0,0,0,0,0,0,0,continu
 continuing,0,0,0,0,0,0,0,continu
 continuity,0,0,0,0,0,0,0,continu
@@ -2803,7 +2803,7 @@ correctness,0,0,0,0,0,0,0,correct
 correlation,0,0,0,0,0,0,0,correl
 correlative,0,0,0,0,0,0,0,correl
 correspond,0,0,0,0,0,0,0,correspond
-correspondence,0,0,0,0,0,0,1,correspond
+correspondence,0,0,0,0,0,0,0,correspond
 correspondent,0,0,0,0,0,0,0,correspond
 corridor,0,0,0,0,0,0,0,corridor
 corroborate,0,0,0,0,0,0,0,corrobor
@@ -2835,7 +2835,7 @@ cotton,0,0,0,0,0,0,0,cotton
 couch,0,0,0,0,1,0,0,couch
 cougar,0,0,0,0,0,0,0,cougar
 cough,0,1,0,0,0,0,0,cough
-council,0,0,0,0,0,0,1,council
+council,0,0,0,0,0,0,0,council
 counsel,0,0,0,0,0,0,0,counsel
 counsellor,1,0,1,0,0,0,0,counsellor
 counselor,0,0,0,0,0,0,0,counselor
@@ -2867,9 +2867,9 @@ courteous,0,0,0,0,0,0,0,courteou
 courtesy,0,0,0,0,0,0,0,courtesi
 courthouse,0,0,0,0,0,0,0,courthous
 courts,0,0,0,0,0,0,0,court
-courtship,0,0,0,1,0,0,1,courtship
+courtship,0,0,0,1,0,0,0,courtship
 courtyard,0,0,0,0,0,0,0,courtyard
-cove,0,1,1,1,0,0,1,cove
+cove,0,1,1,1,0,0,0,cove
 covenant,0,0,0,0,0,0,0,coven
 cover,0,0,0,0,0,0,0,cover
 covered,0,0,0,0,0,0,0,cover
@@ -2893,7 +2893,7 @@ cracked,1,0,1,0,0,0,0,crack
 cracker,0,0,0,0,0,0,0,cracker
 cracking,0,0,0,0,0,0,0,crack
 crackle,0,0,0,0,0,0,0,crackl
-cradle,0,0,0,1,0,0,1,cradl
+cradle,0,0,0,1,0,0,0,cradl
 craft,0,0,0,0,0,0,0,craft
 craftsman,0,0,0,0,0,0,0,craftsman
 crafty,0,0,0,0,0,0,0,crafti
@@ -2919,7 +2919,7 @@ craze,0,0,0,0,0,0,0,craze
 crazed,1,0,1,0,0,0,0,craze
 crazy,1,0,1,0,1,0,0,crazi
 creaking,0,0,0,0,0,0,0,creak
-cream,0,0,0,1,0,1,1,cream
+cream,0,0,0,1,0,1,0,cream
 creamer,0,0,0,0,0,0,0,creamer
 creamy,0,0,0,0,0,0,0,creami
 crease,0,0,0,0,0,0,0,creas
@@ -2944,7 +2944,7 @@ creep,0,0,0,0,0,0,0,creep
 creeping,0,0,0,0,0,0,0,creep
 cremation,0,0,0,0,1,0,0,cremat
 creole,0,0,0,0,0,0,0,creol
-crescendo,0,0,0,1,0,1,1,crescendo
+crescendo,0,0,0,1,0,1,0,crescendo
 crescent,0,0,0,0,0,0,0,crescent
 crevice,0,0,0,0,0,0,0,crevic
 crew,0,0,0,0,0,0,0,crew
@@ -2987,7 +2987,7 @@ crow,0,0,0,0,0,0,0,crow
 crowd,0,0,0,0,0,0,0,crowd
 crowded,0,0,0,0,0,0,0,crowd
 crown,0,0,0,0,0,0,0,crown
-crowning,0,0,0,1,0,1,1,crown
+crowning,0,0,0,1,0,1,0,crown
 crucial,0,0,0,0,0,0,0,crucial
 cruciate,0,0,0,0,0,0,0,cruciat
 crucifix,0,0,0,0,0,0,0,crucifix
@@ -3034,7 +3034,7 @@ culpability,0,0,0,0,0,0,0,culpabl
 culpable,0,0,0,0,0,0,0,culpabl
 culprit,0,0,0,0,0,0,0,culprit
 cult,0,0,1,0,0,0,0,cult
-cultivate,0,0,0,0,0,0,1,cultiv
+cultivate,0,0,0,0,0,0,0,cultiv
 cultivated,0,0,0,0,0,0,0,cultiv
 cultivation,0,0,0,0,0,0,0,cultiv
 culture,0,0,0,0,0,0,0,cultur
@@ -3053,7 +3053,7 @@ curator,0,0,0,0,0,0,0,curat
 curb,0,0,0,0,0,0,0,curb
 curd,0,0,0,0,0,0,0,curd
 curfew,0,0,0,0,0,0,0,curfew
-curiosity,0,0,0,0,0,1,1,curios
+curiosity,0,0,0,0,0,1,0,curios
 curl,0,0,0,0,0,0,0,curl
 curling,0,0,0,0,0,0,0,curl
 currency,0,0,0,0,0,0,0,currenc
@@ -3307,8 +3307,8 @@ delinquency,0,0,0,0,0,0,0,delinqu
 delinquent,1,1,0,0,0,0,0,delinqu
 delirious,0,0,0,0,1,0,0,deliri
 delirium,0,1,0,0,1,0,0,delirium
-deliverance,0,0,0,1,0,0,1,deliver
-delivery,0,0,0,0,0,0,1,deliveri
+deliverance,0,0,0,1,0,0,0,deliver
+delivery,0,0,0,0,0,0,0,deliveri
 dell,0,0,0,0,0,0,0,dell
 delta,0,0,0,0,0,0,0,delta
 deluge,0,0,1,0,1,1,0,delug
@@ -3437,7 +3437,7 @@ despise,1,1,0,0,0,0,0,despis
 despotic,0,0,1,0,0,0,0,despot
 despotism,1,1,1,0,1,0,0,despot
 dessert,0,0,0,0,0,0,0,dessert
-destination,0,0,1,1,1,1,1,destin
+destination,0,0,1,1,1,1,0,destin
 destined,0,0,0,0,0,0,0,destin
 destiny,0,0,0,0,0,0,0,destini
 destitute,0,0,1,0,1,0,0,destitut
@@ -3480,7 +3480,7 @@ deuce,0,0,0,0,0,0,0,deuc
 devastate,1,0,1,0,1,0,0,devast
 devastating,1,1,1,0,1,0,0,devast
 devastation,1,0,1,0,1,1,0,devast
-develop,0,0,0,0,0,0,1,develop
+develop,0,0,0,0,0,0,0,develop
 developing,0,0,0,0,0,0,0,develop
 development,0,0,0,0,0,0,0,develop
 deviate,0,0,0,0,0,0,0,deviat
@@ -3534,7 +3534,7 @@ dictum,0,0,0,0,0,0,0,dictum
 didactic,0,0,0,0,0,0,0,didact
 die,0,0,1,0,1,0,0,die
 diet,0,0,0,0,0,0,0,diet
-dietary,0,0,0,0,0,0,1,dietari
+dietary,0,0,0,0,0,0,0,dietari
 differ,0,0,0,0,0,0,0,differ
 difference,0,0,0,0,0,0,0,differ
 differences,0,0,0,0,0,0,0,differ
@@ -3744,7 +3744,7 @@ displeased,1,1,1,0,1,0,0,displeas
 displeasure,0,1,0,0,0,0,0,displeasur
 disposal,0,0,0,0,0,0,0,dispos
 dispose,0,1,0,0,0,0,0,dispos
-disposed,0,0,0,0,0,0,1,dispos
+disposed,0,0,0,0,0,0,0,dispos
 disposition,0,0,0,0,0,0,0,disposit
 dispossessed,1,0,1,0,1,0,0,dispossess
 disprove,0,0,0,0,0,0,0,disprov
@@ -3912,7 +3912,7 @@ douche,0,0,0,0,0,0,0,douch
 dough,0,0,0,0,0,0,0,dough
 doughnut,0,0,0,0,0,0,0,doughnut
 dour,0,0,0,0,0,0,0,dour
-dove,0,0,0,1,0,0,1,dove
+dove,0,0,0,1,0,0,0,dove
 downcast,0,0,0,0,0,0,0,downcast
 downfall,0,0,1,0,1,0,0,downfal
 downhill,0,0,0,0,0,0,0,downhil
@@ -4028,7 +4028,7 @@ dusky,0,0,0,0,0,0,0,duski
 dust,0,0,0,0,0,0,0,dust
 duster,0,0,0,0,0,0,0,duster
 dusty,0,0,0,0,0,0,0,dusti
-dutiful,0,0,0,0,0,0,1,duti
+dutiful,0,0,0,0,0,0,0,duti
 dwarf,0,0,0,0,0,0,0,dwarf
 dwarfed,0,0,1,0,1,0,0,dwarf
 dwell,0,0,0,0,0,0,0,dwell
@@ -4092,7 +4092,7 @@ edge,0,0,0,0,0,0,0,edg
 edging,0,0,0,0,0,0,0,edg
 edible,0,0,0,0,0,0,0,edibl
 edict,0,0,1,0,0,0,0,edict
-edification,0,0,0,1,0,0,1,edif
+edification,0,0,0,1,0,0,0,edif
 edifice,0,0,0,0,0,0,0,edific
 edit,0,0,0,0,0,0,0,edit
 edition,0,0,0,0,0,0,0,edit
@@ -4125,7 +4125,7 @@ egress,0,0,0,0,0,0,0,egress
 eighth,0,0,0,0,0,0,0,eighth
 eighty,0,0,0,0,0,0,0,eighti
 ejaculate,0,0,0,0,0,0,0,ejacul
-ejaculation,0,0,0,1,0,1,1,ejacul
+ejaculation,0,0,0,1,0,1,0,ejacul
 eject,0,0,0,0,0,0,0,eject
 ejection,0,0,0,0,0,0,0,eject
 elaborate,0,0,0,0,0,0,0,elabor
@@ -4154,7 +4154,7 @@ elementary,0,0,0,0,0,0,0,elementari
 elements,0,0,0,0,0,0,0,element
 elephant,0,0,0,0,0,0,0,eleph
 elevate,0,0,0,0,0,0,0,elev
-elevation,0,0,1,1,0,0,1,elev
+elevation,0,0,1,1,0,0,0,elev
 elevator,0,0,0,0,0,0,0,elev
 eleven,0,0,0,0,0,0,0,eleven
 eleventh,0,0,0,0,0,0,0,eleventh
@@ -4180,7 +4180,7 @@ elude,0,0,0,0,0,0,0,elud
 elusive,0,0,0,0,0,1,0,elus
 emaciated,0,0,1,0,1,0,0,emaci
 emanate,0,0,0,0,0,0,0,eman
-emancipation,0,0,0,1,0,0,1,emancip
+emancipation,0,0,0,1,0,0,0,emancip
 embankment,0,0,0,0,0,0,0,embank
 embargo,0,0,0,0,0,0,0,embargo
 embark,0,0,0,0,0,0,0,embark
@@ -4267,7 +4267,7 @@ encyclopedia,0,0,0,0,0,0,0,encyclopedia
 end,0,0,0,0,0,0,0,end
 endanger,0,0,1,0,0,0,0,endang
 endangered,0,0,1,0,0,0,0,endang
-endeavor,0,0,0,0,0,0,1,endeavor
+endeavor,0,0,0,0,0,0,0,endeavor
 ended,0,0,0,0,0,0,0,end
 endemic,0,1,1,0,1,0,0,endem
 ending,0,0,0,0,0,0,0,end
@@ -4288,7 +4288,7 @@ energy,0,0,0,0,0,0,0,energi
 enforce,1,0,1,0,0,0,0,enforc
 enforcement,0,0,0,0,0,0,0,enforc
 engage,0,0,0,0,0,0,0,engag
-engaged,0,0,0,1,0,0,1,engag
+engaged,0,0,0,1,0,0,0,engag
 engagement,0,0,0,0,0,0,0,engag
 engaging,0,0,0,1,0,0,0,engag
 engender,0,0,0,0,0,0,0,engend
@@ -4336,7 +4336,7 @@ enterprising,0,0,0,0,0,0,0,enterpris
 entertain,0,0,0,1,0,0,0,entertain
 entertained,0,0,0,1,0,0,0,entertain
 entertaining,0,0,0,1,0,0,1,entertain
-entertainment,0,0,0,1,0,1,1,entertain
+entertainment,0,0,0,1,0,1,0,entertain
 enthusiasm,0,0,0,1,0,1,1,enthusiasm
 enthusiast,0,0,0,1,0,1,1,enthusiast
 entice,0,0,0,0,0,0,0,entic
@@ -4409,7 +4409,7 @@ erode,0,0,0,0,0,0,0,erod
 erosion,0,0,0,0,0,0,0,eros
 erotic,0,0,0,1,0,1,1,erot
 err,0,0,0,0,0,0,0,err
-errand,0,0,0,0,0,0,1,errand
+errand,0,0,0,0,0,0,0,errand
 errant,0,0,0,0,0,0,0,errant
 erratic,0,0,0,0,0,1,0,errat
 erratum,0,0,0,0,0,0,0,erratum
@@ -4422,7 +4422,7 @@ eruption,1,0,1,0,0,1,0,erupt
 escalade,0,0,0,0,0,0,0,escalad
 escalate,1,0,0,0,0,0,0,escal
 escalator,0,0,0,0,0,0,0,escal
-escape,0,0,1,0,0,0,1,escap
+escape,0,0,1,0,0,0,0,escap
 escaped,0,0,1,0,0,0,0,escap
 escarpment,0,0,0,0,0,0,0,escarp
 eschew,1,0,0,0,1,0,0,eschew
@@ -4529,7 +4529,7 @@ excise,0,0,0,0,0,0,0,excis
 excision,0,0,0,0,0,0,0,excis
 excitability,0,0,0,0,0,0,0,excit
 excitable,0,0,0,0,0,0,0,excit
-excitation,1,0,1,1,0,1,1,excit
+excitation,1,0,1,1,0,1,0,excit
 excite,1,0,1,1,0,1,1,excit
 excited,0,0,0,1,0,1,1,excit
 excitement,0,0,0,1,0,1,1,excit
@@ -4585,7 +4585,7 @@ expanse,0,0,0,0,0,0,0,expans
 expansion,0,0,0,0,0,0,0,expans
 expansive,0,0,0,0,0,0,0,expans
 expatriate,0,0,0,0,0,0,0,expatri
-expect,0,0,0,0,0,1,1,expect
+expect,0,0,0,0,0,1,0,expect
 expectancy,0,0,0,0,0,0,0,expect
 expectant,0,0,0,0,0,0,0,expect
 expectation,0,0,0,0,0,0,1,expect
@@ -4594,7 +4594,7 @@ expecting,0,0,0,0,0,0,0,expect
 expediency,0,0,0,0,0,0,0,expedi
 expedient,0,0,0,1,0,0,0,expedi
 expedite,0,0,0,0,0,0,0,expedit
-expedition,0,0,0,0,0,0,1,expedit
+expedition,0,0,0,0,0,0,0,expedit
 expeditious,0,0,0,0,0,0,0,expediti
 expel,1,1,1,0,1,0,0,expel
 expenditure,0,0,0,0,0,0,0,expenditur
@@ -4669,7 +4669,7 @@ extravaganza,0,0,0,0,0,0,0,extravaganza
 extreme,0,0,0,0,0,0,0,extrem
 extremely,0,0,0,0,0,0,0,extrem
 extremity,0,0,0,0,0,0,0,extrem
-extricate,0,0,0,0,0,0,1,extric
+extricate,0,0,0,0,0,0,0,extric
 extrinsic,0,0,0,0,0,0,0,extrins
 extrusion,0,0,0,0,0,0,0,extrus
 exuberance,0,0,0,1,0,0,0,exuber
@@ -4706,7 +4706,7 @@ faded,0,0,0,0,0,0,0,fade
 faeces,0,1,0,0,0,0,0,faec
 failing,1,0,1,0,1,0,0,fail
 failure,0,1,1,0,1,0,0,failur
-fain,0,0,0,1,0,0,1,fain
+fain,0,0,0,1,0,0,0,fain
 fainting,0,0,1,0,1,1,0,faint
 fair,0,0,0,0,0,0,0,fair
 fairly,0,0,0,0,0,0,0,fairli
@@ -4732,7 +4732,7 @@ falter,0,0,1,0,0,0,0,falter
 fame,0,0,0,0,0,0,0,fame
 famed,0,0,0,0,0,0,0,fame
 familiar,0,0,0,0,0,0,0,familiar
-familiarity,0,0,0,1,0,0,1,familiar
+familiarity,0,0,0,1,0,0,0,familiar
 familiarize,0,0,0,0,0,0,0,familiar
 famine,0,0,0,0,1,0,0,famin
 famous,0,0,0,0,0,0,0,famou
@@ -4838,10 +4838,10 @@ fertile,0,0,0,0,0,0,0,fertil
 fertilize,0,0,0,0,0,0,0,fertil
 fervent,0,0,0,0,0,0,0,fervent
 fervor,1,0,0,1,0,0,0,fervor
-festival,0,0,0,1,0,1,1,festiv
+festival,0,0,0,1,0,1,0,festiv
 festive,0,0,0,1,0,0,0,festiv
 fetch,0,0,0,0,0,0,0,fetch
-fete,0,0,0,1,0,1,1,fete
+fete,0,0,0,1,0,1,0,fete
 fetish,0,0,0,0,0,0,0,fetish
 feud,1,0,0,0,0,0,0,feud
 feudal,0,0,0,0,0,0,0,feudal
@@ -4864,7 +4864,7 @@ fiduciary,0,0,0,0,0,0,0,fiduciari
 field,0,0,0,0,0,0,0,field
 fiend,1,1,1,0,0,0,0,fiend
 fierce,1,1,1,0,0,0,0,fierc
-fiesta,0,0,0,1,0,1,1,fiesta
+fiesta,0,0,0,1,0,1,0,fiesta
 fight,1,0,1,0,0,0,0,fight
 fighter,0,0,0,0,0,0,0,fighter
 fighting,1,0,0,0,0,0,0,fight
@@ -4921,7 +4921,7 @@ firm,0,0,0,0,0,0,0,firm
 firmament,0,0,0,0,0,0,0,firmament
 firmly,0,0,0,0,0,0,0,firmli
 firmness,0,0,0,0,0,0,0,firm
-firstborn,0,0,0,1,0,0,1,firstborn
+firstborn,0,0,0,1,0,0,0,firstborn
 fiscal,0,0,0,0,0,0,0,fiscal
 fish,0,0,0,0,0,0,0,fish
 fisherman,0,0,0,0,0,0,0,fisherman
@@ -5071,7 +5071,7 @@ fooling,0,0,0,0,0,0,0,fool
 foolish,0,0,0,0,0,0,0,foolish
 foolishness,0,0,0,0,0,0,0,foolish
 foot,0,0,0,0,0,0,0,foot
-football,0,0,0,1,0,0,1,footbal
+football,0,0,0,1,0,0,0,footbal
 footbridge,0,0,0,0,0,0,0,footbridg
 footing,0,0,0,0,0,0,0,foot
 footpath,0,0,0,0,0,0,0,footpath
@@ -5105,8 +5105,8 @@ foreigner,0,0,1,0,0,0,0,foreign
 foreman,0,0,0,0,0,0,0,foreman
 forensic,0,0,0,0,0,0,0,forens
 forerunner,0,0,0,0,0,0,0,forerunn
-foresee,0,0,0,0,0,1,1,forese
-foreseen,0,0,0,0,0,0,1,foreseen
+foresee,0,0,0,0,0,1,0,forese
+foreseen,0,0,0,0,0,0,0,foreseen
 foresight,0,0,0,0,0,0,1,foresight
 forest,0,0,0,0,0,0,0,forest
 forethought,0,0,0,0,0,0,0,forethought
@@ -5227,7 +5227,7 @@ frightful,1,0,1,0,1,0,0,fright
 frigid,0,0,0,0,0,0,0,frigid
 fringe,0,0,0,0,0,0,0,fring
 fringed,0,0,0,0,0,0,0,fring
-frisky,0,0,0,1,0,1,1,friski
+frisky,0,0,0,1,0,1,0,friski
 frivolous,0,0,0,0,0,0,0,frivol
 frock,0,0,0,0,0,0,0,frock
 frog,0,0,0,0,0,0,0,frog
@@ -5428,7 +5428,7 @@ ghost,0,0,1,0,0,0,0,ghost
 ghostly,0,0,1,0,0,0,0,ghostli
 giant,0,0,1,0,0,0,0,giant
 gibberish,1,0,0,0,0,0,0,gibberish
-gift,0,0,0,1,0,1,1,gift
+gift,0,0,0,1,0,1,0,gift
 gifted,0,0,0,0,0,0,0,gift
 gig,0,0,0,0,0,0,0,gig
 gigantic,0,0,0,0,0,0,0,gigant
@@ -5466,7 +5466,7 @@ glean,0,0,0,0,0,0,0,glean
 glee,0,0,0,1,0,0,0,glee
 glen,0,0,0,0,0,0,0,glen
 glib,0,0,0,0,0,0,0,glib
-glide,0,0,0,1,0,0,1,glide
+glide,0,0,0,1,0,0,0,glide
 glimmer,0,0,0,1,0,1,1,glimmer
 glimpse,0,0,0,0,0,0,0,glimps
 glint,0,0,0,0,0,0,0,glint
@@ -5500,7 +5500,7 @@ gob,0,1,0,0,0,0,0,gob
 gobble,0,0,0,0,0,0,0,gobbl
 goblet,0,0,0,0,0,0,0,goblet
 goblin,0,1,1,0,0,0,0,goblin
-god,0,0,1,1,0,0,1,god
+god,0,0,1,1,0,0,0,god
 goddess,0,0,0,0,0,0,0,goddess
 godfather,0,0,0,0,0,0,0,godfath
 godless,1,0,0,0,0,0,0,godless
@@ -5552,19 +5552,19 @@ grader,0,0,0,0,0,0,0,grader
 gradient,0,0,0,0,0,0,0,gradient
 gradual,0,0,0,0,0,0,0,gradual
 gradually,0,0,0,0,0,0,0,gradual
-graduation,0,0,1,1,0,1,1,graduat
+graduation,0,0,1,1,0,1,0,graduat
 grain,0,0,0,0,0,0,0,grain
 gram,0,0,0,0,0,0,0,gram
 grammar,0,0,0,0,0,0,0,grammar
 grand,0,0,0,0,0,0,0,grand
-grandchildren,0,0,0,1,0,0,1,grandchild
+grandchildren,0,0,0,1,0,0,0,grandchild
 grandeur,0,0,0,0,0,0,0,grandeur
 grandfather,0,0,0,0,0,0,0,grandfath
 grandiose,0,0,0,0,0,0,0,grandios
 grandmother,0,0,0,0,0,0,0,grandmoth
 grange,0,0,0,0,0,0,0,grang
 granite,0,0,0,0,0,0,0,granit
-grant,0,0,0,1,0,0,1,grant
+grant,0,0,0,1,0,0,0,grant
 granted,0,0,0,0,0,0,0,grant
 grantee,0,0,0,0,0,0,0,grante
 grantor,0,0,0,0,0,0,0,grantor
@@ -5657,7 +5657,7 @@ grouping,0,0,0,0,0,0,0,group
 grouse,0,0,0,0,0,0,0,grous
 grout,0,0,0,0,0,0,0,grout
 grove,0,0,0,0,0,0,0,grove
-grow,0,0,0,1,0,0,1,grow
+grow,0,0,0,1,0,0,0,grow
 growl,1,0,1,0,0,0,0,growl
 growling,1,1,1,0,0,0,0,growl
 growth,0,0,0,0,0,0,0,growth
@@ -5804,7 +5804,7 @@ harrowing,0,0,1,0,0,0,0,harrow
 harry,1,0,0,0,1,0,0,harri
 harshness,1,0,1,0,0,0,0,harsh
 hart,0,0,0,0,0,0,0,hart
-harvest,0,0,0,1,0,0,1,harvest
+harvest,0,0,0,1,0,0,0,harvest
 hash,0,0,0,0,0,0,0,hash
 hashish,0,0,0,0,0,0,0,hashish
 haste,0,0,0,0,0,0,0,hast
@@ -5847,7 +5847,7 @@ headstone,0,0,0,0,0,0,0,headston
 headway,0,0,0,0,0,0,0,headway
 heady,0,0,0,0,0,0,0,headi
 heal,0,0,0,1,0,0,0,heal
-healing,0,0,0,1,0,0,1,heal
+healing,0,0,0,1,0,0,0,heal
 health,0,0,0,0,0,0,0,health
 healthful,0,0,0,1,0,0,0,health
 healthy,0,0,0,0,0,0,0,healthi
@@ -5887,7 +5887,7 @@ hedonism,0,0,0,1,0,0,0,hedon
 heed,0,0,0,0,0,0,0,heed
 heel,0,0,0,0,0,0,0,heel
 heels,0,0,0,0,0,0,0,heel
-heft,0,0,1,0,0,0,1,heft
+heft,0,0,1,0,0,0,0,heft
 hegemonic,0,0,0,0,0,0,0,hegemon
 heifer,0,0,0,0,0,0,0,heifer
 height,0,0,0,0,0,0,0,height
@@ -5943,7 +5943,7 @@ heroic,0,0,0,1,0,1,0,heroic
 heroics,0,0,0,0,0,0,0,heroic
 heroin,0,0,0,0,0,0,0,heroin
 heroine,0,0,0,0,0,0,0,heroin
-heroism,0,0,0,1,0,1,1,heroism
+heroism,0,0,0,1,0,1,0,heroism
 herpes,0,1,0,0,0,0,0,herp
 herpesvirus,0,1,0,0,0,0,0,herpesviru
 hesitating,0,0,0,0,0,0,0,hesit
@@ -5951,7 +5951,7 @@ hesitation,0,0,1,0,0,0,0,hesit
 heterogeneity,0,0,0,0,0,0,0,heterogen
 hew,0,0,0,0,0,0,0,hew
 hexagon,0,0,0,0,0,0,0,hexagon
-heyday,0,0,0,1,0,0,1,heyday
+heyday,0,0,0,1,0,0,0,heyday
 hiatus,0,0,0,0,0,0,0,hiatu
 hibernate,0,0,0,0,0,0,0,hibern
 hibernation,0,0,0,0,0,0,0,hibern
@@ -5963,7 +5963,7 @@ hiding,0,0,1,0,0,0,0,hide
 hierarchical,0,0,0,0,0,0,0,hierarch
 high,0,0,0,0,0,0,0,high
 higher,0,0,0,0,0,0,0,higher
-highest,0,0,1,1,0,1,1,highest
+highest,0,0,1,1,0,1,0,highest
 highland,0,0,0,0,0,0,0,highland
 highlands,0,0,0,0,0,0,0,highland
 hight,0,0,0,0,0,0,0,hight
@@ -5982,7 +5982,7 @@ hint,0,0,0,0,0,0,0,hint
 hinterland,0,0,0,0,0,0,0,hinterland
 hip,0,0,0,0,0,0,0,hip
 hippie,0,0,0,0,0,0,0,hippi
-hire,0,0,0,1,0,0,1,hire
+hire,0,0,0,1,0,0,0,hire
 hirsute,0,0,0,0,0,0,0,hirsut
 hiss,1,0,1,0,0,0,0,hiss
 hissing,0,0,0,0,0,0,0,hiss
@@ -6009,8 +6009,8 @@ hold,0,0,0,0,0,0,0,hold
 holder,0,0,0,0,0,0,0,holder
 holding,0,0,0,0,0,0,0,hold
 hole,0,0,0,0,0,0,0,hole
-holiday,0,0,0,1,0,0,1,holiday
-holiness,0,0,1,1,0,1,1,holi
+holiday,0,0,0,1,0,0,0,holiday
+holiness,0,0,1,1,0,1,0,holi
 hollow,0,0,0,0,1,0,0,hollow
 holocaust,1,1,1,0,1,0,0,holocaust
 holy,0,0,0,0,0,0,0,holi
@@ -6056,7 +6056,7 @@ hopes,0,0,0,0,0,0,0,hope
 hoping,0,0,0,0,0,0,0,hope
 hopper,0,0,0,0,0,0,0,hopper
 horde,0,0,0,0,0,1,0,hord
-horizon,0,0,0,0,0,0,1,horizon
+horizon,0,0,0,0,0,0,0,horizon
 horizontal,0,0,0,0,0,0,0,horizont
 horizontally,0,0,0,0,0,0,0,horizont
 horn,0,0,0,0,0,0,0,horn
@@ -6114,7 +6114,7 @@ hull,0,0,0,0,0,0,0,hull
 hum,0,0,0,0,0,0,0,hum
 human,0,0,0,0,0,0,0,human
 humane,0,0,0,0,0,0,0,human
-humanitarian,0,0,0,1,0,1,1,humanitarian
+humanitarian,0,0,0,1,0,1,0,humanitarian
 humanities,0,0,0,0,0,0,0,human
 humanity,0,0,0,1,0,0,0,human
 humble,0,1,0,0,1,0,0,humbl
@@ -6171,7 +6171,7 @@ hydrographic,0,0,0,0,0,0,0,hydrograph
 hydrology,0,0,0,0,0,0,0,hydrolog
 hygiene,0,0,0,0,0,0,0,hygien
 hygienic,0,0,0,0,0,0,0,hygien
-hymn,0,0,0,1,1,0,1,hymn
+hymn,0,0,0,1,1,0,0,hymn
 hype,0,0,0,0,0,0,0,hype
 hyperbole,0,0,0,0,0,0,0,hyperbol
 hypertrophy,0,1,1,0,0,1,0,hypertrophi
@@ -6259,7 +6259,7 @@ immediacy,0,0,0,0,0,1,0,immediaci
 immediately,0,0,0,0,0,0,1,immedi
 immemorial,0,0,0,0,0,0,0,immemori
 immense,0,0,0,0,0,0,0,immens
-immerse,0,0,1,1,0,1,1,immers
+immerse,0,0,1,1,0,1,0,immers
 immersion,0,0,0,0,0,0,0,immers
 immigrant,0,0,1,0,0,0,0,immigr
 immigration,0,0,0,0,0,0,0,immigr
@@ -6375,7 +6375,7 @@ inattention,1,0,0,0,0,0,0,inattent
 inaudible,0,0,0,0,0,0,0,inaud
 inaugural,0,0,0,0,0,0,0,inaugur
 inaugurate,0,0,0,0,0,0,0,inaugur
-inauguration,0,0,0,1,0,0,1,inaugur
+inauguration,0,0,0,1,0,0,0,inaugur
 inborn,0,0,0,0,0,0,0,inborn
 inbred,0,0,0,0,0,0,0,inbr
 incalculable,0,0,0,0,0,0,0,incalcul
@@ -6413,7 +6413,7 @@ inclusion,0,0,0,0,0,0,0,inclus
 inclusive,0,0,0,0,0,0,0,inclus
 incognito,0,0,0,0,0,0,0,incognito
 incoherent,0,0,0,0,0,0,0,incoher
-income,0,0,0,1,1,0,1,incom
+income,0,0,0,1,1,0,0,incom
 incoming,0,0,0,0,0,0,0,incom
 incompatible,1,1,0,0,1,0,0,incompat
 incompetence,0,0,0,0,0,0,0,incompet
@@ -6520,7 +6520,7 @@ infallible,0,0,0,0,0,0,0,infal
 infamous,1,1,1,0,0,0,0,infam
 infamy,0,0,0,0,1,0,0,infami
 infancy,0,0,0,0,0,0,0,infanc
-infant,0,0,1,1,0,1,1,infant
+infant,0,0,1,1,0,1,0,infant
 infanticide,1,1,1,0,1,0,0,infanticid
 infantile,1,1,0,0,0,0,0,infantil
 infantry,0,0,0,0,0,0,0,infantri
@@ -6545,7 +6545,7 @@ infiltration,0,0,0,0,0,0,0,infiltr
 infinite,0,0,0,0,0,0,0,infinit
 infinitely,0,0,0,0,0,0,0,infinit
 infinitesimal,0,0,0,0,0,0,0,infinitesim
-infinity,0,0,0,1,0,0,1,infin
+infinity,0,0,0,1,0,0,0,infin
 infirm,0,0,0,0,0,0,0,infirm
 infirmary,0,0,0,0,0,0,0,infirmari
 infirmity,0,0,1,0,0,0,0,infirm
@@ -6589,7 +6589,7 @@ inhalation,0,0,0,0,0,0,0,inhal
 inhale,0,0,0,0,0,0,0,inhal
 inherent,0,0,0,0,0,0,0,inher
 inherit,0,0,0,0,0,0,0,inherit
-inheritance,0,0,0,1,0,1,1,inherit
+inheritance,0,0,0,1,0,1,0,inherit
 inhibit,1,1,0,0,1,0,0,inhibit
 inhibition,0,0,0,0,0,0,0,inhibit
 inhospitable,0,0,0,0,1,0,0,inhospit
@@ -6637,7 +6637,7 @@ inquest,0,0,0,0,0,0,0,inquest
 inquire,0,0,0,0,0,0,0,inquir
 inquirer,0,0,0,0,0,0,0,inquir
 inquiring,0,0,0,0,0,0,0,inquir
-inquiry,0,0,0,0,0,0,1,inquiri
+inquiry,0,0,0,0,0,0,0,inquiri
 inquisitive,0,0,0,0,0,0,0,inquisit
 insane,1,0,1,0,0,0,0,insan
 insanity,1,1,1,0,1,0,0,insan
@@ -6688,7 +6688,7 @@ instruction,0,0,0,0,0,0,0,instruct
 instructional,0,0,0,0,0,0,0,instruct
 instructions,0,0,0,0,0,0,0,instruct
 instructive,0,0,0,0,0,0,0,instruct
-instructor,0,0,0,0,0,0,1,instructor
+instructor,0,0,0,0,0,0,0,instructor
 instrument,0,0,0,0,0,0,0,instrument
 instrumental,0,0,0,0,0,0,0,instrument
 instrumentalist,0,0,0,0,0,0,0,instrumentalist
@@ -6720,7 +6720,7 @@ intelligent,0,0,0,0,0,0,0,intellig
 intelligibility,0,0,0,0,0,0,0,intellig
 intelligible,0,0,0,0,0,0,0,intellig
 intend,0,0,0,0,0,0,0,intend
-intended,0,0,0,0,0,0,1,intend
+intended,0,0,0,0,0,0,0,intend
 intending,0,0,0,0,0,0,0,intend
 intense,1,1,1,1,0,1,0,intens
 intensely,0,0,0,0,0,0,0,intens
@@ -6756,7 +6756,7 @@ interlude,0,0,0,0,0,0,0,interlud
 intermediary,0,0,0,0,0,0,0,intermediari
 intermediate,0,0,0,0,0,0,0,intermedi
 interment,0,0,0,0,1,0,0,inter
-interminable,1,0,0,0,0,0,1,intermin
+interminable,1,0,0,0,0,0,0,intermin
 intermission,0,0,0,0,0,0,0,intermiss
 intermittent,0,0,0,0,0,0,0,intermitt
 intern,0,0,0,0,0,0,0,intern
@@ -6845,9 +6845,9 @@ invigorate,0,0,0,0,0,0,0,invigor
 invincible,0,0,0,0,0,0,0,invinc
 invisibility,0,0,0,0,0,0,0,invis
 invisible,0,0,0,0,0,0,0,invis
-invitation,0,0,0,0,0,0,1,invit
-invite,0,0,0,1,0,1,1,invit
-inviting,0,0,0,1,0,1,1,invit
+invitation,0,0,0,0,0,0,0,invit
+invite,0,0,0,1,0,1,0,invit
+inviting,0,0,0,1,0,1,0,invit
 invocation,0,0,0,0,0,0,0,invoc
 invoice,0,0,0,0,0,0,0,invoic
 invoke,0,0,0,0,0,0,0,invok
@@ -6912,7 +6912,7 @@ jab,1,0,0,0,0,0,0,jab
 jabber,0,0,0,0,0,0,0,jabber
 jack,0,0,0,0,0,0,0,jack
 jackass,0,0,0,0,0,0,0,jackass
-jackpot,0,0,0,1,0,1,1,jackpot
+jackpot,0,0,0,1,0,1,0,jackpot
 jacks,0,0,0,0,0,0,0,jack
 jade,0,0,0,0,0,0,0,jade
 jag,0,0,0,0,0,0,0,jag
@@ -6973,7 +6973,7 @@ jot,0,0,0,0,0,0,0,jot
 journal,0,0,0,0,0,0,0,journal
 journalism,0,0,0,0,0,0,0,journal
 journalist,0,0,0,0,0,0,0,journalist
-journey,0,0,1,1,0,0,1,journey
+journey,0,0,1,1,0,0,0,journey
 journeyman,0,0,0,0,0,0,0,journeyman
 jovial,0,0,0,1,0,0,0,jovial
 joy,0,0,0,1,0,0,0,joy
@@ -6984,7 +6984,7 @@ jubilee,0,0,0,1,0,1,0,jubile
 judge,0,0,0,0,0,0,0,judg
 judging,0,0,0,0,0,0,0,judg
 judgment,0,0,0,0,0,1,0,judgment
-judicial,0,0,0,0,0,0,1,judici
+judicial,0,0,0,0,0,0,0,judici
 judiciary,0,0,0,0,0,0,0,judiciari
 judicious,0,0,0,0,0,0,0,judici
 jug,0,0,0,0,0,0,0,jug
@@ -7053,7 +7053,7 @@ kin,0,0,0,0,0,0,0,kin
 kind,0,0,0,1,0,0,0,kind
 kindergarten,0,0,0,0,0,0,0,kindergarten
 kindness,0,0,0,0,0,0,0,kind
-kindred,0,0,0,1,0,0,1,kindr
+kindred,0,0,0,1,0,0,0,kindr
 kinematics,0,0,0,0,0,0,0,kinemat
 king,0,0,0,0,0,0,0,king
 kingdom,0,0,0,0,0,0,0,kingdom
@@ -7091,7 +7091,7 @@ kris,0,0,0,0,0,0,0,kri
 kudos,0,0,0,1,0,0,0,kudo
 lab,0,0,0,0,0,0,0,lab
 label,0,0,0,0,0,0,0,label
-labor,0,0,0,1,0,1,1,labor
+labor,0,0,0,1,0,1,0,labor
 laboratory,0,0,0,0,0,0,0,laboratori
 labored,0,0,0,0,1,0,0,labor
 laborer,0,0,0,0,0,0,0,labor
@@ -7178,7 +7178,7 @@ laugh,0,0,0,1,0,1,0,laugh
 laughable,0,1,0,0,0,0,0,laughabl
 laughing,0,0,0,1,0,0,0,laugh
 laughter,0,0,0,1,0,1,1,laughter
-launch,0,0,0,0,0,0,1,launch
+launch,0,0,0,0,0,0,0,launch
 laundry,0,0,0,0,0,0,0,laundri
 laureate,0,0,0,0,0,0,0,laureat
 laurel,0,0,0,0,0,0,0,laurel
@@ -7258,7 +7258,7 @@ legislature,0,0,0,0,0,0,0,legislatur
 legitimacy,0,0,0,0,0,0,0,legitimaci
 legs,0,0,0,0,0,0,0,leg
 legume,0,0,0,0,0,0,0,legum
-leisure,0,0,0,1,0,1,1,leisur
+leisure,0,0,0,1,0,1,0,leisur
 leisurely,0,0,0,0,0,0,0,leisur
 lemma,0,0,0,0,0,0,0,lemma
 lemon,0,1,0,0,0,0,0,lemon
@@ -7280,13 +7280,13 @@ lessee,0,0,0,0,0,0,0,lesse
 lessen,0,0,0,0,0,0,0,lessen
 lessening,0,0,0,0,0,0,0,lessen
 lesser,0,1,0,0,0,0,0,lesser
-lesson,0,0,0,0,0,0,1,lesson
+lesson,0,0,0,0,0,0,0,lesson
 lessor,0,0,0,0,0,0,0,lessor
 lethal,0,1,1,0,1,0,0,lethal
 lethargic,0,0,0,0,0,0,0,letharg
 lethargy,0,0,0,0,1,0,0,lethargi
 letter,0,0,0,0,0,0,0,letter
-lettered,0,0,0,0,0,0,1,letter
+lettered,0,0,0,0,0,0,0,letter
 letters,0,0,0,0,0,0,0,letter
 lettuce,0,0,0,0,0,0,0,lettuc
 leukemia,1,0,1,0,1,0,0,leukemia
@@ -7533,7 +7533,7 @@ lure,0,0,0,0,0,0,0,lure
 lurid,0,1,0,0,0,0,0,lurid
 lurk,0,0,0,0,0,0,0,lurk
 lurking,0,0,0,0,0,0,0,lurk
-luscious,0,0,0,1,0,0,1,lusciou
+luscious,0,0,0,1,0,0,0,lusciou
 lush,0,1,0,0,1,0,0,lush
 lust,0,0,0,0,0,0,0,lust
 luster,0,0,0,1,0,0,0,luster
@@ -7685,10 +7685,10 @@ marmalade,0,0,0,0,0,0,0,marmalad
 maroon,0,0,0,0,0,0,0,maroon
 marquee,0,0,0,0,0,0,0,marque
 marquis,0,0,0,0,0,0,0,marqui
-marriage,0,0,0,1,0,0,1,marriag
+marriage,0,0,0,1,0,0,0,marriag
 married,0,0,0,0,0,0,0,marri
 marrow,0,0,0,1,0,0,0,marrow
-marry,0,0,1,1,0,1,1,marri
+marry,0,0,1,1,0,1,0,marri
 marsh,0,0,0,0,0,0,0,marsh
 marshal,0,0,0,0,0,0,0,marshal
 mart,0,0,0,0,0,0,0,mart
@@ -7730,13 +7730,13 @@ materialize,0,0,0,0,0,0,0,materi
 materially,0,0,0,0,0,0,0,materi
 materials,0,0,0,0,0,0,0,materi
 materiel,0,0,0,0,0,0,0,materiel
-maternal,0,0,0,0,0,0,1,matern
+maternal,0,0,0,0,0,0,0,matern
 maternity,0,0,0,0,0,0,0,matern
 mathematical,0,0,0,0,0,0,0,mathemat
 mathematician,0,0,0,0,0,0,0,mathematician
 mathematics,0,0,0,0,0,0,0,mathemat
 matriculation,0,0,0,0,0,0,0,matricul
-matrimony,0,0,0,1,0,0,1,matrimoni
+matrimony,0,0,0,1,0,0,0,matrimoni
 matrix,0,0,0,0,0,0,0,matrix
 matron,0,0,0,0,0,0,0,matron
 matted,0,0,0,0,0,0,0,mat
@@ -7770,7 +7770,7 @@ meat,0,0,0,0,0,0,0,meat
 mechanic,0,0,0,0,0,0,0,mechan
 mechanical,0,0,0,0,0,0,0,mechan
 mechanism,0,0,0,0,0,0,0,mechan
-medal,0,0,0,1,0,1,1,medal
+medal,0,0,0,1,0,1,0,medal
 medallion,0,0,0,0,0,0,0,medallion
 medallist,0,0,0,0,0,0,0,medallist
 meddle,1,0,0,0,0,0,0,meddl
@@ -7778,16 +7778,16 @@ meddling,0,0,0,0,0,0,0,meddl
 media,0,0,0,0,0,0,0,medium
 medial,0,0,0,0,0,0,0,medial
 median,0,0,0,0,0,0,0,median
-mediate,0,0,0,0,0,0,1,mediat
+mediate,0,0,0,0,0,0,0,mediat
 mediation,0,0,0,0,0,0,0,mediat
-mediator,0,0,0,0,0,0,1,mediat
-medical,0,0,1,0,0,0,1,medic
+mediator,0,0,0,0,0,0,0,mediat
+medical,0,0,1,0,0,0,0,medic
 medicinal,0,0,0,0,0,0,0,medicin
 medicine,0,0,0,0,0,0,0,medicin
 medieval,0,0,0,0,0,0,0,mediev
 mediocre,0,0,0,0,0,0,0,mediocr
 mediocrity,0,0,0,0,0,0,0,mediocr
-meditate,0,0,0,1,0,0,1,medit
+meditate,0,0,0,1,0,0,0,medit
 meditation,0,0,0,0,0,0,0,medit
 meditative,0,0,0,0,0,0,0,medit
 mediterranean,0,0,0,0,0,0,0,mediterranean
@@ -7841,7 +7841,7 @@ merciless,0,0,1,0,0,0,0,merciless
 mercurial,0,0,0,0,0,0,0,mercuri
 mercy,0,0,0,0,0,0,0,merci
 mere,0,0,0,0,0,0,0,mere
-merge,0,0,0,0,0,0,1,merg
+merge,0,0,0,0,0,0,0,merg
 meridian,0,0,0,0,0,0,0,meridian
 meridional,0,0,0,0,0,0,0,meridion
 merit,0,0,0,0,0,0,0,merit
@@ -7905,7 +7905,7 @@ midnight,0,0,0,0,0,0,0,midnight
 midst,0,0,0,0,0,0,0,midst
 midsummer,0,0,0,0,0,0,0,midsumm
 midway,0,0,0,0,0,0,0,midway
-midwife,0,0,0,1,0,0,1,midwif
+midwife,0,0,0,1,0,0,0,midwif
 midwifery,0,0,0,0,0,0,0,midwiferi
 mien,0,0,0,0,0,0,0,mien
 mighty,1,0,1,1,0,0,0,mighti
@@ -8066,14 +8066,14 @@ molten,0,0,0,0,0,0,0,molten
 moment,0,0,0,0,0,0,0,moment
 momentary,0,0,0,0,0,0,0,momentari
 momentous,0,0,0,0,0,0,0,moment
-momentum,0,0,0,0,0,0,1,momentum
+momentum,0,0,0,0,0,0,0,momentum
 monad,0,0,0,0,0,0,0,monad
 monarch,0,0,0,0,0,0,0,monarch
 monarchy,0,0,0,0,0,0,0,monarchi
 monastery,0,0,0,0,0,0,0,monasteri
 monastic,0,0,0,0,0,0,0,monast
-monetary,0,0,0,0,0,0,1,monetari
-money,1,0,0,1,0,1,1,money
+monetary,0,0,0,0,0,0,0,monetari
+money,1,0,0,1,0,1,0,money
 monk,0,0,0,0,0,0,0,monk
 monkey,0,0,0,0,0,0,0,monkey
 monochrome,0,1,0,0,0,0,0,monochrom
@@ -8108,7 +8108,7 @@ mooted,0,0,0,0,0,0,0,moot
 mop,0,0,0,0,0,0,0,mop
 moral,1,0,0,0,0,0,0,moral
 morality,0,0,0,0,0,0,0,moral
-morals,1,1,0,1,0,1,1,moral
+morals,1,1,0,1,0,1,0,moral
 morass,0,0,0,0,0,0,0,morass
 moratorium,0,0,0,0,0,0,0,moratorium
 morbid,0,0,0,0,1,0,0,morbid
@@ -8138,7 +8138,7 @@ moss,0,0,0,0,0,0,0,moss
 mossy,0,0,0,0,0,0,0,mossi
 mote,0,0,0,0,0,0,0,mote
 moth,0,0,0,0,0,0,0,moth
-mother,0,0,0,1,1,0,1,mother
+mother,0,0,0,1,1,0,0,mother
 motherhood,0,0,0,1,0,0,0,motherhood
 motion,0,0,0,0,0,0,0,motion
 motionless,0,0,0,0,0,0,0,motionless
@@ -8214,7 +8214,7 @@ museum,0,0,0,0,0,0,0,museum
 mush,0,0,0,0,0,0,0,mush
 mushroom,0,0,0,0,0,0,0,mushroom
 music,0,0,0,1,1,0,0,music
-musical,1,0,0,1,1,1,1,music
+musical,1,0,0,1,1,1,0,music
 musician,0,0,0,0,0,0,0,musician
 musing,0,0,0,0,0,0,0,muse
 musk,0,0,0,0,0,0,0,musk
@@ -8225,7 +8225,7 @@ mustang,0,0,0,0,0,0,0,mustang
 mustard,0,0,0,0,0,0,0,mustard
 muster,0,0,0,0,0,0,0,muster
 musty,0,1,0,0,0,0,0,musti
-mutable,0,0,0,0,0,0,1,mutabl
+mutable,0,0,0,0,0,0,0,mutabl
 mutant,0,0,0,0,0,0,0,mutant
 mutation,0,0,0,0,0,0,0,mutat
 mutilated,0,1,0,0,0,0,0,mutil
@@ -8331,7 +8331,7 @@ negotiation,0,0,0,0,0,0,0,negoti
 negotiator,0,0,0,0,0,0,0,negoti
 negro,0,0,0,0,1,0,0,negro
 neigh,0,0,0,0,0,0,0,neigh
-neighbor,0,0,0,0,0,0,1,neighbor
+neighbor,0,0,0,0,0,0,0,neighbor
 neighborhood,0,0,0,0,0,0,0,neighborhood
 neighboring,0,0,0,0,0,0,0,neighbor
 neonatal,0,0,0,0,0,0,0,neonat
@@ -8388,7 +8388,7 @@ ninth,0,0,0,0,0,0,0,ninth
 nip,0,0,0,0,0,0,0,nip
 nipple,0,0,0,0,0,0,0,nippl
 nix,0,0,0,0,0,0,0,nix
-nobility,0,0,0,0,0,0,1,nobil
+nobility,0,0,0,0,0,0,0,nobil
 noble,0,0,0,0,0,0,0,nobl
 nobleman,0,0,0,0,0,0,0,nobleman
 nocturnal,0,0,0,0,0,0,0,nocturn
@@ -8509,7 +8509,7 @@ obligation,0,0,0,0,0,0,0,oblig
 obligatory,0,0,0,0,0,0,0,obligatori
 oblige,0,0,0,0,0,0,0,oblig
 obliged,0,0,0,0,0,0,0,oblig
-obliging,1,1,1,1,0,1,1,oblig
+obliging,1,1,1,1,0,1,0,oblig
 obligor,0,0,1,0,0,0,0,obligor
 oblique,0,0,0,0,0,0,0,obliqu
 obliterate,1,0,1,0,1,0,0,obliter
@@ -8639,7 +8639,7 @@ opener,0,0,0,0,0,0,0,open
 opening,0,0,0,0,0,0,0,open
 openly,0,0,0,0,0,0,0,openli
 openness,0,0,0,0,0,0,0,open
-opera,1,0,1,1,1,1,1,opera
+opera,1,0,1,1,1,1,0,opera
 operatic,0,0,0,0,0,0,0,operat
 operation,0,0,1,0,0,0,0,oper
 operations,0,0,0,0,0,0,0,oper
@@ -8678,7 +8678,7 @@ optometrist,0,0,0,0,0,0,0,optometrist
 opulence,0,0,0,0,0,0,0,opul
 opulent,0,0,0,0,0,0,0,opul
 opus,0,0,0,0,0,0,0,opu
-oracle,0,0,0,0,0,0,1,oracl
+oracle,0,0,0,0,0,0,0,oracl
 oral,0,0,0,0,0,0,0,oral
 orange,0,0,0,0,0,0,0,orang
 oration,0,0,0,0,0,0,0,orat
@@ -8697,18 +8697,18 @@ order,0,0,0,0,0,0,0,order
 orderly,0,0,0,0,0,0,0,orderli
 ordinance,0,0,0,0,0,0,0,ordin
 ordinary,0,0,0,0,0,0,0,ordinari
-ordination,0,0,0,1,0,0,1,ordin
+ordination,0,0,0,1,0,0,0,ordin
 ordnance,0,0,1,0,0,0,0,ordnanc
 ore,0,0,0,0,0,0,0,ore
 oregano,0,0,0,0,0,0,0,oregano
-organ,0,0,0,1,0,0,1,organ
+organ,0,0,0,1,0,0,0,organ
 organic,0,0,0,0,0,0,0,organ
 organism,0,0,0,0,0,0,0,organ
 organist,0,0,0,0,0,0,0,organist
-organization,0,0,0,1,0,1,1,organ
+organization,0,0,0,1,0,1,0,organ
 organize,0,0,0,0,0,0,0,organ
 organized,0,0,0,0,0,0,0,organ
-orgasm,0,0,0,1,0,0,1,orgasm
+orgasm,0,0,0,1,0,0,0,orgasm
 orgies,0,0,0,0,0,0,0,orgi
 orient,0,0,0,0,0,0,0,orient
 oriental,0,0,0,0,0,0,0,orient
@@ -8846,7 +8846,7 @@ packet,0,0,0,0,0,0,0,packet
 pact,0,0,0,0,0,0,0,pact
 pad,0,0,0,0,0,0,0,pad
 padding,0,0,0,0,0,0,0,pad
-paddle,0,0,0,0,0,0,1,paddl
+paddle,0,0,0,0,0,0,0,paddl
 paddock,0,0,0,0,0,0,0,paddock
 paddy,0,0,0,0,0,0,0,paddi
 padlock,0,0,0,0,0,0,0,padlock
@@ -8917,12 +8917,12 @@ parable,0,0,0,0,0,0,0,parabl
 parabola,0,0,0,0,0,0,0,parabola
 parabolic,0,0,0,0,0,0,0,parabol
 parachute,0,0,1,0,0,0,0,parachut
-parade,0,0,1,1,0,1,1,parad
+parade,0,0,1,1,0,1,0,parad
 paradigm,0,0,0,0,0,0,0,paradigm
 paradox,0,0,0,0,0,0,0,paradox
 paradoxical,0,0,0,0,0,0,0,paradox
 paraffin,0,0,0,0,0,0,0,paraffin
-paragon,0,0,0,1,0,0,1,paragon
+paragon,0,0,0,1,0,0,0,paragon
 paragraph,0,0,0,0,0,0,0,paragraph
 parallax,0,0,0,0,0,0,0,parallax
 parallel,0,0,0,0,0,0,0,parallel
@@ -9043,7 +9043,7 @@ paving,0,0,0,0,0,0,0,pave
 paw,0,0,0,0,0,0,0,paw
 pawn,0,0,0,0,0,0,0,pawn
 pax,0,0,0,0,0,0,0,pax
-pay,0,0,0,1,0,0,1,pay
+pay,0,0,0,1,0,0,0,pay
 payback,1,0,0,0,0,0,0,payback
 payer,0,0,0,0,0,0,0,payer
 payment,0,0,0,0,0,0,0,payment
@@ -9168,7 +9168,7 @@ perpetual,0,0,0,0,0,0,0,perpetu
 perpetually,0,0,0,0,0,0,0,perpetu
 perpetuate,0,0,0,0,0,0,0,perpetu
 perpetuation,0,0,0,0,0,0,0,perpetu
-perpetuity,0,0,0,0,0,0,1,perpetu
+perpetuity,0,0,0,0,0,0,0,perpetu
 perplexed,0,0,0,0,0,0,0,perplex
 perplexing,0,0,0,0,0,0,0,perplex
 perplexity,0,0,0,0,1,0,0,perplex
@@ -9267,7 +9267,7 @@ picket,1,0,1,0,0,0,0,picket
 picketing,1,0,0,0,0,0,0,picket
 pickle,0,0,0,0,0,0,0,pickl
 pickup,0,0,0,0,0,0,0,pickup
-picnic,0,0,0,1,0,1,1,picnic
+picnic,0,0,0,1,0,1,0,picnic
 pictorial,0,0,0,0,0,0,0,pictori
 picture,0,0,0,0,0,0,0,pictur
 picturesque,0,0,0,1,0,0,0,picturesqu
@@ -9345,7 +9345,7 @@ planetarium,0,0,0,0,0,0,0,planetarium
 planets,0,0,0,0,0,0,0,planet
 plank,0,0,0,0,0,0,0,plank
 planned,0,0,0,0,0,0,0,plan
-planning,0,0,0,0,0,0,1,plan
+planning,0,0,0,0,0,0,0,plan
 plant,0,0,0,0,0,0,0,plant
 plantation,0,0,0,0,0,0,0,plantat
 planter,0,0,0,0,0,0,0,planter
@@ -9367,7 +9367,7 @@ play,0,0,0,0,0,0,0,play
 playa,0,0,0,0,0,0,0,playa
 player,0,0,0,0,0,0,0,player
 playful,1,0,0,1,0,1,0,play
-playground,0,0,0,1,0,1,1,playground
+playground,0,0,0,1,0,1,0,playground
 playhouse,0,0,0,1,0,0,0,playhous
 playmate,0,0,0,0,0,0,0,playmat
 playwright,0,0,0,0,0,0,0,playwright
@@ -9513,7 +9513,7 @@ poser,0,0,0,0,0,0,0,poser
 posited,0,0,0,0,0,0,0,posit
 position,0,0,0,0,0,0,0,posit
 posse,0,0,1,0,0,0,0,poss
-possess,0,0,0,1,0,0,1,poss
+possess,0,0,0,1,0,0,0,poss
 possessed,1,1,1,0,0,0,0,possess
 possessing,0,0,0,0,0,0,0,possess
 possession,1,1,1,0,0,0,0,possess
@@ -9560,7 +9560,7 @@ practical,0,0,0,0,0,0,0,practic
 practically,0,0,0,0,0,0,0,practic
 practice,0,0,0,0,0,0,0,practic
 practiced,0,0,0,1,0,1,0,practic
-practise,0,0,0,0,0,0,1,practis
+practise,0,0,0,0,0,0,0,practis
 practitioner,0,0,0,0,0,0,0,practition
 prairie,0,0,0,0,0,0,0,prairi
 praise,0,0,0,1,0,0,0,prais
@@ -9606,7 +9606,7 @@ predicting,0,0,0,0,0,0,0,predict
 prediction,0,0,0,0,0,0,0,predict
 predictive,0,0,0,0,0,0,0,predict
 predictor,0,0,0,0,0,0,0,predictor
-predilection,0,0,0,0,0,0,1,predilect
+predilection,0,0,0,0,0,0,0,predilect
 predispose,0,0,0,0,0,0,0,predispos
 predisposed,0,0,0,0,0,0,0,predispos
 predisposition,0,0,0,0,0,0,0,predisposit
@@ -9639,7 +9639,7 @@ preoccupation,0,0,0,0,0,0,0,preoccup
 preoccupied,0,0,0,0,0,0,0,preoccupi
 preparation,0,0,0,0,0,0,0,prepar
 preparatory,0,0,0,0,0,0,0,preparatori
-prepare,0,0,0,0,0,0,1,prepar
+prepare,0,0,0,0,0,0,0,prepar
 prepared,0,0,0,0,0,0,1,prepar
 preparedness,0,0,0,0,0,0,0,prepared
 preparer,0,0,0,0,0,0,0,prepar
@@ -9647,17 +9647,17 @@ preparing,0,0,0,0,0,0,0,prepar
 preponderance,0,0,0,0,0,0,0,preponder
 prerequisite,0,0,0,0,0,0,0,prerequisit
 prerogative,0,0,0,0,0,0,0,prerog
-prescient,0,0,0,0,0,0,1,prescient
+prescient,0,0,0,0,0,0,0,prescient
 prescribed,0,0,0,0,0,0,0,prescrib
 prescription,0,0,0,0,0,0,0,prescript
 prescriptive,0,0,0,0,0,0,0,prescript
 presence,0,0,0,0,0,0,0,presenc
-present,0,0,0,1,0,1,1,present
+present,0,0,0,1,0,1,0,present
 presentable,0,0,0,0,0,0,0,present
 presentation,0,0,0,0,0,0,0,present
 presentment,0,0,0,0,0,0,0,present
 preservation,0,0,0,0,0,0,0,preserv
-preservative,0,0,0,1,0,1,1,preserv
+preservative,0,0,0,1,0,1,0,preserv
 preserve,0,0,0,0,0,0,0,preserv
 preserved,0,0,0,0,0,0,0,preserv
 preserving,0,0,0,0,0,0,0,preserv
@@ -9680,13 +9680,13 @@ pretense,0,0,0,0,0,0,0,pretens
 pretensions,0,0,0,0,0,0,0,pretens
 pretext,0,0,0,0,0,0,0,pretext
 pretty,0,0,0,1,0,0,1,pretti
-prevail,0,0,0,1,0,0,1,prevail
+prevail,0,0,0,1,0,0,0,prevail
 prevailing,0,0,0,0,0,0,0,prevail
 prevalence,0,0,0,0,0,0,0,preval
 prevalent,0,0,0,0,0,0,0,preval
 prevent,0,0,1,0,0,0,0,prevent
 preventative,0,0,0,0,0,0,0,prevent
-prevention,0,0,0,0,0,0,1,prevent
+prevention,0,0,0,0,0,0,0,prevent
 preventive,0,0,0,0,0,0,0,prevent
 previous,0,0,0,0,0,0,0,previou
 previously,0,0,0,0,0,0,0,previous
@@ -9697,7 +9697,7 @@ prick,1,1,1,0,0,1,0,prick
 prickly,0,0,0,0,0,0,0,prickli
 pride,0,0,0,1,0,0,0,pride
 priest,0,0,0,0,0,0,0,priest
-priesthood,0,0,0,1,1,0,1,priesthood
+priesthood,0,0,0,1,1,0,0,priesthood
 priestly,0,0,0,0,0,0,0,priestli
 prim,0,0,0,0,0,0,0,prim
 primacy,0,0,0,0,0,0,0,primaci
@@ -9712,7 +9712,7 @@ priming,0,0,0,0,0,0,0,prime
 primitive,0,0,0,0,0,0,0,primit
 primordial,0,0,0,0,0,0,0,primordi
 prince,0,0,0,0,0,0,0,princ
-princely,0,0,0,1,0,1,1,princ
+princely,0,0,0,1,0,1,0,princ
 princess,0,0,0,0,0,0,0,princess
 principal,0,0,0,0,0,0,0,princip
 principally,0,0,0,0,0,0,0,princip
@@ -9765,7 +9765,7 @@ produced,0,0,0,0,0,0,0,produc
 producer,0,0,0,0,0,0,0,produc
 producing,0,0,0,0,0,0,0,produc
 product,0,0,0,0,0,0,0,product
-production,0,0,0,0,0,0,1,product
+production,0,0,0,0,0,0,0,product
 productive,0,0,0,0,0,0,0,product
 productivity,0,0,0,0,0,0,0,product
 profane,1,0,0,0,0,0,0,profan
@@ -9775,7 +9775,7 @@ profession,0,0,0,0,0,0,0,profess
 professional,0,0,0,0,0,0,0,profession
 professor,0,0,0,0,0,0,0,professor
 professorship,0,0,0,0,0,0,0,professorship
-proficiency,0,0,0,1,0,1,1,profici
+proficiency,0,0,0,1,0,1,0,profici
 proficient,0,0,0,0,0,0,0,profici
 profile,0,0,0,0,0,0,0,profil
 profit,0,0,0,0,0,0,0,profit
@@ -9790,7 +9790,7 @@ program,0,0,0,0,0,0,0,program
 programme,0,0,0,0,0,0,0,programm
 programmer,0,0,0,0,0,0,0,programm
 progress,0,0,0,1,0,0,1,progress
-progression,0,0,0,1,1,0,1,progress
+progression,0,0,0,1,1,0,0,progress
 progressive,0,0,0,0,0,0,0,progress
 prohibit,0,0,0,0,0,0,0,prohibit
 prohibited,1,1,1,0,0,0,0,prohibit
@@ -9845,9 +9845,9 @@ proper,0,0,0,0,0,0,0,proper
 property,0,0,0,0,0,0,0,properti
 prophecy,0,0,0,0,0,0,0,propheci
 prophesy,0,0,0,0,0,0,0,prophesi
-prophet,0,0,0,0,0,0,1,prophet
+prophet,0,0,0,0,0,0,0,prophet
 prophetic,0,0,0,0,0,0,0,prophet
-prophylactic,0,0,0,0,0,0,1,prophylact
+prophylactic,0,0,0,0,0,0,0,prophylact
 prophylaxis,0,0,0,0,0,0,0,prophylaxi
 proportion,0,0,0,0,0,0,0,proport
 proportional,0,0,0,0,0,0,0,proport
@@ -9897,7 +9897,7 @@ proverbial,0,0,0,0,0,0,0,proverbi
 provide,0,0,0,0,0,0,0,provid
 provided,0,0,0,0,0,0,0,provid
 providence,0,0,0,0,0,0,0,provid
-providing,0,0,0,1,0,0,1,provid
+providing,0,0,0,1,0,0,0,provid
 province,0,0,0,0,0,0,0,provinc
 provincial,0,0,0,0,0,0,0,provinci
 provision,0,0,0,0,0,0,0,provis
@@ -9932,7 +9932,7 @@ psychosis,1,0,1,0,1,0,0,psychosi
 pub,0,0,0,0,0,0,0,pub
 puberty,0,0,0,0,0,0,0,puberti
 pubescent,0,0,0,0,0,0,0,pubesc
-public,0,0,0,0,0,0,1,public
+public,0,0,0,0,0,0,0,public
 publication,0,0,0,0,0,0,0,public
 publicist,0,0,0,0,0,0,0,publicist
 publicity,0,0,0,0,0,0,0,public
@@ -9976,7 +9976,7 @@ puny,0,0,0,0,0,0,0,puni
 pup,0,0,0,0,0,0,0,pup
 pupil,0,0,0,0,0,0,0,pupil
 puppet,0,0,0,0,0,0,0,puppet
-puppy,0,0,0,0,0,0,1,puppi
+puppy,0,0,0,0,0,0,0,puppi
 purchase,0,0,0,0,0,0,0,purchas
 purchaser,0,0,0,0,0,0,0,purchas
 purchasing,0,0,0,0,0,0,0,purchas
@@ -10057,7 +10057,7 @@ queen,0,0,0,0,0,0,0,queen
 quell,0,0,0,0,0,0,0,quell
 quench,0,0,0,0,0,0,0,quench
 query,0,0,0,0,0,0,0,queri
-quest,0,0,0,0,0,0,1,quest
+quest,0,0,0,0,0,0,0,quest
 question,0,0,0,0,0,0,0,question
 questionable,0,1,0,0,0,0,0,question
 questioning,0,0,0,0,0,0,0,question
@@ -10081,7 +10081,7 @@ quiz,0,0,0,0,0,0,0,quiz
 quorum,0,0,0,0,0,0,0,quorum
 quota,0,0,0,0,0,0,0,quota
 quotation,0,0,0,0,0,0,0,quotat
-quote,0,0,0,0,0,1,1,quot
+quote,0,0,0,0,0,1,0,quot
 quotient,0,0,0,0,0,0,0,quotient
 rabbit,0,0,0,0,0,0,0,rabbit
 rabble,1,0,1,0,0,0,0,rabbl
@@ -10232,7 +10232,7 @@ receipt,0,0,0,0,0,0,0,receipt
 receipts,0,0,0,0,0,0,0,receipt
 received,0,0,0,0,0,0,0,receiv
 receiver,0,0,0,0,0,0,0,receiv
-receiving,0,0,0,1,0,1,1,receiv
+receiving,0,0,0,1,0,1,0,receiv
 recent,0,0,0,0,0,0,0,recent
 receptacle,0,0,0,0,0,0,0,receptacl
 reception,0,0,0,0,0,0,0,recept
@@ -10272,8 +10272,8 @@ reconnaissance,0,0,0,0,0,0,0,reconnaiss
 reconsider,0,0,0,0,0,0,0,reconsid
 reconsideration,0,0,0,0,0,0,0,reconsider
 reconstitution,0,0,0,0,0,0,0,reconstitut
-reconstruct,0,0,0,0,0,0,1,reconstruct
-reconstruction,0,0,0,0,0,0,1,reconstruct
+reconstruct,0,0,0,0,0,0,0,reconstruct
+reconstruction,0,0,0,0,0,0,0,reconstruct
 record,0,0,0,0,0,0,0,record
 recorder,0,0,0,0,0,0,0,record
 recording,0,0,0,0,0,0,0,record
@@ -10282,8 +10282,8 @@ recoup,0,0,0,0,0,0,0,recoup
 recourse,0,0,0,0,0,0,0,recours
 recoverable,0,0,0,0,0,0,0,recover
 recovery,0,0,0,0,0,0,0,recoveri
-recreation,0,0,0,1,0,0,1,recreat
-recreational,0,0,0,1,0,0,1,recreat
+recreation,0,0,0,1,0,0,0,recreat
+recreational,0,0,0,1,0,0,0,recreat
 recruit,0,0,0,0,0,0,0,recruit
 recruiting,0,0,0,0,0,0,0,recruit
 recruits,0,0,0,0,0,0,0,recruit
@@ -10379,7 +10379,7 @@ regrettable,0,0,0,0,1,0,0,regrett
 regretted,0,0,0,0,1,0,0,regret
 regretting,0,0,0,0,1,0,0,regret
 regular,0,0,0,0,0,0,0,regular
-regularity,0,0,0,0,0,0,1,regular
+regularity,0,0,0,0,0,0,0,regular
 regulars,0,0,0,0,0,0,0,regular
 regulate,0,0,0,0,0,0,0,regul
 regulated,0,0,0,0,0,0,0,regul
@@ -10413,7 +10413,7 @@ rejoicing,0,0,0,1,0,1,1,rejoic
 rejoin,0,0,0,0,0,0,0,rejoin
 rejuvenate,0,0,0,0,0,0,0,rejuven
 rejuvenated,0,0,0,0,0,0,0,rejuven
-rekindle,0,0,1,1,0,1,1,rekindl
+rekindle,0,0,1,1,0,1,0,rekindl
 relapse,0,0,1,0,1,0,0,relaps
 relate,0,0,0,0,0,0,0,relat
 related,0,0,0,0,0,0,0,relat
@@ -10621,7 +10621,7 @@ restful,0,0,0,0,0,0,0,rest
 restitution,1,0,0,0,0,0,0,restitut
 restlessness,0,0,0,0,0,0,0,restless
 restoration,0,0,0,0,0,0,0,restor
-restorative,0,0,0,1,0,0,1,restor
+restorative,0,0,0,1,0,0,0,restor
 restored,0,0,0,0,0,0,0,restor
 restoring,0,0,0,0,0,0,0,restor
 restrain,1,0,1,0,0,0,0,restrain
@@ -10651,7 +10651,7 @@ retentive,0,0,0,0,0,0,0,retent
 reticent,0,0,1,0,0,0,0,retic
 retina,0,0,0,0,0,0,0,retina
 retired,0,0,0,0,0,0,0,retir
-retirement,0,0,1,1,1,0,1,retir
+retirement,0,0,1,1,1,0,0,retir
 retiring,0,0,0,0,0,0,0,retir
 retold,0,0,0,0,0,0,0,retold
 retort,0,0,0,0,0,0,0,retort
@@ -10669,7 +10669,7 @@ retrospect,0,0,0,0,0,0,0,retrospect
 retrospective,0,0,0,0,0,0,0,retrospect
 retrospectively,0,0,0,0,0,0,0,retrospect
 return,0,0,0,0,0,0,0,return
-reunion,0,0,0,0,0,0,1,reunion
+reunion,0,0,0,0,0,0,0,reunion
 reveal,0,0,0,0,0,0,0,reveal
 revel,0,0,0,1,0,0,0,revel
 revelation,0,0,0,0,0,0,0,revel
@@ -10714,7 +10714,7 @@ rhythm,0,0,0,0,0,0,0,rhythm
 rhythmical,0,0,0,1,0,1,0,rhythmic
 rib,0,0,0,0,0,0,0,rib
 ribbed,0,0,0,0,0,0,0,rib
-ribbon,1,0,0,1,0,0,1,ribbon
+ribbon,1,0,0,1,0,0,0,ribbon
 rice,0,0,0,0,0,0,0,rice
 riches,0,0,0,0,0,0,0,rich
 richness,0,0,0,0,0,0,0,rich
@@ -10754,11 +10754,11 @@ riot,1,0,1,0,0,0,0,riot
 riotous,1,0,1,0,0,1,0,riotou
 riparian,0,0,0,0,0,0,0,riparian
 ripe,0,0,0,0,0,0,0,ripe
-ripen,0,0,0,0,0,0,1,ripen
+ripen,0,0,0,0,0,0,0,ripen
 ripening,0,0,0,0,0,0,0,ripen
 ripple,0,0,0,0,0,0,0,rippl
 rise,0,0,0,0,0,0,0,rise
-rising,0,0,0,1,0,0,1,rise
+rising,0,0,0,1,0,0,0,rise
 risk,0,0,1,0,0,0,0,risk
 risky,0,0,1,0,0,0,0,riski
 rite,0,0,0,0,0,0,0,rite
@@ -10798,7 +10798,7 @@ roller,0,0,0,0,0,0,0,roller
 rollers,0,0,0,0,0,0,0,roller
 rollicking,0,0,0,1,0,0,0,rollick
 rolling,0,0,0,0,0,0,0,roll
-romance,0,0,1,1,1,1,1,romanc
+romance,0,0,1,1,1,1,0,romanc
 romantic,0,0,0,1,0,0,1,romant
 romanticism,0,0,0,1,0,0,0,romantic
 romp,0,0,0,1,0,0,0,romp
@@ -10920,7 +10920,7 @@ saint,0,0,0,1,0,1,1,saint
 saintly,0,0,0,1,0,1,1,saintli
 salad,0,0,0,0,0,0,0,salad
 salamander,0,0,0,0,0,0,0,salamand
-salary,0,0,0,1,0,0,1,salari
+salary,0,0,0,1,0,0,0,salari
 sale,0,0,0,0,0,0,0,sale
 salesman,0,0,0,0,0,0,0,salesman
 salient,0,0,0,0,0,0,0,salient
@@ -11045,7 +11045,7 @@ schooner,0,0,0,0,0,0,0,schooner
 sciatica,0,0,0,0,0,0,0,sciatica
 science,0,0,0,0,0,0,0,scienc
 scientific,0,0,0,0,0,0,0,scientif
-scientist,0,0,0,0,0,0,1,scientist
+scientist,0,0,0,0,0,0,0,scientist
 scintilla,0,0,0,0,0,0,0,scintilla
 scintillation,0,0,0,0,0,0,0,scintil
 scintillator,0,0,0,0,0,0,0,scintil
@@ -11057,7 +11057,7 @@ scolding,1,0,0,0,0,0,0,scold
 scoop,0,0,0,0,0,0,0,scoop
 scope,0,0,0,0,0,0,0,scope
 scorching,1,0,0,0,0,0,0,scorch
-score,0,0,0,1,0,1,1,score
+score,0,0,0,1,0,1,0,score
 scores,0,0,0,0,0,0,0,score
 scorn,1,0,0,0,0,0,0,scorn
 scorpion,1,1,1,0,0,1,0,scorpion
@@ -11191,8 +11191,8 @@ sensibility,0,0,0,0,0,0,0,sensibl
 sensibly,0,0,0,0,0,0,0,sensibl
 sensitive,0,0,0,0,0,0,0,sensit
 sensory,0,0,0,0,0,0,0,sensori
-sensual,0,0,0,1,0,1,1,sensual
-sensuality,0,0,0,1,0,0,1,sensual
+sensual,0,0,0,1,0,1,0,sensual
+sensuality,0,0,0,1,0,0,0,sensual
 sensuous,0,0,0,1,0,0,0,sensuou
 sentence,1,1,1,0,1,0,0,sentenc
 sentient,0,0,0,0,0,0,0,sentient
@@ -11257,7 +11257,7 @@ sew,0,0,0,0,0,0,0,sew
 sewage,0,1,0,0,0,0,0,sewag
 sewer,0,1,0,0,0,0,0,sewer
 sewerage,0,1,0,0,0,0,0,sewerag
-sex,0,0,0,1,0,0,1,sex
+sex,0,0,0,1,0,0,0,sex
 sexuality,0,0,0,0,0,0,0,sexual
 sexy,0,0,0,0,0,0,0,sexi
 shabby,0,1,0,0,0,0,0,shabbi
@@ -11287,7 +11287,7 @@ shank,0,0,1,0,0,0,0,shank
 shanty,0,0,0,0,0,0,0,shanti
 shape,0,0,0,0,0,0,0,shape
 shapely,0,0,0,0,0,0,0,shape
-share,0,0,0,1,0,0,1,share
+share,0,0,0,1,0,0,0,share
 shareholder,0,0,0,0,0,0,0,sharehold
 shark,0,0,0,0,0,0,0,shark
 sharpen,1,0,0,0,0,0,0,sharpen
@@ -11325,7 +11325,7 @@ shimmer,0,0,0,0,0,0,0,shimmer
 shin,0,0,0,0,0,0,0,shin
 shine,0,0,0,0,0,0,0,shine
 shingle,0,0,0,0,0,0,0,shingl
-shining,0,0,0,1,0,0,1,shine
+shining,0,0,0,1,0,0,0,shine
 shiny,0,0,0,0,0,0,0,shini
 ship,0,0,0,0,0,0,0,ship
 shipment,0,0,0,0,0,0,0,shipment
@@ -11348,7 +11348,7 @@ shooting,1,0,1,0,0,0,0,shoot
 shop,0,0,0,0,0,0,0,shop
 shopkeeper,0,0,0,0,0,0,0,shopkeep
 shoplifting,1,1,0,0,0,0,0,shoplift
-shopping,0,0,0,1,0,1,1,shop
+shopping,0,0,0,1,0,1,0,shop
 shore,0,0,0,0,0,0,0,shore
 shorn,0,0,0,0,0,0,0,shorn
 short,0,0,0,0,0,0,0,short
@@ -11449,7 +11449,7 @@ sin,1,1,1,0,1,0,0,sin
 sincere,0,0,0,0,0,0,0,sincer
 sincerity,0,0,0,0,0,0,0,sincer
 sinful,1,1,1,0,1,0,0,sin
-sing,0,0,0,1,1,0,1,sing
+sing,0,0,0,1,1,0,0,sing
 singer,0,0,0,0,0,0,0,singer
 single,0,0,0,0,0,0,0,singl
 singly,0,0,0,0,0,0,0,singli
@@ -11702,7 +11702,7 @@ solvent,0,0,0,0,0,0,0,solvent
 somatic,0,0,0,0,0,1,0,somat
 somber,0,0,0,0,1,0,0,somber
 son,0,0,0,0,0,0,0,son
-sonar,0,0,0,0,0,0,1,sonar
+sonar,0,0,0,0,0,0,0,sonar
 sonata,0,0,0,0,0,0,0,sonata
 song,0,0,0,0,0,0,0,song
 sonnet,0,0,0,1,1,0,0,sonnet
@@ -11739,7 +11739,7 @@ souvenir,0,0,0,0,0,0,0,souvenir
 sovereign,0,0,0,0,0,0,0,sovereign
 sovereignty,0,0,0,0,0,0,0,sovereignti
 sow,0,0,0,0,0,0,0,sow
-spa,0,0,0,1,0,1,1,spa
+spa,0,0,0,1,0,1,0,spa
 space,0,0,0,0,0,0,0,space
 spacious,0,0,0,0,0,0,0,spaciou
 spade,0,0,0,0,0,0,0,spade
@@ -11823,7 +11823,7 @@ spiny,0,0,0,0,0,0,0,spini
 spiral,0,0,0,0,0,0,0,spiral
 spire,0,0,0,0,0,0,0,spire
 spirit,0,0,0,0,0,0,0,spirit
-spirits,0,0,0,1,0,1,1,spirit
+spirits,0,0,0,1,0,1,0,spirit
 spiritual,0,0,0,0,0,0,0,spiritu
 spirituality,0,0,0,0,0,0,0,spiritu
 spit,0,1,0,0,0,0,0,spit
@@ -11943,7 +11943,7 @@ stare,0,0,0,0,0,0,0,stare
 staring,0,0,0,0,0,0,0,stare
 stark,0,0,0,0,0,0,0,stark
 starlight,0,0,0,0,0,0,0,starlight
-starry,0,0,0,1,0,0,1,starri
+starry,0,0,0,1,0,0,0,starri
 stars,0,0,0,0,0,0,0,star
 start,0,0,0,0,0,0,0,start
 startle,0,0,1,0,0,1,0,startl
@@ -12005,7 +12005,7 @@ stereotype,0,0,0,0,0,0,0,stereotyp
 stereotyped,0,0,0,0,0,0,0,stereotyp
 sterile,0,0,0,0,1,0,0,steril
 sterility,0,0,0,0,0,0,0,steril
-sterling,1,0,0,1,0,0,1,sterl
+sterling,1,0,0,1,0,0,0,sterl
 stern,0,0,0,0,0,0,0,stern
 stethoscope,0,0,0,0,0,0,0,stethoscop
 stew,0,0,0,0,0,0,0,stew
@@ -12060,7 +12060,7 @@ stopper,0,0,0,0,0,0,0,stopper
 stopping,0,0,0,0,0,0,0,stop
 stopwatch,0,0,0,0,0,0,0,stopwatch
 storage,0,0,0,0,0,0,0,storag
-store,0,0,0,0,0,0,1,store
+store,0,0,0,0,0,0,0,store
 storehouse,0,0,0,0,0,0,0,storehous
 storing,0,0,0,0,0,0,0,store
 storm,1,0,0,0,0,0,0,storm
@@ -12085,7 +12085,7 @@ strap,0,0,0,0,0,0,0,strap
 strapping,0,0,0,0,0,0,0,strap
 strata,0,0,0,0,0,0,0,stratum
 strategic,0,0,0,0,0,0,0,strateg
-strategist,0,0,0,0,0,0,1,strategist
+strategist,0,0,0,0,0,0,0,strategist
 strategy,0,0,0,0,0,0,0,strategi
 stratification,0,0,0,0,0,0,0,stratif
 stratum,0,0,0,0,0,0,0,stratum
@@ -12217,7 +12217,7 @@ subversive,1,0,0,0,0,1,0,subvers
 subvert,0,1,1,0,1,0,0,subvert
 subway,0,0,0,0,0,0,0,subway
 succeed,0,0,0,1,0,1,1,succeed
-succeeding,0,0,0,1,0,0,1,succeed
+succeeding,0,0,0,1,0,0,0,succeed
 success,0,0,0,1,0,0,1,success
 successful,0,0,0,1,0,0,1,success
 succession,0,0,0,0,0,0,0,success
@@ -12270,7 +12270,7 @@ summons,0,0,0,0,0,0,0,summon
 sumo,0,0,0,0,0,0,0,sumo
 sump,0,1,0,0,0,0,0,sump
 sumptuous,0,0,0,0,0,0,0,sumptuou
-sun,0,0,0,1,0,1,1,sun
+sun,0,0,0,1,0,1,0,sun
 sunbeam,0,0,0,0,0,0,0,sunbeam
 sundial,0,0,0,0,0,0,0,sundial
 sundown,0,0,0,0,0,0,0,sundown
@@ -12282,7 +12282,7 @@ sunless,0,0,0,0,0,0,0,sunless
 sunlight,0,0,0,0,0,0,0,sunlight
 sunny,0,0,0,1,0,1,1,sunni
 sunrise,0,0,0,0,0,0,0,sunris
-sunset,0,0,0,0,0,0,1,sunset
+sunset,0,0,0,0,0,0,0,sunset
 sunshine,0,0,0,1,0,0,0,sunshin
 superannuation,0,0,0,0,0,0,0,superannu
 superb,0,0,0,0,0,0,0,superb
@@ -12346,7 +12346,7 @@ surprisingly,0,0,0,0,0,1,0,surprisingli
 surrender,0,0,1,0,1,0,0,surrend
 surrendering,0,0,0,0,1,0,0,surrend
 surrogate,0,0,0,0,0,0,0,surrog
-surround,0,0,0,0,0,0,1,surround
+surround,0,0,0,0,0,0,0,surround
 surrounding,0,0,0,0,0,0,0,surround
 surroundings,0,0,0,0,0,0,0,surround
 surveillance,0,0,1,0,0,0,0,surveil
@@ -12398,7 +12398,7 @@ sweetener,0,0,0,0,0,0,0,sweeten
 sweetheart,0,0,0,1,1,0,1,sweetheart
 sweetie,0,0,0,0,0,0,0,sweeti
 sweetness,0,0,0,0,0,0,0,sweet
-sweets,0,0,0,1,0,0,1,sweet
+sweets,0,0,0,1,0,0,0,sweet
 swell,0,0,0,0,0,0,0,swell
 swelling,0,0,1,0,0,0,0,swell
 sweltering,0,0,0,0,0,0,0,swelter
@@ -12406,7 +12406,7 @@ swerve,0,0,1,0,0,1,0,swerv
 swift,0,0,0,0,0,0,0,swift
 swiftly,0,0,0,0,0,0,0,swiftli
 swig,0,1,0,0,0,0,0,swig
-swim,0,0,1,1,0,0,1,swim
+swim,0,0,1,1,0,0,0,swim
 swimming,0,0,0,0,0,0,0,swim
 swine,0,1,0,0,0,0,0,swine
 swing,0,0,0,0,0,0,0,swing
@@ -12431,11 +12431,11 @@ symmetry,0,0,0,1,0,0,0,symmetri
 sympathetic,0,0,1,1,1,0,0,sympathet
 sympathize,0,0,0,0,1,0,0,sympath
 sympathy,0,0,0,0,1,0,0,sympathi
-symphony,0,0,0,1,0,0,1,symphoni
+symphony,0,0,0,1,0,0,0,symphoni
 symptom,0,0,0,0,0,0,0,symptom
 symptomatic,0,0,0,0,0,0,0,symptomat
 synagogue,0,0,0,0,0,0,0,synagogu
-synchronize,0,0,0,1,0,1,1,synchron
+synchronize,0,0,0,1,0,1,0,synchron
 synchronous,0,0,0,0,0,0,0,synchron
 syncope,0,0,1,0,1,1,0,syncop
 syndicate,0,0,0,0,0,0,0,syndic
@@ -12883,7 +12883,7 @@ tout,0,0,0,0,0,0,0,tout
 tow,0,0,0,0,0,0,0,tow
 towel,0,0,0,0,0,0,0,towel
 tower,0,0,0,0,0,0,0,tower
-towering,0,0,1,0,0,0,1,tower
+towering,0,0,1,0,0,0,0,tower
 town,0,0,0,0,0,0,0,town
 townhouse,0,0,0,0,0,0,0,townhous
 toxic,0,1,0,0,0,0,0,toxic
@@ -12925,7 +12925,7 @@ tranquility,0,0,0,1,0,0,0,tranquil
 transact,0,0,0,0,0,0,0,transact
 transaction,0,0,0,0,0,0,0,transact
 transatlantic,0,0,0,0,0,0,0,transatlant
-transcendence,0,0,0,1,0,1,1,transcend
+transcendence,0,0,0,1,0,1,0,transcend
 transcendent,0,0,0,0,0,0,0,transcend
 transcendental,0,0,0,0,0,0,0,transcendent
 transcribe,0,0,0,0,0,0,0,transcrib
@@ -12992,7 +12992,7 @@ treatise,0,0,0,0,0,0,0,treatis
 treatment,0,0,0,0,0,0,0,treatment
 treaty,0,0,0,0,0,0,0,treati
 treble,0,0,0,0,0,0,0,trebl
-tree,1,1,0,1,0,1,1,tree
+tree,1,1,0,1,0,1,0,tree
 trek,0,0,0,0,0,0,0,trek
 trellis,0,0,0,0,0,0,0,trelli
 tremble,0,0,0,0,0,0,0,trembl
@@ -13013,7 +13013,7 @@ tribe,0,0,0,0,0,0,0,tribe
 tribulation,0,0,1,0,1,0,0,tribul
 tribunal,0,1,1,0,0,0,0,tribun
 tribune,0,0,0,0,0,0,0,tribun
-tributary,0,0,0,0,0,0,1,tributari
+tributary,0,0,0,0,0,0,0,tributari
 tribute,0,0,0,0,0,0,0,tribut
 trick,0,0,0,0,0,1,0,trick
 trickery,1,1,1,0,1,1,0,trickeri
@@ -13049,7 +13049,7 @@ trombone,0,0,0,0,0,0,0,trombon
 troop,0,0,0,0,0,0,0,troop
 trooper,0,0,0,0,0,0,0,trooper
 troops,0,0,0,0,0,0,0,troop
-trophy,0,0,0,1,0,1,1,trophi
+trophy,0,0,0,1,0,1,0,trophi
 tropical,0,0,0,0,0,0,0,tropic
 trot,0,0,0,0,0,0,0,trot
 troublesome,1,0,1,0,0,0,0,troublesom
@@ -13129,7 +13129,7 @@ twilight,0,0,0,0,0,0,0,twilight
 twill,0,0,0,0,0,0,0,twill
 twin,0,0,0,0,0,0,0,twin
 twine,0,0,0,0,0,0,0,twine
-twinkle,0,0,0,1,0,0,1,twinkl
+twinkle,0,0,0,1,0,0,0,twinkl
 twins,0,0,0,0,0,0,0,twin
 twist,0,0,0,0,0,0,0,twist
 twisted,0,0,0,0,0,0,0,twist
@@ -13189,7 +13189,7 @@ unavoidable,0,0,0,0,0,0,0,unavoid
 unaware,0,0,0,0,0,0,0,unawar
 unbalanced,0,0,0,0,0,0,0,unbalanc
 unbearable,0,1,0,0,1,0,0,unbear
-unbeaten,0,0,0,1,1,1,1,unbeaten
+unbeaten,0,0,0,1,1,1,0,unbeaten
 unbelief,0,0,0,0,0,0,0,unbelief
 unbelievable,0,0,0,0,0,0,0,unbeliev
 unbiased,0,0,0,0,0,0,0,unbias
@@ -13197,7 +13197,7 @@ unborn,0,0,0,0,0,0,0,unborn
 unbound,0,0,0,0,0,0,0,unbound
 unbounded,0,0,0,0,0,0,0,unbound
 unbreakable,0,0,0,0,0,0,0,unbreak
-unbridled,1,0,1,0,0,1,1,unbridl
+unbridled,1,0,1,0,0,1,0,unbridl
 unbroken,0,0,0,0,0,0,0,unbroken
 uncanny,0,0,1,0,0,1,0,uncanni
 uncaring,1,1,0,0,1,0,0,uncar
@@ -13272,7 +13272,7 @@ undoubted,0,1,0,0,0,0,0,undoubt
 undress,0,0,0,0,0,0,0,undress
 undressed,0,0,0,0,0,0,0,undress
 undue,0,0,0,0,0,0,0,undu
-undying,0,0,0,1,1,0,1,undi
+undying,0,0,0,1,1,0,0,undi
 unearned,0,0,0,0,0,0,0,unearn
 unearth,0,0,0,0,0,0,0,unearth
 uneasiness,0,0,0,0,1,0,0,uneasi
@@ -13300,7 +13300,7 @@ unfavorable,0,1,0,0,1,0,0,unfavor
 unfettered,0,0,0,0,0,0,0,unfett
 unfinished,0,0,0,0,0,0,0,unfinish
 unflinching,0,0,0,0,0,0,0,unflinch
-unfold,0,0,0,0,0,0,1,unfold
+unfold,0,0,0,0,0,0,0,unfold
 unforeseen,0,0,0,0,0,1,0,unforeseen
 unforgiving,1,0,0,0,1,0,0,unforgiv
 unfortunate,0,0,0,0,1,0,0,unfortun
@@ -13317,7 +13317,7 @@ unhealthy,0,1,1,0,1,0,0,unhealthi
 unhindered,0,0,0,0,0,0,0,unhind
 unholy,0,0,1,0,0,0,0,unholi
 unicorn,0,0,0,0,0,0,0,unicorn
-unification,0,0,0,1,0,0,1,unif
+unification,0,0,0,1,0,0,0,unif
 uniform,0,0,0,0,0,0,0,uniform
 uniformity,0,0,0,0,0,0,0,uniform
 uniformly,0,0,0,0,0,0,0,uniformli
@@ -13349,7 +13349,7 @@ unity,0,0,0,0,0,0,0,uniti
 universal,0,0,0,0,0,0,0,univers
 universality,0,0,0,0,0,0,0,univers
 universe,0,0,0,0,0,0,0,univers
-university,0,0,0,0,0,0,1,univers
+university,0,0,0,0,0,0,0,univers
 unjust,1,0,0,0,0,0,0,unjust
 unjustifiable,1,1,1,0,0,0,0,unjustifi
 unjustified,0,0,0,0,0,0,0,unjustifi
@@ -13442,7 +13442,7 @@ unsuccessful,0,0,0,0,1,0,0,unsuccess
 unsuitable,0,0,0,0,0,0,0,unsuit
 unsung,0,0,0,0,0,0,0,unsung
 unsupported,0,0,0,0,0,0,0,unsupport
-unsurpassed,0,0,1,1,0,0,1,unsurpass
+unsurpassed,0,0,1,1,0,0,0,unsurpass
 unsuspecting,0,0,0,0,0,1,0,unsuspect
 unsustainable,0,0,0,0,0,0,0,unsustain
 unsweetened,0,0,0,0,0,0,0,unsweeten
@@ -13485,7 +13485,7 @@ unworthy,0,1,0,0,0,0,0,unworthi
 unwritten,0,0,0,0,0,0,0,unwritten
 unyielding,0,0,0,0,0,0,0,unyield
 upheaval,1,0,1,0,1,0,0,upheav
-uphill,0,0,1,0,0,0,1,uphil
+uphill,0,0,1,0,0,0,0,uphil
 upholstery,0,0,0,0,0,0,0,upholsteri
 upland,0,0,0,0,0,0,0,upland
 uplands,0,0,0,0,0,0,0,upland
@@ -13522,11 +13522,11 @@ utility,0,0,0,0,0,0,0,util
 utilization,0,0,0,0,0,0,0,util
 utilize,0,0,0,0,0,0,0,util
 utmost,0,0,0,0,0,0,0,utmost
-utopian,0,0,0,1,0,0,1,utopian
+utopian,0,0,0,1,0,0,0,utopian
 utterance,0,0,0,0,0,0,0,utter
 utterly,0,0,0,0,0,0,0,utterli
 vacancy,0,0,0,0,0,0,0,vacanc
-vacation,0,0,0,1,0,0,1,vacat
+vacation,0,0,0,1,0,0,0,vacat
 vaccination,0,0,0,0,0,0,0,vaccin
 vaccine,0,0,0,0,0,0,0,vaccin
 vacuolar,0,0,0,0,0,0,0,vacuolar
@@ -13615,7 +13615,7 @@ ventricle,0,0,0,0,0,0,0,ventricl
 ventricular,0,0,0,0,0,0,0,ventricular
 venture,0,0,0,0,0,0,0,ventur
 venue,0,0,0,0,0,0,0,venu
-veracity,0,0,0,1,0,1,1,verac
+veracity,0,0,0,1,0,1,0,verac
 veranda,0,0,0,0,0,0,0,veranda
 verbal,0,0,0,0,0,0,0,verbal
 verbatim,0,0,0,0,0,0,0,verbatim
@@ -13694,7 +13694,7 @@ villainous,1,1,1,0,0,0,0,villain
 vinaigrette,0,0,0,0,0,0,0,vinaigrett
 vindicate,1,0,0,0,0,0,0,vindic
 vindicated,0,0,0,0,0,0,0,vindic
-vindication,0,0,0,1,0,0,1,vindic
+vindication,0,0,0,1,0,0,0,vindic
 vindictive,1,1,0,0,0,0,0,vindict
 vinegar,0,0,0,0,0,0,0,vinegar
 vineyard,0,0,0,0,0,0,0,vineyard
@@ -13708,7 +13708,7 @@ violin,0,0,0,0,0,0,0,violin
 violinist,0,0,0,0,0,0,0,violinist
 viper,0,0,1,0,0,0,0,viper
 virgin,0,0,0,0,0,0,0,virgin
-virginity,0,0,0,0,0,0,1,virgin
+virginity,0,0,0,0,0,0,0,virgin
 virology,0,0,0,0,0,0,0,virolog
 virtual,0,0,0,0,0,0,0,virtual
 virtually,0,0,0,0,0,0,0,virtual
@@ -13725,12 +13725,12 @@ vise,0,0,0,0,0,0,0,vise
 visibility,0,0,0,0,0,0,0,visibl
 visible,0,0,0,0,0,0,0,visibl
 visibly,0,0,0,0,0,0,0,visibl
-vision,0,0,0,0,0,0,1,vision
+vision,0,0,0,0,0,0,0,vision
 visionary,0,0,0,1,0,0,1,visionari
 visit,0,0,0,0,0,0,0,visit
 visitation,0,0,0,0,0,0,0,visit
 visiting,0,0,0,0,0,0,0,visit
-visitor,0,0,0,1,0,0,1,visitor
+visitor,0,0,0,1,0,0,0,visitor
 visor,0,0,0,0,0,1,0,visor
 vista,0,0,0,0,0,0,0,vista
 visual,0,0,0,0,0,0,0,visual
@@ -13759,16 +13759,16 @@ volume,0,0,0,0,0,0,0,volum
 voluminous,0,0,0,0,0,0,0,volumin
 voluntarily,0,0,0,0,0,0,0,voluntarili
 voluntary,0,0,0,0,0,0,0,voluntari
-volunteer,0,0,1,1,0,0,1,volunt
+volunteer,0,0,1,1,0,0,0,volunt
 volunteering,0,0,0,0,0,0,0,volunt
 volunteers,0,0,0,0,0,0,0,volunt
-voluptuous,0,0,0,1,0,0,1,voluptu
+voluptuous,0,0,0,1,0,0,0,voluptu
 vomit,0,1,0,0,0,0,0,vomit
 vomiting,0,0,0,0,0,0,0,vomit
 voodoo,0,0,0,0,0,0,0,voodoo
 voracious,0,0,0,0,0,0,0,voraci
 vortex,0,0,0,0,0,0,0,vortex
-vote,1,0,0,1,1,1,1,vote
+vote,1,0,0,1,1,1,0,vote
 voting,0,0,0,0,0,0,0,vote
 votive,0,0,0,0,0,0,0,votiv
 vouch,0,0,0,0,0,0,0,vouch
@@ -13894,7 +13894,7 @@ weep,0,0,0,0,1,0,0,weep
 weeping,0,0,0,0,1,0,0,weep
 weigh,0,0,0,0,0,0,0,weigh
 weighing,0,0,0,0,0,0,0,weigh
-weight,0,1,1,1,1,1,1,weight
+weight,0,1,1,1,1,1,0,weight
 weightless,0,0,0,0,0,0,0,weightless
 weights,0,0,0,0,0,0,0,weight
 weighty,0,0,1,0,0,0,0,weighti
@@ -13924,7 +13924,7 @@ wherewithal,0,0,0,0,0,0,0,wherewith
 whet,0,0,0,0,0,0,0,whet
 whiff,0,0,0,0,0,0,0,whiff
 whilst,0,0,0,0,0,0,0,whilst
-whim,0,0,0,1,0,1,1,whim
+whim,0,0,0,1,0,1,0,whim
 whimper,0,0,1,0,1,0,0,whimper
 whimsical,0,0,0,1,0,0,0,whimsic
 whimsy,0,0,0,0,0,0,0,whimsi
@@ -13988,14 +13988,14 @@ wine,0,0,0,0,0,0,0,wine
 wing,0,0,0,0,0,0,0,wing
 winged,0,0,0,0,0,0,0,wing
 wink,0,0,0,0,0,0,0,wink
-winner,0,0,0,1,0,1,1,winner
+winner,0,0,0,1,0,1,0,winner
 winning,0,1,0,1,1,1,1,win
-winnings,0,0,0,1,0,0,1,win
+winnings,0,0,0,1,0,0,0,win
 winter,0,0,0,0,0,0,0,winter
 wintry,0,0,0,0,0,0,0,wintri
 wipe,0,0,0,0,0,0,0,wipe
 wire,0,0,0,0,0,0,0,wire
-wireless,1,0,0,0,0,1,1,wireless
+wireless,1,0,0,0,0,1,0,wireless
 wis,0,0,0,0,0,0,0,wi
 wisdom,0,0,0,0,0,0,0,wisdom
 wise,0,0,0,0,0,0,0,wise
@@ -14009,11 +14009,11 @@ withdraw,0,0,0,0,1,0,0,withdraw
 withdrawal,0,0,0,0,0,0,0,withdraw
 wither,0,0,0,0,1,0,0,wither
 withered,0,1,0,0,0,0,0,wither
-withstand,0,0,1,0,0,0,1,withstand
+withstand,0,0,1,0,0,0,0,withstand
 witness,0,0,0,0,0,0,0,wit
 wits,0,0,0,0,0,0,0,wit
 witty,0,0,0,1,0,0,0,witti
-wizard,0,0,0,0,0,1,1,wizard
+wizard,0,0,0,0,0,1,0,wizard
 woe,0,1,1,0,1,0,0,woe
 woeful,0,0,0,0,1,0,0,woeful
 woefully,0,1,0,0,1,0,0,woefulli
@@ -14134,7 +14134,7 @@ yoke,0,0,0,0,0,0,0,yoke
 yolk,0,0,0,0,0,0,0,yolk
 yon,0,0,0,0,0,0,0,yon
 yonder,0,0,0,0,0,0,0,yonder
-youth,1,0,1,1,0,1,1,youth
+youth,1,0,1,1,0,1,0,youth
 zany,0,0,0,0,0,1,0,zani
 zap,0,0,0,0,0,0,0,zap
 zeal,0,0,0,1,0,1,1,zeal
