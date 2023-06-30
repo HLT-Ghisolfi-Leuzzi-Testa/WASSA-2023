@@ -12,9 +12,9 @@ from sklearn.metrics import (
 from sklearn.preprocessing import MultiLabelBinarizer, LabelEncoder, LabelBinarizer
 from torch.utils.data import Dataset
 from transformers import EvalPrediction
-from torchsummary import summary
-from torchview import draw_graph
-from bertviz import model_view
+#from torchsummary import summary
+#from torchview import draw_graph
+#from bertviz import model_view
 
 def print_model_summary(model, path):
     '''
