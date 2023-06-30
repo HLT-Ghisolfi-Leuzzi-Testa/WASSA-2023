@@ -165,9 +165,9 @@ class BERTClassifier(BertPreTrainedModel):
         return SequenceClassifierOutput(loss=loss, logits=logits, hidden_states=outputs.hidden_states,attentions=outputs.attentions)
 
 ############################ SUB-SAMPLE ############################
-train_df = train_df
-val_df = val_df
-dev_df = dev_df
+train_df = train_df[:2]
+val_df = val_df[:20]
+dev_df = dev_df[:20]
 ####################################################################
 
 train_set = EMODataset(tokenizer=tokenizer, essay=train_df.essay, targets=y_train, features=features_train)
