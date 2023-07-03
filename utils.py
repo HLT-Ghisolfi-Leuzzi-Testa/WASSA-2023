@@ -41,7 +41,7 @@ def plot_model_graph(model, input_data, path):
     model_graph.visual_graph.render(filename=path)
     model_graph.visual_graph.view()
 
-def plot_loss_curveX(training_loss, validation_loss, eval_epochs, path, title):
+def plot_loss_curve(training_loss, validation_loss, eval_epochs, path, title):
     '''
     This function saves the plot of the training and validation loss curves.
     
