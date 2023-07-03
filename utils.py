@@ -12,9 +12,9 @@ from sklearn.metrics import (
 from sklearn.preprocessing import MultiLabelBinarizer, LabelEncoder, LabelBinarizer
 from torch.utils.data import Dataset
 from transformers import EvalPrediction
-from torchsummary import summary
-from torchview import draw_graph
-from bertviz import model_view
+#from torchsummary import summary
+#from torchview import draw_graph
+#from bertviz import model_view
 
 def print_model_summary(model, path):
     '''
@@ -41,7 +41,7 @@ def plot_model_graph(model, input_data, path):
     model_graph.visual_graph.render(filename=path)
     model_graph.visual_graph.view()
 
-def plot_loss_curve(training_loss, validatin_loss, path, title):
+def plot_loss_curve(training_loss, validation_loss, eval_epochs, path, title):
     '''
     This function saves the plot of the training and validation loss curves.
     
@@ -54,7 +54,7 @@ def plot_loss_curve(training_loss, validatin_loss, path, title):
     sns.set(style='darkgrid')
     plt.rcParams["figure.figsize"] = (12,6)
     plt.plot(training_loss, 'b-o', label="Training")
-    plt.plot(validatin_loss, 'r-o', label="Validation")
+    plt.plot(eval_epochs, validation_loss,'r-o', label="Validation")
     plt.title("Training & Validation Loss")
     plt.xlabel("Epoch")
     plt.ylabel("Loss")
