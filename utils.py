@@ -9,6 +9,7 @@ from sklearn.metrics import (
     confusion_matrix, roc_auc_score, accuracy_score, jaccard_score, 
     precision_recall_fscore_support
     )
+from sklearn.model_selection import KFold
 from sklearn.preprocessing import MultiLabelBinarizer, LabelEncoder, LabelBinarizer
 from torch.utils.data import Dataset
 from transformers import EvalPrediction
@@ -55,7 +56,6 @@ def plot_loss_curve(training_loss, validation_loss, eval_epochs, path, title):
     plt.rcParams["figure.figsize"] = (12,6)
     plt.plot(training_loss, 'b-o', label="Training")
     plt.plot(eval_epochs, validation_loss,'r-o', label="Validation")
-    plt.title("Training & Validation Loss")
     plt.xlabel("Epoch")
     plt.ylabel("Loss")
     plt.legend()
@@ -64,6 +64,93 @@ def plot_loss_curve(training_loss, validation_loss, eval_epochs, path, title):
     plt.tight_layout()
     plt.savefig(path)
     plt.show()
+
+def flatten_logits(logits, threshold):
+    '''
+    This function flattens the logits passed as parameter using the specified 
+    threshold.
+
+    :param logits: logits to flatten
+    :param threshold: threshold to use for flattening
+    :return: flattened logits
+    '''
+
+    predictions = np.where(logits >= threshold, 1, 0)
+    for i, pred in enumerate(predictions):
+        if np.all(pred==0):
+            predictions[i][np.argmax(logits[i])] = 1
+    return predictions
+
+def save_logits(logits, labels, path):
+    '''
+    This function saves the logits in the path passed as parameter. Logits are
+    saved as a csv file using labels as colums.
+
+    :param logits: logits to save
+    :param labels: labels to use as columns
+    :param path: path where to save the logits
+    '''
+
+    pd.DataFrame(logits, columns=labels).to_csv(path, index=False)
+
+def ensemble_logits(logits_path_list):
+    '''
+    This function computes the mean of the logits in file file list
+    passed as parameter.
+
+    :param logits_path_list: list of paths to the logits files
+    :return: dataframe with mean of logits
+    '''
+
+    logits = []
+    labels = None
+    for path in logits_path_list:
+        logits_df = pd.read_csv(path)
+        if labels is None:
+            labels = logits_df.columns
+        logits_df = logits_df[labels] # reorder columns
+        logits.append(logits_df.to_numpy())
+    mean_logits = np.mean(logits, axis=0)
+    return pd.DataFrame(mean_logits, columns=labels)
+
+def logits_to_predictions(logits, threshold):
+    '''
+    This function converts the dataframe of logits passed as parameter to a list
+    of strings representing predictions. Logits are flattened using the
+    specified threshold.
+
+    :param logits: dataframe of logits
+    :param threshold: threshold to use for flattening
+    :return: list of predictions
+    '''
+
+    predictions_str = []
+    predictions_bin = flatten_logits(logits, threshold)
+    for pred in predictions_bin:
+        predictions_str.append('/'.join([logits.columns[i] for i in np.where(pred==1)[0]]))
+    return predictions_str
+
+def dev_cross_val(train_set, dev_set, k, shuffle, seed):
+    '''
+    This function splits the dev_set datarame in k folds and returns a
+    list of tuples. The first element of each tuple is a dataframe representing
+    a train split, the second element is a dataframe representing a validation
+    split.
+
+    :param train_set: training set dataframe
+    :param dev_set: dev set dataframe
+    :param k: number of folds
+    :param shuffle: whether to shuffle the data before splitting
+    :param seed: seed for the random number generator
+    '''
+
+    splits = []
+    splitter = KFold(n_splits=k, shuffle=shuffle, random_state=seed)
+    for train_idx, valid_idx in splitter.split(dev_set):
+        train_split = pd.concat([train_set, dev_set.iloc[train_idx]])
+        val_split = dev_set.iloc[valid_idx]
+        splits.append((train_split, val_split))
+    return splits
 
 def plot_attentions(input_str, model, tokenizer, title, path):
     '''
@@ -309,6 +396,7 @@ class EmotionsLabelEncoder():
 
         emotions = [emotion.split('/') for emotion in emotions]
         self.mlb.fit(emotions)
+        self.classes = self.mlb.classes_
 
     def encode(self, emotions):
         '''
