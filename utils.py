@@ -9,6 +9,7 @@ from sklearn.metrics import (
     confusion_matrix, roc_auc_score, accuracy_score, jaccard_score, 
     precision_recall_fscore_support
     )
+from sklearn.model_selection import KFold
 from sklearn.preprocessing import MultiLabelBinarizer, LabelEncoder, LabelBinarizer
 from torch.utils.data import Dataset
 from transformers import EvalPrediction
@@ -128,6 +129,28 @@ def logits_to_predictions(logits, threshold):
     for pred in predictions_bin:
         predictions_str.append('/'.join([logits.columns[i] for i in np.where(pred==1)[0]]))
     return predictions_str
+
+def dev_cross_val(train_set, dev_set, k, shuffle, seed):
+    '''
+    This function splits the dev_set datarame in k folds and returns a
+    list of tuples. The first element of each tuple is a dataframe representing
+    a train split, the second element is a dataframe representing a validation
+    split.
+
+    :param train_set: training set dataframe
+    :param dev_set: dev set dataframe
+    :param k: number of folds
+    :param shuffle: whether to shuffle the data before splitting
+    :param seed: seed for the random number generator
+    '''
+
+    splits = []
+    splitter = KFold(n_splits=k, shuffle=shuffle, random_state=seed)
+    for train_idx, valid_idx in splitter.split(dev_set):
+        train_split = pd.concat([train_set, dev_set.iloc[train_idx]])
+        val_split = dev_set.iloc[valid_idx]
+        splits.append((train_split, val_split))
+    return splits
 
 def plot_attentions(input_str, model, tokenizer, title, path):
     '''
