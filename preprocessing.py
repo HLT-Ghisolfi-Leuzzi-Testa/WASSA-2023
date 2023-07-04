@@ -90,7 +90,7 @@ def get_stemmed_EMP_lexicon(lexicon):
 def read_lexicon_df(categories):
     categories_dfs = {}
     for category in categories:
-        categories_dfs[category] = pd.read_csv(f"lexicon/{category}.txt", skiprows = [0], names=['word', category], sep=None, engine='python')
+        categories_dfs[category] = pd.read_csv(f"lexicon/{category}.txt", header=None, names=['word', category], sep=None, engine='python')
     
     lexicon = pd.DataFrame(columns=['word'])
     
@@ -136,7 +136,7 @@ def add_counts(df, lexicon, stemmed_lexicon, categories):
                     df.loc[index, f'{category}_count'] += lexicon.loc[word][category]
                     
                             
-        # expand contractions, correct spelling, lemmatize and stemmed essay tokens
+        # expand contractions, correct spelling, lemmatize and stemm essay tokens
         essay = expand_contractions(essay)
         essay = correct_spelling(essay)
         lemmas = [lemmatizer.lemmatize(token) for token in essay.split()]
