@@ -82,16 +82,16 @@ def get_stemmed_EMP_lexicon(lexicon):
             stemmed_lexicon[stemma] = l
         
 
-    print(stemmed_lexicon)
+    #print(stemmed_lexicon)
     #col_names = ['word', 'empathy', 'distress', 'count']
     
     stemmed_lexicon =  pd.DataFrame(stemmed_lexicon).T
     stemmed_lexicon.rename(columns={0:'empathy', 1:'distress', 2:'count'}, inplace=True)
-    print(stemmed_lexicon)
+    #print(stemmed_lexicon)
     stemmed_lexicon['empathy'] = stemmed_lexicon['empathy'].astype(float) / stemmed_lexicon['count']
     stemmed_lexicon['distress'] = stemmed_lexicon['distress'].astype(float) / stemmed_lexicon['count']
     #stemmed_lexicon[stemmed_lexicon > 0] = 1
-    print(stemmed_lexicon)
+    #print(stemmed_lexicon)
     #stemmed_lexicon = stemmed_lexicon.loc[(stemmed_lexicon!=0).any(axis=1)]
     stemmed_lexicon.to_csv('./lexicon/stemmed_lexicon_EMP.csv')
     lexicon.to_csv('./lexicon/lexicon_EMP.csv')
@@ -298,11 +298,11 @@ def pre(year):
     internal_val_df.to_csv(f"datasets/WASSA{year}_essay_level_internal_val_preproc.tsv", index=False, sep='\t')
     dev_df.to_csv(f"datasets/WASSA{year}_essay_level_dev_preproc.tsv", index=False, sep='\t')
     test_df.to_csv(f"datasets/WASSA{year}_essay_level_test_preproc.tsv", index=False, sep='\t')
-    #essay_level_df.to_csv("datasets/WASSA23_essay_level_preproc.tsv", index=False, sep='\t')
     essay_level.to_csv(f"datasets/WASSA{year}_essay_level_preproc.tsv", index=False, sep='\t')
 
-
-
 def main():
-    pre(22)
+    #pre(22)
     pre(23)
+
+if __name__ == "__main__":
+    main()
