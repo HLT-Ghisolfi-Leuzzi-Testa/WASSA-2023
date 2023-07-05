@@ -9,6 +9,7 @@ from sklearn.metrics import (
     confusion_matrix, roc_auc_score, accuracy_score, jaccard_score, 
     precision_recall_fscore_support
     )
+from scipy.stats import gaussian_kde
 from sklearn.model_selection import KFold
 from sklearn.preprocessing import MultiLabelBinarizer, LabelEncoder, LabelBinarizer
 from torch.utils.data import Dataset
@@ -42,7 +43,7 @@ def plot_model_graph(model, input_data, path):
     model_graph.visual_graph.render(filename=path)
     model_graph.visual_graph.view()
 
-def plot_loss_curve(training_loss, validation_loss, eval_epochs, path, title):
+def plot_loss_curve(training_loss, validation_loss, eval_epochs, title=None, path=None):
     '''
     This function saves the plot of the training and validation loss curves.
     
@@ -59,10 +60,139 @@ def plot_loss_curve(training_loss, validation_loss, eval_epochs, path, title):
     plt.xlabel("Epoch")
     plt.ylabel("Loss")
     plt.legend()
-    plt.title(title)
     plt.xticks(np.arange(1, len(training_loss) + 1, 1))
     plt.tight_layout()
-    plt.savefig(path)
+    if title:
+        plt.title(title)
+    if path:
+        plt.savefig(path)
+    plt.show()
+
+def plot_attentions(input_str, model, tokenizer, title=None, path=None):
+    '''
+    This function plots the attention weights for the string passed as parameter.
+
+    :param input_str: string for which to plot the attention weights
+    :param model: model
+    :param tokenizer: tokenizer
+    :param title: title of the plot
+    :param path: path where to save the plot
+    '''
+
+    model_inputs = tokenizer(input_str, return_tensors="pt")
+    with torch.no_grad():
+        model_output = model(**model_inputs)
+    tokens = tokenizer.convert_ids_to_tokens(model_inputs.input_ids[0])
+    n_tokens = len(tokens)
+    n_layers = len(model_output.attentions)
+    n_heads = len(model_output.attentions[0][0])
+    fig, axes = plt.subplots(n_layers, n_heads)
+    fig.set_size_inches(18.5*2, 10.5*4)
+    for layer in range(n_layers):
+        for i in range(n_heads):
+            axes[layer, i].imshow(model_output.attentions[layer][0, i])
+            axes[layer][i].set_xticks(list(range(n_tokens)))
+            axes[layer][i].set_xticklabels(labels=tokens, rotation="vertical")
+            axes[layer][i].set_yticks(list(range(n_tokens)))
+            axes[layer][i].set_yticklabels(labels=tokens)
+
+            if layer == 5:
+                axes[layer, i].set(xlabel=f"head={i}")
+            if i == 0:
+                axes[layer, i].set(ylabel=f"layer={layer}") 
+    plt.subplots_adjust(wspace=0.3)
+    plt.tight_layout()
+    if title:
+        plt.title(title)
+    if path:
+        plt.savefig(path)
+    plt.show()
+
+def plot_model_view(
+        model,
+        tokenizer,
+        sentence_a,
+        sentence_b=None,
+        hide_delimiter_attn=False,
+        display_mode="dark"):
+    '''
+    This function visualizes the attention weights produced by model on
+    sentence_a. If sentence_b is provided, the two sentences are concatenated
+    with separator token in between.
+    '''
+    
+    inputs = tokenizer.encode_plus(
+        sentence_a,
+        sentence_b,
+        return_tensors='pt',
+        add_special_tokens=True)
+    input_ids = inputs['input_ids']
+    if sentence_b:
+        token_type_ids = inputs['token_type_ids'] # 0 for first sentence, 1 for second
+        attention = model(
+            input_ids,
+            token_type_ids=token_type_ids,
+            attention_mask=inputs.attention_mask).attentions # if not customed, need to set output_attentions=True
+        sentence_b_start = token_type_ids[0].tolist().index(1)
+    else:
+        attention = model(input_ids).attentions
+        sentence_b_start = None
+    input_id_list = input_ids[0].tolist() # Batch index 0
+    tokens = tokenizer.convert_ids_to_tokens(input_id_list)  
+    if hide_delimiter_attn:
+        for i, t in enumerate(tokens):
+            if t in ("[SEP]", "[CLS]"):
+                for layer_attn in attention:
+                    layer_attn[0, :, i, :] = 0
+                    layer_attn[0, :, :, i] = 0
+    model_view(attention, tokens, sentence_b_start, display_mode=display_mode)
+
+def plot_confusion_matrix(golds, predictions, title=None, path=None):
+    '''
+    This function plots the confusion matrix given gold and predicted labels.
+    
+    :param golds: list of gold labels
+    :param predictions: list of predicted labels
+    :param path: path where to save the plot
+    :param title: title of the plot
+    '''
+
+    labels = np.unique(golds)
+    cm_df = pd.DataFrame(confusion_matrix(golds, predictions, labels=labels),index=labels, columns=labels)
+    plt.figure(figsize = (10,7))
+    sns.heatmap(cm_df, annot=True, cmap="Blues", fmt='g')
+    plt.title("Confusion Matrix")
+    plt.xlabel("Predicted")
+    plt.ylabel("Actual")
+    plt.tight_layout()
+    if title:
+        plt.title(title)
+    if path:
+        plt.savefig(path)
+    plt.show()
+
+def plot_true_vs_predicted(golds, predictions, title=None, path=None):
+    '''
+    This function plots the ground true values vs the predicted values.
+
+    :param golds: list of ground truth labels
+    :param predictions: list of predicted labels
+    :param title: title of the plot
+    :param path: path where to save the plot
+    '''
+
+    xy = np.vstack([golds, predictions])
+    kernel = gaussian_kde(xy)(xy)
+    plt.scatter(golds, predictions, c=kernel)
+    plt.xlabel("Actual")
+    plt.ylabel("Predicted")
+    xpoints = ypoints = plt.xlim()
+    plt.plot(xpoints, ypoints)
+    plt.tight_layout()
+    if title:
+        plt.title(title)
+    if path:
+        plt.savefig(path)
     plt.show()
 
 def flatten_logits(logits, threshold):
@@ -151,105 +281,6 @@ def dev_cross_val(train_set, dev_set, k, shuffle, seed):
         val_split = dev_set.iloc[valid_idx]
         splits.append((train_split, val_split))
     return splits
-
-def plot_attentions(input_str, model, tokenizer, title, path):
-    '''
-    This function plots the attention weights for the string passed as parameter.
-
-    :param input_str: string for which to plot the attention weights
-    :param model: model
-    :param tokenizer: tokenizer
-    :param title: title of the plot
-    :param path: path where to save the plot
-    '''
-
-    model_inputs = tokenizer(input_str, return_tensors="pt")
-    with torch.no_grad():
-        model_output = model(**model_inputs)
-    tokens = tokenizer.convert_ids_to_tokens(model_inputs.input_ids[0])
-    n_tokens = len(tokens)
-    n_layers = len(model_output.attentions)
-    n_heads = len(model_output.attentions[0][0])
-    fig, axes = plt.subplots(n_layers, n_heads)
-    fig.set_size_inches(18.5*2, 10.5*4)
-    for layer in range(n_layers):
-        for i in range(n_heads):
-            axes[layer, i].imshow(model_output.attentions[layer][0, i])
-            axes[layer][i].set_xticks(list(range(n_tokens)))
-            axes[layer][i].set_xticklabels(labels=tokens, rotation="vertical")
-            axes[layer][i].set_yticks(list(range(n_tokens)))
-            axes[layer][i].set_yticklabels(labels=tokens)
-
-            if layer == 5:
-                axes[layer, i].set(xlabel=f"head={i}")
-            if i == 0:
-                axes[layer, i].set(ylabel=f"layer={layer}") 
-    plt.subplots_adjust(wspace=0.3)
-    plt.title(title)
-    plt.tight_layout()
-    plt.savefig(path)
-    plt.show()
-
-def plot_model_view(
-        model,
-        tokenizer,
-        sentence_a,
-        sentence_b=None,
-        hide_delimiter_attn=False,
-        display_mode="dark"):
-    '''
-    This function visualizes the attention weights produced by model on
-    sentence_a. If sentence_b is provided, the two sentences are concatenated
-    with separator token in between.
-    '''
-    
-    inputs = tokenizer.encode_plus(
-        sentence_a,
-        sentence_b,
-        return_tensors='pt',
-        add_special_tokens=True)
-    input_ids = inputs['input_ids']
-    if sentence_b:
-        token_type_ids = inputs['token_type_ids'] # 0 for first sentence, 1 for second
-        attention = model(
-            input_ids,
-            token_type_ids=token_type_ids,
-            attention_mask=inputs.attention_mask).attentions # if not customed, need to set output_attentions=True
-        sentence_b_start = token_type_ids[0].tolist().index(1)
-    else:
-        attention = model(input_ids).attentions
-        sentence_b_start = None
-    input_id_list = input_ids[0].tolist() # Batch index 0
-    tokens = tokenizer.convert_ids_to_tokens(input_id_list)  
-    if hide_delimiter_attn:
-        for i, t in enumerate(tokens):
-            if t in ("[SEP]", "[CLS]"):
-                for layer_attn in attention:
-                    layer_attn[0, :, i, :] = 0
-                    layer_attn[0, :, :, i] = 0
-    model_view(attention, tokens, sentence_b_start, display_mode=display_mode)
-
-def plot_confusion_matrix(golds, predictions, path, title):
-    '''
-    This function plots the confusion matrix given gold and predicted labels.
-    
-    :param golds: list of gold labels
-    :param predictions: list of predicted labels
-    :param path: path where to save the plot
-    :param title: title of the plot
-    '''
-
-    labels = np.unique(golds)
-    cm_df = pd.DataFrame(confusion_matrix(golds, predictions, labels=labels),index=labels, columns=labels)
-    plt.figure(figsize = (10,7))
-    sns.heatmap(cm_df, annot=True, cmap="Blues", fmt='g')
-    plt.title("Confusion Matrix")
-    plt.xlabel("Predicted")
-    plt.ylabel("Actual")
-    plt.title(title)
-    plt.tight_layout()
-    plt.savefig(path)
-    plt.show()
 
 def write_dict_to_json(dict, path):
     '''
