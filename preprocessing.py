@@ -251,8 +251,8 @@ def drop_rows_with_unknown(dataframe):
 
 def pre(year):
 
-    train_path = f"datasets/WASSA{year}_essay_level_train.tsv"
-    dev_path = f"datasets/WASSA{year}_essay_level_dev.tsv"
+    train_path = f"hope_dataset/WASSA{year}_essay_level_train.tsv"
+    dev_path = f"hope_dataset/WASSA{year}_essay_level_dev.tsv"
     test_path = f"datasets/WASSA{year}_essay_level_test.tsv"
     dev_labels_path = f"datasets/WASSA{year}_goldstandard_dev.tsv"
 
@@ -301,8 +301,8 @@ def pre(year):
     essay_level.to_csv(f"datasets/WASSA{year}_essay_level_preproc.tsv", index=False, sep='\t')
 
 def main():
-    #pre(22)
-    pre(23)
+    pre(22)
+    #pre(23)
 
 if __name__ == "__main__":
     main()
