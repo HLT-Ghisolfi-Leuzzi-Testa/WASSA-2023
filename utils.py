@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-from evaluation import calculatePRF_MLabel
+from evaluation import calculatePRF_MLabel, calculate_pearson
 from sklearn.metrics import (
     confusion_matrix, roc_auc_score, accuracy_score, jaccard_score, 
     precision_recall_fscore_support
@@ -14,9 +14,9 @@ from sklearn.model_selection import KFold
 from sklearn.preprocessing import MultiLabelBinarizer, LabelEncoder, LabelBinarizer
 from torch.utils.data import Dataset
 from transformers import EvalPrediction
-#from torchsummary import summary
-#from torchview import draw_graph
-#from bertviz import model_view
+from torchsummary import summary
+from torchview import draw_graph
+from bertviz import model_view
 
 def print_model_summary(model, path):
     '''
@@ -362,6 +362,51 @@ def compute_EMO_metrics_trainer(p: EvalPrediction):
     metrics['macro_precision'] = prf_macro[0]
     metrics['macro_recall'] = prf_macro[1]
     metrics['macro_f'] = prf_macro[2]
+    return metrics
+
+def compute_EMP_metrics(golds, predictions):
+    '''
+    This function computes the metrics for the EMO task.
+
+    :param golds: list of gold emotions
+    :param predictions: list of predicted emotions
+    '''
+
+    scores = {}
+    if (len(predictions.shape) == 2):
+      scores['empathy_pearson'] = calculate_pearson(golds[:,0], predictions[:,0])
+      scores['distress_pearson'] = calculate_pearson(golds[:,1], predictions[:,1])
+      scores['avg_pearson'] = (scores['empathy_pearson']+ scores['distress_pearson']) / 2
+    else:
+      scores['pearson'] = calculate_pearson(golds, predictions)
+
+    return scores
+
+def compute_EMP_metrics_trainer(p: EvalPrediction):
+
+    predictions = p.predictions[0] if isinstance(p.predictions, tuple) else p.predictions # TODO: ?
+    golds = p.label_ids
+
+    # NOTE: not needed if using multilabel
+    # https://szuyuchu.medium.com/multi-label-text-classification-with-bert-52fa78eddb9
+    # apply sigmoid on predictions
+    # sigmoid = torch.nn.Sigmoid()
+    # probs = sigmoid(torch.Tensor(predictions))
+
+    # use a threshold to turn prediction into 0/1 values
+    #bin_predictions = np.where(predictions >= 0.5, 1, 0)
+    # TODO: if no emotion is predicted, set the one with highest activation
+    # for i, bin_pred in enumerate(bin_predictions):
+    #     if np.all(bin_pred==0):
+    #         bin_predictions[i][np.argmax(predictions[i])] = 1
+    metrics = {}
+    if (len(predictions.shape) == 2):
+      metrics['empathy_pearson'] = calculate_pearson(golds[:,0], predictions[:,0])
+      metrics['distress_pearson'] = calculate_pearson(golds[:,1], predictions[:,1])
+      metrics['avg_pearson'] = (metrics['empathy_pearson']+ metrics['distress_pearson']) / 2
+    else:
+      metrics['pearson'] = calculate_pearson(golds, predictions)
+
     return metrics
 
 class EMODataset(Dataset):
