@@ -6,9 +6,23 @@ import contractions
 from nltk.stem import WordNetLemmatizer
 from nltk.stem.porter import PorterStemmer
 from textblob import TextBlob
+import json
+import numpy as np
+import os
+    
+def write_dict_to_json(dict, path):
+    '''
+    This function saves a dictionary to a json file.
+    
+    :param dict: dictionary to save
+    :param path: path where to save the dictionary
+    '''
+    
+    with open(path, 'w') as fp:
+        json.dump(dict, fp, indent = 1)
 
-nltk.download('wordnet')
-nltk.download('omw-1.4')
+# nltk.download('wordnet')
+# nltk.download('omw-1.4')
 
 TRAIN_DATA_PATH = "datasets/WASSA23_essay_level_with_labels_train.tsv"
 DEV_DATA_PATH = "datasets/WASSA23_essay_level_dev.tsv"
@@ -39,52 +53,63 @@ VAL_SIZE = 0.2
 RANDOM_STATE = 42
 
 def get_stemmed_EMO_lexicon(lexicon, categories):
-    lemmatizer = WordNetLemmatizer()
-    stemmer = PorterStemmer()
-    stemmed_lexicon = {}
-    lexicon['stemma'] = ['' for _ in range(len(lexicon))]
-    for word, _ in lexicon.iterrows():
-        lemma = lemmatizer.lemmatize(word)
-        stemma = stemmer.stem(lemma)
-        lexicon.loc[word, 'stemma'] = stemma
-        if stemma in stemmed_lexicon:
-            stemmed_lexicon[stemma] += lexicon.loc[word, categories]
-        else:
-            stemmed_lexicon[stemma] = lexicon.loc[word, categories]
-    stemmed_lexicon = pd.DataFrame(stemmed_lexicon).T
-    stemmed_lexicon[stemmed_lexicon > 0] = 1
-    stemmed_lexicon = stemmed_lexicon.loc[(stemmed_lexicon!=0).any(axis=1)]
-    stemmed_lexicon.to_csv('./lexicon/stemmed_lexicon_EMO.csv')
-    lexicon.to_csv('./lexicon/lexicon_EMO.csv')
+    
+    if (os.path.exists('./lexicon/lexicon_EMO.csv') and os.path.exists('./lexicon/stemmed_lexicon_EMO.csv')):
+        stemmed_lexicon = pd.read_csv('./lexicon/stemmed_lexicon_EMO.csv', index_col='word')
+        lexicon = pd.read_csv('./lexicon/lexicon_EMO.csv', index_col='word')
+    else:
+        lemmatizer = WordNetLemmatizer()
+        stemmer = PorterStemmer()
+        stemmed_lexicon = {}
+        lexicon['stemma'] = ['' for _ in range(len(lexicon))]
+        for word, _ in lexicon.iterrows():
+            lemma = lemmatizer.lemmatize(word)
+            stemma = stemmer.stem(lemma)
+            lexicon.loc[word, 'stemma'] = stemma
+            if stemma in stemmed_lexicon:
+                stemmed_lexicon[stemma] += lexicon.loc[word, categories]
+            else:
+                stemmed_lexicon[stemma] = lexicon.loc[word, categories]
+        stemmed_lexicon = pd.DataFrame(stemmed_lexicon).T
+        stemmed_lexicon[stemmed_lexicon > 0] = 1
+        stemmed_lexicon = stemmed_lexicon.loc[(stemmed_lexicon!=0).any(axis=1)]
+        stemmed_lexicon.to_csv('./lexicon/stemmed_lexicon_EMO.csv')
+        lexicon.to_csv('./lexicon/lexicon_EMO.csv')
     return stemmed_lexicon, lexicon
 
 def get_stemmed_EMP_lexicon(lexicon):
-    lemmatizer = WordNetLemmatizer()
-    stemmer = PorterStemmer()
-    stemmed_lexicon = {}
-    lexicon['stemma'] = ['' for _ in range(len(lexicon))]
-    for word, _ in lexicon.iterrows():
-        lemma = lemmatizer.lemmatize(word)
-        stemma = stemmer.stem(lemma)
-        lexicon.loc[word, 'stemma'] = stemma
-        if stemma in stemmed_lexicon:
-            stemmed_lexicon[stemma] = [
-                lexicon.loc[word, 'empathy']+stemmed_lexicon[stemma][0],
-                lexicon.loc[word, 'distress']+stemmed_lexicon[stemma][1],
-                stemmed_lexicon[stemma][-1]+1
-            ]
-        else:
-            stemmed_lexicon[stemma] = [
-                lexicon.loc[word, 'empathy'],
-                lexicon.loc[word, 'distress'],
-                1
-            ]
-    stemmed_lexicon =  pd.DataFrame(stemmed_lexicon).T
-    stemmed_lexicon.rename(columns={0:'empathy', 1:'distress', 2:'count'}, inplace=True)
-    stemmed_lexicon['empathy'] = stemmed_lexicon['empathy'].astype(float) / stemmed_lexicon['count']
-    stemmed_lexicon['distress'] = stemmed_lexicon['distress'].astype(float) / stemmed_lexicon['count']
-    stemmed_lexicon.to_csv('./lexicon/stemmed_lexicon_EMP.csv')
-    lexicon.to_csv('./lexicon/lexicon_EMP.csv')
+    
+    if (os.path.exists('./lexicon/lexicon_EMP.csv') and os.path.exists('./lexicon/stemmed_lexicon_EMP.csv')):
+        stemmed_lexicon = pd.read_csv('./lexicon/stemmed_lexicon_EMP.csv', index_col='word')
+        lexicon = pd.read_csv('./lexicon/lexicon_EMP.csv', index_col='word') 
+    else:
+        lemmatizer = WordNetLemmatizer()
+        stemmer = PorterStemmer()
+        stemmed_lexicon = {}
+        lexicon['stemma'] = ['' for _ in range(len(lexicon))]
+        for word, _ in lexicon.iterrows():
+            lemma = lemmatizer.lemmatize(word)
+            stemma = stemmer.stem(lemma)
+            lexicon.loc[word, 'stemma'] = stemma
+            if stemma in stemmed_lexicon:
+                stemmed_lexicon[stemma] = [
+                    lexicon.loc[word, 'empathy']+stemmed_lexicon[stemma][0],
+                    lexicon.loc[word, 'distress']+stemmed_lexicon[stemma][1],
+                    stemmed_lexicon[stemma][-1]+1
+                ]
+            else:
+                stemmed_lexicon[stemma] = [
+                    lexicon.loc[word, 'empathy'],
+                    lexicon.loc[word, 'distress'],
+                    1
+                ]
+        stemmed_lexicon =  pd.DataFrame(stemmed_lexicon).T
+        stemmed_lexicon.rename(columns={0:'empathy', 1:'distress', 2:'count'}, inplace=True)
+        stemmed_lexicon['empathy'] = stemmed_lexicon['empathy'].astype(float) / stemmed_lexicon['count']
+        stemmed_lexicon['distress'] = stemmed_lexicon['distress'].astype(float) / stemmed_lexicon['count']
+        stemmed_lexicon.to_csv('./lexicon/stemmed_lexicon_EMP.csv')
+        lexicon.to_csv('./lexicon/lexicon_EMP.csv')
+    
     return stemmed_lexicon, lexicon
 
 def read_lexicon_df(categories):
@@ -115,41 +140,66 @@ def correct_spelling(text):
     textblob = TextBlob(text)
     return textblob.correct()
 
-def add_counts(df, lexicon, stemmed_lexicon, categories):
+def add_counts(df, split, lexicon, stemmed_lexicon, categories):
     lemmatizer = WordNetLemmatizer()
     stemmer = PorterStemmer()
     
     for category in categories:
         df[f'{category}_count'] = [0 for _ in range(len(df))]
-
+    
+    per_word_values = {}
+    
+    
+    essays_per_word_values = {}
     for index, row in df.iterrows():
         # remove punctuations and digits
+        per_word_values = {}
+    
+        for category in categories:
+            per_word_values[category] = [0.0 for _ in range(len(row['essay'].split()))]
+        
+        
         essay = remove_punctuations(row['essay'])
         essay = remove_digit(essay)
         count = 0
-
+        
         # count emotion flags of essay tokens in lexicon
-        for word in essay.split():
+        for i, word in enumerate(essay.split()):
+            counter_word_in_lexicon = 0
+            word = word.lower()
             if word in lexicon.index:
+                counter_word_in_lexicon += 1
                 count += 1
                 for category in categories:
-                    df.loc[index, f'{category}_count'] += lexicon.loc[word][category]
-                    
-                            
-        # expand contractions, correct spelling, lemmatize and stemm essay tokens
-        essay = expand_contractions(essay)
-        essay = correct_spelling(essay)
-        lemmas = [lemmatizer.lemmatize(token) for token in essay.split()]
-        stemmas = [stemmer.stem(lemma) for lemma in lemmas]
-        
-        # sum the emotion flags counts of stemmed essay tokens in stemmed_lexicon
-        for stemma in stemmas:
-            if stemma in stemmed_lexicon.index:
-                count += 0.5
+                    df.loc[index, f'{category}_count'] += lexicon.loc[word][category].astype(float)
+                    per_word_values[category][i] = lexicon.loc[word][category].astype(float)
+                                        
+            # expand contractions, correct spelling, lemmatize and stemm essay tokens
+            word = expand_contractions(word)
+            word = correct_spelling(word)
+            lemmas = [lemmatizer.lemmatize(token) for token in word.split()]
+            stemmas = [stemmer.stem(lemma) for lemma in lemmas]
+            
+            # sum the emotion flags counts of stemmed essay tokens in stemmed_lexicon
+            for stemma in stemmas:
+                if stemma in stemmed_lexicon.index:
+                    counter_word_in_lexicon += 1
+                    count += 0.5
+                    for category in categories:
+                        df.loc[index, f'{category}_count'] += stemmed_lexicon.loc[stemma][category].astype(float)
+                        per_word_values[category][i] += stemmed_lexicon.loc[stemma][category].astype(float)
+                else:
+                    if (len(categories) == 2):    
+                        per_word_values['empathy'][i] = 4.0 
+            
+            if(len(categories) == 2):
                 for category in categories:
-                    df.loc[index, f'{category}_count'] += stemmed_lexicon.loc[stemma][category]
-        
-              
+                    if (counter_word_in_lexicon != 0):
+                        per_word_values[category][i] /= counter_word_in_lexicon
+            else:
+                for category in categories:
+                    if (per_word_values[category][i] > 1):
+                        per_word_values[category][i] = 1.0
         # nomalize counts
         word_count = len(row['essay'].split())
         for category in categories:
@@ -157,6 +207,13 @@ def add_counts(df, lexicon, stemmed_lexicon, categories):
                 df.loc[index, f'{category}_count'] /= (word_count * count/100)
             else:
                 df.loc[index, f'{category}_count'] /= (word_count/100)
+        
+        essays_per_word_values[row['essay_id']] = per_word_values
+    
+    if (len(categories) == 2):
+        write_dict_to_json(essays_per_word_values, f"./lexicon/{split}_per_word_lexicon_EMP.json")
+    else:
+        write_dict_to_json(essays_per_word_values, f"./lexicon/{split}_per_word_lexicon_EMO.json")
     
     return df
 
@@ -209,14 +266,14 @@ def add_lexicon_features(train_df, dev_df, test_df):
     stemmed_lexicon_EMO, lexicon_EMO = get_stemmed_EMO_lexicon(lexicon_EMO, categories_EMO)
     stemmed_lexicon_EMP, lexicon_EMP = get_stemmed_EMP_lexicon(lexicon_EMP)
 
-    train_df = add_counts(train_df, lexicon_EMO, stemmed_lexicon_EMO, categories_EMO)
-    train_df = add_counts(train_df, lexicon_EMP, stemmed_lexicon_EMP, categories_EMP)
+    train_df = add_counts(train_df, "train", lexicon_EMO, stemmed_lexicon_EMO, categories_EMO)
+    train_df = add_counts(train_df, "train",lexicon_EMP, stemmed_lexicon_EMP, categories_EMP)
 
-    dev_df = add_counts(dev_df, lexicon_EMO, stemmed_lexicon_EMO, categories_EMO)
-    dev_df = add_counts(dev_df, lexicon_EMP, stemmed_lexicon_EMP, categories_EMP)
+    dev_df = add_counts(dev_df, "dev",lexicon_EMO, stemmed_lexicon_EMO, categories_EMO)
+    dev_df = add_counts(dev_df, "dev",lexicon_EMP, stemmed_lexicon_EMP, categories_EMP)
 
-    test_df = add_counts(test_df, lexicon_EMO, stemmed_lexicon_EMO, categories_EMO)
-    test_df = add_counts(test_df, lexicon_EMP, stemmed_lexicon_EMP, categories_EMP)
+    test_df = add_counts(test_df, "test",lexicon_EMO, stemmed_lexicon_EMO, categories_EMO)
+    test_df = add_counts(test_df, "test",lexicon_EMP, stemmed_lexicon_EMP, categories_EMP)
 
     return train_df, dev_df, test_df
 
@@ -235,8 +292,8 @@ def drop_rows_with_unknown(dataframe):
 
 def preprocess(year):
 
-    train_path = f"hope_dataset/WASSA{year}_essay_level_train.tsv"
-    dev_path = f"hope_dataset/WASSA{year}_essay_level_dev.tsv"
+    train_path = f"datasets/WASSA{year}_essay_level_train.tsv"
+    dev_path = f"datasets/WASSA{year}_essay_level_dev.tsv"
     test_path = f"datasets/WASSA{year}_essay_level_test.tsv"
     dev_labels_path = f"datasets/WASSA{year}_goldstandard_dev.tsv"
 
@@ -286,9 +343,20 @@ def preprocess(year):
 
 def main():
     # preprocess WASSA 22 dataset
-    preprocess(22)
-    # preprocess WASSA 23 dataset
-    preprocess(23)
+    # preprocess(22)
+    # # preprocess WASSA 23 dataset
+    # preprocess(23)
+    year = 23
+    train_path = f"datasets/WASSA{year}_essay_level_train.tsv"
+    dev_path = f"datasets/WASSA{year}_essay_level_dev.tsv"
+    test_path = f"datasets/WASSA{year}_essay_level_test.tsv"
+    dev_labels_path = f"datasets/WASSA{year}_goldstandard_dev.tsv"
+
+    train_df = pd.read_csv(train_path, sep='\t')#.head(5)
+    dev_df = pd.read_csv(dev_path, sep='\t')#.head(5)
+    test_df = pd.read_csv (test_path, sep='\t')#.head(5)
+    #dev_lbl_df = pd.read_csv(dev_labels_path, sep='\t', names=DEV_COL_NAMES)
+    add_lexicon_features(train_df, dev_df, test_df)
 
 if __name__ == "__main__":
     main()
