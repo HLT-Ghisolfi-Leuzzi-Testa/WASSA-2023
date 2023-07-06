@@ -244,8 +244,10 @@ def build_hope_lexicon():
     # build hope lexicon
     hope_lexicon = {}
     for word, value in anticipation_lexicon.items():
-        if (value == 1 and (word in  subjectivity_lexicon or TextBlob(word).sentiment.subjectivity >= 0.5) 
-            and (positive_lexicon[word]==1 or joy_lexicon[word]==1)):
+        if word=='abundance':
+            print("ciao")
+        if (value == '1' and (word in  subjectivity_lexicon or TextBlob(word).sentiment.subjectivity >= 0.5) 
+            and (positive_lexicon[word]=='1' or joy_lexicon[word]=='1')):
             hope_lexicon[word] = 1
         else:
             hope_lexicon[word] = 0
@@ -304,10 +306,10 @@ def preprocess(year):
     
     build_hope_lexicon()
 
-    train_df, dev_df, test_df = add_lexicon_features(train_df, dev_df, test_df)
-
     # merging dev labels with data
     dev_df = dev_df.merge(dev_lbl_df, left_index=True, right_index=True, how='outer')
+
+    train_df, dev_df, test_df = add_lexicon_features(train_df, dev_df, test_df)
     
     # splitting train data into train and validation with a stratified approach
     emotions = train_df['emotion'].unique().tolist()
