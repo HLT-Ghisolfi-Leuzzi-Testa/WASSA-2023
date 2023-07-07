@@ -74,7 +74,7 @@ def get_stemmed_EMO_lexicon(lexicon, categories):
         stemmed_lexicon[stemmed_lexicon > 0] = 1
         stemmed_lexicon = stemmed_lexicon.loc[(stemmed_lexicon!=0).any(axis=1)]
         stemmed_lexicon.to_csv('./lexicon/stemmed_lexicon_EMO.csv')
-        lexicon.to_csv('./lexicon/lexicon_EMO.csv')
+        lexicon.to_csv('./lexicon/lexicon_EMO.csv', index_label='word')
     return stemmed_lexicon, lexicon
 
 def get_stemmed_EMP_lexicon(lexicon):
@@ -108,7 +108,7 @@ def get_stemmed_EMP_lexicon(lexicon):
         stemmed_lexicon['empathy'] = stemmed_lexicon['empathy'].astype(float) / stemmed_lexicon['count']
         stemmed_lexicon['distress'] = stemmed_lexicon['distress'].astype(float) / stemmed_lexicon['count']
         stemmed_lexicon.to_csv('./lexicon/stemmed_lexicon_EMP.csv')
-        lexicon.to_csv('./lexicon/lexicon_EMP.csv')
+        lexicon.to_csv('./lexicon/lexicon_EMP.csv', index_label='word')
     
     return stemmed_lexicon, lexicon
 
@@ -291,6 +291,9 @@ def drop_rows_with_unknown(dataframe):
         dataframe = dataframe[dataframe[column] != 'unknown']
     return dataframe
 
+def add_word_count(dataframe):
+    dataframe['essay_word_count'] = dataframe['essay'].apply(lambda x: len(x.split()))
+    return dataframe
 
 def preprocess(year):
 
@@ -309,7 +312,21 @@ def preprocess(year):
     # merging dev labels with data
     dev_df = dev_df.merge(dev_lbl_df, left_index=True, right_index=True, how='outer')
 
+    # drop unknown values
+    train_df = drop_rows_with_unknown(train_df)
+    internal_train_df = drop_rows_with_unknown(internal_train_df)
+    internal_val_df = drop_rows_with_unknown(internal_val_df)
+    dev_df = drop_rows_with_unknown(dev_df)
+    test_df = drop_rows_with_unknown(test_df)
+
     train_df, dev_df, test_df = add_lexicon_features(train_df, dev_df, test_df)
+
+    # add essay word count
+    train_df = add_word_count(train_df)
+    internal_train_df = add_word_count(internal_train_df)
+    internal_val_df = add_word_count(internal_val_df)
+    dev_df = add_word_count(dev_df)
+    test_df = add_word_count(test_df)
     
     # splitting train data into train and validation with a stratified approach
     emotions = train_df['emotion'].unique().tolist()
@@ -323,13 +340,6 @@ def preprocess(year):
             t_df, v_df = train_test_split(emotion_df, test_size=VAL_SIZE, stratify=emotion_df['emotion'], shuffle=True)
             internal_train_df = pd.concat([internal_train_df, t_df])
             internal_val_df = pd.concat([internal_val_df, v_df])
-
-    # drop unknown values
-    train_df = drop_rows_with_unknown(train_df)
-    internal_train_df = drop_rows_with_unknown(internal_train_df)
-    internal_val_df = drop_rows_with_unknown(internal_val_df)
-    dev_df = drop_rows_with_unknown(dev_df)
-    test_df = drop_rows_with_unknown(test_df)
 
     # get pre-processed train data (ordered by internal_train and internal_val)
     train_df = pd.concat([internal_train_df, internal_val_df])
