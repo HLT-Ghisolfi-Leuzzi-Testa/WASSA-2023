@@ -77,7 +77,7 @@ def get_stemmed_EMO_lexicon(lexicon, categories):
         lexicon.to_csv('./lexicon/lexicon_EMO.csv', index_label='word')
     return stemmed_lexicon, lexicon
 
-def get_stemmed_EMP_lexicon(lexicon):
+def get_stemmed_EMP_lexicon(lexicon): # TODO: sistemare normalizzazione
     
     if (os.path.exists('./lexicon/lexicon_EMP.csv') and os.path.exists('./lexicon/stemmed_lexicon_EMP.csv')):
         stemmed_lexicon = pd.read_csv('./lexicon/stemmed_lexicon_EMP.csv', index_col='word')
