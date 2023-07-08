@@ -306,51 +306,71 @@ def add_word_count(dataframe):
     dataframe['essay_word_count'] = dataframe['essay'].apply(lambda x: len(x.split()))
     return dataframe
 
+def generate_prompt(essay, gender, education, ethnicity, age, income, empathy, distress):
+    if gender == 1: gender_str = "male"
+    else: gender_str = "female"
+
+    if education == 1: education_str = "with less than a high school diploma"
+    elif education == 2: education_str = "with a high school diploma"
+    elif education == 3: education_str = "went to a technical/vocational school"
+    elif education == 4: education_str = "went to college"
+    elif education == 5: education_str = "with a two year associate degree"
+    elif education == 6: education_str = "with a four year bachelor's degree"
+    else: education_str = "postgradute or with a professional degree"
+
+    if ethnicity == 1: ethnicity_str = " white"
+    elif ethnicity == 2: ethnicity_str = " hispanic or latino"
+    elif ethnicity == 3: ethnicity_str = " black or african american"
+    elif ethnicity == 4: ethnicity_str = " native american or american indian"
+    elif ethnicity == 5: ethnicity_str = " asian/pacific islander"
+    else: ethnicity = ""
+
+    text_prompt_bio = "An essay written by a {} years old{} {}, {}, with an income of {}$.".format(
+        age, ethnicity_str,
+        gender_str,
+        education_str,
+        income
+        )
+    
+    if empathy is not None:
+        if empathy < 3: empathy_value = "low"
+        elif empathy < 5: empathy_value = "medium"
+        else: empathy_value = "high"
+        if distress < 3: distress_value = "low"
+        elif distress < 5: distress_value = "medium"
+        else: distress_value = "high"
+        text_prompt_emp = "The essay expresses {} empathy and {} distress levels.".format(
+            empathy_value,
+            distress_value
+            )
+
+    emotions = NRCLex(essay).top_emotions
+    if (sum(np.array([emo[1] for emo in emotions])))==0:
+        emotions = {'neutral': 1}
+    n_emo = len(emotions)
+    emo_string = ""
+    for i, emo in enumerate(emotions):
+        emo_string += emo[0]
+        if i < n_emo-1:
+            emo_string += ", "
+    text_prompt_emo = " The top emotions expressed in the essay are: {}.".format(emo_string)
+
+    text_prompt = essay + '"' + text_prompt_bio + text_prompt_emp + text_prompt_emo + '"'
+    return text_prompt
+
 def add_prompt(dataframe, empathy=True):
     dataframe["prompt"] = ""
     for idx, row in dataframe.iterrows():
-        if row['gender'] == 1: gender = "male"
-        else: gender = "female"
-
-        if row['education'] == 1: education = "with less than a high school diploma"
-        elif row['education'] == 2: education = "with a high school diploma"
-        elif row['education'] == 3: education = "went to a technical/vocational school"
-        elif row['education'] == 4: education = "went to college"
-        elif row['education'] == 5: education = "with a two year associate degree"
-        elif row['education'] == 6: education = "with a four year bachelor's degree"
-        else: education = "postgradute or with a professional degree"
-
-        if row['race'] == 1: ethnicity = " white"
-        elif row['race'] == 2: ethnicity = " hispanic or latino"
-        elif row['race'] == 3: ethnicity = " black or african american"
-        elif row['race'] == 4: ethnicity = " native american or american indian"
-        elif row['race'] == 5: ethnicity = " asian/pacific islander"
-        else: ethnicity = ""
-
-        text_prompt_bio = "An essay written by a {} years old{} {}, {}, with an income of {}$.".format(
-                                        row["age"], ethnicity, gender, education, row["income"]) 
-        
-        if empathy:
-            if row["empathy"] < 3: emp = "low"
-            elif row["empathy"] < 5: emp = "medium"
-            else: emp = "high"
-            if row["distress"] < 3: dis = "low"
-            elif row["distress"] < 5: dis = "medium"
-            else: dis = "high"
-            text_prompt_emp = "The essay expresses {} empathy and {} distress levels.".format(emp,  dis)
-
-        emotions = NRCLex(row["essay"]).top_emotions
-        if (sum(np.array([emo[1] for emo in emotions])))== 0:
-           emotions = {'neutral': 1}
-        n_emo = len(emotions)
-        emo_string = ""
-        for i, emo in enumerate(emotions):
-            emo_string += emo[0]
-            if i < n_emo-1:
-                emo_string += ", "
-        text_prompt_emo = " The top emotions expressed in the essay are: {}.".format(emo_string)
-
-        text_prompt = row["essay"] + '"' + text_prompt_bio + text_prompt_emp + text_prompt_emo + '"'
+        text_prompt = generate_prompt(
+            row['essay'],
+            row['gender'],
+            row['education'],
+            row['ethnicity'],
+            row['age'],
+            row['income'],
+            row['empathy'] if empathy else None,
+            row['distress'] if empathy else None
+            )
         dataframe["prompt"][idx] = text_prompt
     return dataframe
 

@@ -14,10 +14,11 @@ from sklearn.model_selection import KFold
 from sklearn.preprocessing import MultiLabelBinarizer, LabelEncoder, LabelBinarizer
 from torch.utils.data import Dataset
 from transformers import EvalPrediction
-from torchsummary import summary
-from torchview import draw_graph
-from bertviz import model_view
+#from torchsummary import summary
+#from torchview import draw_graph
+#from bertviz import model_view
 from textblob import TextBlob
+from preprocessing import generate_prompt
 
 EMP_LEXICON_PATH = "./lexicon/lexicon_EMP.csv"
 
@@ -491,56 +492,21 @@ def plot_confusion_matrix_per_emotions(gold_emotions, predicted_emotions):
     plt.tight_layout()
     plt.show()
 
-    
-def add_prompt_to_test_from_EMP_predictions(test_df, emp_predictions_path): #TODO: verificare che funzioni
-    emp_predictions = pd.read_csv(emp_predictions_path, header=None)
+def add_prompt_to_test_from_EMP_predictions(test_df, emp_predictions_path):
+    emp_predictions = pd.read_csv(emp_predictions_path, header=None) #TODO: verificare che funzioni
+    emp_predictions.columns = ['empathy', 'distress']
 
     for idx, row in test_df.iterrows():
-        if row['gender'] == 1: gender = "male"
-        else: gender = "female"
-
-        if row['education'] == 1: education = "less than a high school diploma"
-        elif row['education'] == 2: education = "high School diploma"
-        elif row['education'] == 3: education = "technical/vocational School"
-        elif row['education'] == 4: education = "some college but no degree"
-        elif row['education'] == 5: education = "two year associate degree"
-        elif row['education'] == 6: education = "four year bachelor's degree"
-        else: education = "postgradute or professional degree"
-
-        if row['race'] == 1: ethnicity = "white"
-        elif row['race'] == 2: ethnicity = "hispanic or latino"
-        elif row['race'] == 3: ethnicity = "black or african american"
-        elif row['race'] == 4: ethnicity = "native american or american indian"
-        elif row['race'] == 5: ethnicity = "asian/pacific islander"
-        else: ethnicity = ""
-
-        text_prompt_bio = "An essay written by a {} years old {} {}, with {}, with an income of {}$.".format(
-                                        row["age"], ethnicity, gender, education, row["income"]) 
-        
-        for line in emp_predictions[idx]:
-            empathy = line.split('/')[0]
-            distress = line.split('/')[1]
-
-            if empathy < 3: emp = "The essay expresses low empathy"
-            elif empathy < 5: emp = "The essay not expresses empathy"
-            else: empathy = "The essay expresses high empathy"
-            if distress < 3: dis = "low"
-            elif distress < 5: dis = "medium"
-            else: dis = "high"
-            text_prompt_emp = " {} and {} distress level.".format(emp,  dis)
-
-        emotions = NRCLex(row["essay"]).top_emotions
-        if (sum(np.array([emo[1] for emo in emotions])))== 0:
-           emotions = {'neutral': 0}
-        n_emo = len(emotions)
-        string = ""
-        for i, emo in enumerate(emotions):
-            string += emo[0]
-            if i < n_emo-1:
-                string += ", "
-        text_prompt_emo = " Top emotions expressed by the writer are: {}.".format(string)
-
-        text_prompt = row["essay"] + '"' + text_prompt_bio + text_prompt_emp + text_prompt_emo + '"'
+        text_prompt = generate_prompt(
+            row['essay'],
+            row['gender'],
+            row['education'],
+            row['ethnicity'],
+            row['age'],
+            row['income'],
+            emp_predictions['empathy'][idx],
+            emp_predictions['distress'][idx],
+            )
         test_df["prompt"][idx] = text_prompt
         
     return test_df
