@@ -70,8 +70,10 @@ def plot_metric_curve(
     
     sns.set(style='darkgrid')
     plt.rcParams["figure.figsize"] = (12,6)
-    plt.plot(train_epochs, train_metric, 'b-o', label="Training")
-    plt.plot(eval_epochs, eval_metric,'r-o', label="Validation")
+    if train_epochs:
+        plt.plot(train_epochs, train_metric, 'b-o', label="Training")
+    if eval_epochs:
+        plt.plot(eval_epochs, eval_metric,'r-o', label="Validation")
     plt.xlabel("Epoch")
     plt.ylabel(metric)
     plt.legend()
