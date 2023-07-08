@@ -1,5 +1,5 @@
 class BertPoolingByLexica(BertPreTrainedModel):
-  def __init__(self, config, n_features, dropout=0.3):
+  def __init__(self, config, n_features, dropout=0.3, weights):
     super().__init__(config)
     print(config)
     self.num_labels = config.num_labels
@@ -8,6 +8,7 @@ class BertPoolingByLexica(BertPreTrainedModel):
     self.bert = BertModel(config)
     self.dropout = nn.Dropout(dropout)
     self.classifier = nn.Linear(config.hidden_size+self.n_features, config.num_labels)
+    self.weights = weights
     self.post_init()
 
   def forward(
@@ -83,10 +84,10 @@ class BertPoolingByLexica(BertPreTrainedModel):
         else:
           loss = loss_fct(logits, labels)
       elif self.config.problem_type == "single_label_classification":
-        loss_fct = nn.CrossEntropyLoss()
+        loss_fct = nn.CrossEntropyLoss(weight=torch.tensor(self.weights))
         loss = loss_fct(logits.view(-1, self.num_labels), labels.view(-1))
       elif self.config.problem_type == "multi_label_classification":
-        loss_fct = nn.BCEWithLogitsLoss()
+        loss_fct = nn.BCEWithLogitsLoss(weight=torch.tensor(self.weights))
         loss = loss_fct(logits, labels)
 
     if not return_dict:
@@ -101,7 +102,7 @@ class BertPoolingByLexica(BertPreTrainedModel):
     )
 
 class BertConcatCLS(BertPreTrainedModel):
-  def __init__(self, config, n_features, dropout=0.3, hidden_layers_to_concat=1):
+  def __init__(self, config, n_features, dropout=0.3, hidden_layers_to_concat=1, weights):
     super().__init__(config)
     print(config)
     self.num_labels = config.num_labels
@@ -111,6 +112,7 @@ class BertConcatCLS(BertPreTrainedModel):
     self.bert = BertModel(config)
     self.dropout = nn.Dropout(dropout)
     self.classifier = nn.Linear((config.hidden_size*self.hidden_layers_to_concat)+self.n_features, config.num_labels)
+    self.weights = weights
     self.post_init()
 
   def forward(
@@ -170,10 +172,10 @@ class BertConcatCLS(BertPreTrainedModel):
         else:
           loss = loss_fct(logits, labels)
       elif self.config.problem_type == "single_label_classification":
-        loss_fct = nn.CrossEntropyLoss()
+        loss_fct = nn.CrossEntropyLoss(weight=torch.tensor(self.weights))
         loss = loss_fct(logits.view(-1, self.num_labels), labels.view(-1))
       elif self.config.problem_type == "multi_label_classification":
-        loss_fct = nn.BCEWithLogitsLoss()
+        loss_fct = nn.BCEWithLogitsLoss(weight=torch.tensor(self.weights))
         loss = loss_fct(logits, labels)
 
     if not return_dict:
@@ -188,7 +190,7 @@ class BertConcatCLS(BertPreTrainedModel):
     )
 
 class BertAverageCLS(BertPreTrainedModel):
-  def __init__(self, config, n_features, dropout=0.3, hidden_layers_to_average=1):
+  def __init__(self, config, n_features, dropout=0.3, hidden_layers_to_average=1, weights):
     super().__init__(config)
     print(config)
     self.num_labels = config.num_labels
@@ -198,6 +200,7 @@ class BertAverageCLS(BertPreTrainedModel):
     self.bert = BertModel(config)
     self.dropout = nn.Dropout(dropout)
     self.classifier = nn.Linear(config.hidden_size+self.n_features, config.num_labels)
+    self.weights = weights
     self.post_init()
 
   def forward(
@@ -257,10 +260,10 @@ class BertAverageCLS(BertPreTrainedModel):
         else:
           loss = loss_fct(logits, labels)
       elif self.config.problem_type == "single_label_classification":
-        loss_fct = nn.CrossEntropyLoss()
+        loss_fct = nn.CrossEntropyLoss(weight=torch.tensor(self.weights))
         loss = loss_fct(logits.view(-1, self.num_labels), labels.view(-1))
       elif self.config.problem_type == "multi_label_classification":
-        loss_fct = nn.BCEWithLogitsLoss()
+        loss_fct = nn.BCEWithLogitsLoss(weight=torch.tensor(self.weights))
         loss = loss_fct(logits, labels)
 
     if not return_dict:
