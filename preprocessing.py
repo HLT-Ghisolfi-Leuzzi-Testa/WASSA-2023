@@ -312,49 +312,49 @@ def add_prompt(dataframe, empathy=True):
         if row['gender'] == 1: gender = "male"
         else: gender = "female"
 
-        if row['education'] == 1: education = "less than a high school diploma"
-        elif row['education'] == 2: education = "high School diploma"
-        elif row['education'] == 3: education = "technical/vocational School"
-        elif row['education'] == 4: education = "some college but no degree"
-        elif row['education'] == 5: education = "two year associate degree"
-        elif row['education'] == 6: education = "four year bachelor's degree"
-        else: education = "postgradute or professional degree"
+        if row['education'] == 1: education = "with less than a high school diploma"
+        elif row['education'] == 2: education = "with a high school diploma"
+        elif row['education'] == 3: education = "went to a technical/vocational school"
+        elif row['education'] == 4: education = "went to college"
+        elif row['education'] == 5: education = "with a two year associate degree"
+        elif row['education'] == 6: education = "with a four year bachelor's degree"
+        else: education = "postgradute or with a professional degree"
 
-        if row['race'] == 1: ethnicity = "white"
-        elif row['race'] == 2: ethnicity = "hispanic or latino"
-        elif row['race'] == 3: ethnicity = "black or african american"
-        elif row['race'] == 4: ethnicity = "native american or american indian"
-        elif row['race'] == 5: ethnicity = "asian/pacific islander"
+        if row['race'] == 1: ethnicity = " white"
+        elif row['race'] == 2: ethnicity = " hispanic or latino"
+        elif row['race'] == 3: ethnicity = " black or african american"
+        elif row['race'] == 4: ethnicity = " native american or american indian"
+        elif row['race'] == 5: ethnicity = " asian/pacific islander"
         else: ethnicity = ""
 
-        text_prompt_bio = "An essay written by a {} years old {} {}, with {}, with an income of {}$.".format(
+        text_prompt_bio = "An essay written by a {} years old{} {}, {}, with an income of {}$.".format(
                                         row["age"], ethnicity, gender, education, row["income"]) 
         
         if empathy:
-            if row["empathy"] < 3: emp = "The essay expresses low empathy"
-            elif row["empathy"] < 5: emp = "The essay not expresses empathy"
-            else: emp = "The essay expresses high empathy"
+            if row["empathy"] < 3: emp = "low"
+            elif row["empathy"] < 5: emp = "medium"
+            else: emp = "high"
             if row["distress"] < 3: dis = "low"
             elif row["distress"] < 5: dis = "medium"
             else: dis = "high"
-            text_prompt_emp = " {} and {} distress level.".format(emp,  dis)
+            text_prompt_emp = "The essay expresses {} empathy and {} distress levels.".format(emp,  dis)
 
         emotions = NRCLex(row["essay"]).top_emotions
         if (sum(np.array([emo[1] for emo in emotions])))== 0:
-           emotions = {'neutral': 0}
+           emotions = {'neutral': 1}
         n_emo = len(emotions)
-        string = ""
+        emo_string = ""
         for i, emo in enumerate(emotions):
-            string += emo[0]
+            emo_string += emo[0]
             if i < n_emo-1:
-                string += ", "
-        text_prompt_emo = " Top emotions expressed by the writer are: {}.".format(string)
+                emo_string += ", "
+        text_prompt_emo = " The top emotions expressed in the essay are: {}.".format(emo_string)
 
         text_prompt = row["essay"] + '"' + text_prompt_bio + text_prompt_emp + text_prompt_emo + '"'
         dataframe["prompt"][idx] = text_prompt
     return dataframe
 
-def remouve_space_from_essay(dataframe):
+def remove_space_from_essay(dataframe):
     dataframe['essay'] = dataframe['essay'].str.replace("\r\n", " ")
     return dataframe
 
@@ -390,7 +390,7 @@ def preprocess(year):
 
     if year == 23:
         # remouve unuselful space from essay
-        test_df = remouve_space_from_essay(test_df)
+        test_df = remove_space_from_essay(test_df)
 
     # add prompt with anagraphic data
     train_df = add_prompt(train_df)
