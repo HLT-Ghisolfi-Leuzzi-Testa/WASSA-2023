@@ -676,7 +676,7 @@ class EMPlexicon():
                 value_counts[0] += self.empathy_dict[word]
                 value_counts[1] += self.distress_dict[word]
             else:
-                self.empathy_list.append(0)
+                self.empathy_list.append(4)
                 self.distress_list.append(0)
 
         # dict with mean values for empathy and distress over the sentence   
