@@ -1,3 +1,224 @@
+abundance	1
+accolade	1
+achievement	1
+adore	1
+adventure	1
+advocacy	1
+allure	1
+amour	1
+angel	1
+ardent	1
+arouse	1
+aspiration	1
+aspire	1
+attainable	1
+auspicious	1
+award	1
+bless	1
+blessing	1
+bloom	1
+boisterous	1
+bonus	1
+bountiful	1
+brilliant	1
+brotherly	1
+candid	1
+captivate	1
+cautious	1
+celebrated	1
+celebration	1
+celebrity	1
+champion	1
+chant	1
+charitable	1
+cheer	1
+cheery	1
+cherish	1
+comfort	1
+compensate	1
+complement	1
+compliment	1
+convince	1
+dawn	1
+deal	1
+defense	1
+delight	1
+delighted	1
+delightful	1
+deserve	1
+devout	1
+diplomacy	1
+discreet	1
+discretion	1
+eager	1
+eagerness	1
+ecstasy	1
+ecstatic	1
+efficient	1
+elegance	1
+elite	1
+embrace	1
+enchant	1
+enchanting	1
+enjoy	1
+enjoying	1
+entertaining	1
+enthusiasm	1
+enthusiast	1
+erotic	1
+exalt	1
+exceed	1
+excel	1
+excite	1
+excited	1
+excitement	1
+exciting	1
+expectation	1
+faith	1
+fancy	1
+fanfare	1
+favorable	1
+feat	1
+feeling	1
+finally	1
+fitting	1
+flirt	1
+foresight	1
+fortune	1
+friendly	1
+fulfillment	1
+fun	1
+gain	1
+generosity	1
+glad	1
+glimmer	1
+glorify	1
+glory	1
+glow	1
+good	1
+goodness	1
+grin	1
+happiness	1
+happy	1
+heavenly	1
+hero	1
+honeymoon	1
+hope	1
+hopeful	1
+illuminate	1
+immediately	1
+importance	1
+improve	1
+improvise	1
+independence	1
+inspiration	1
+inspire	1
+intimate	1
+intimately	1
+kiss	1
+laughter	1
+liberate	1
+liberation	1
+liberty	1
+lovely	1
+lover	1
+luck	1
+magical	1
+magnificence	1
+magnificent	1
+majestic	1
+miracle	1
+navigable	1
+nurture	1
+oasis	1
+objective	1
+offset	1
+opportunity	1
+optimism	1
+outdo	1
+passion	1
+passionate	1
+patience	1
+patient	1
+peace	1
+peaceful	1
+perfect	1
+perfection	1
+pleasant	1
+powerful	1
+praiseworthy	1
+pray	1
+precious	1
+prepared	1
+pretty	1
+progress	1
+prosper	1
+proud	1
+punctual	1
+radiance	1
+rapture	1
+raving	1
+readiness	1
+recognizable	1
+reconciliation	1
+rehabilitation	1
+rejoice	1
+rejoicing	1
+remedy	1
+renovate	1
+renovation	1
+repay	1
+rescue	1
+respect	1
+responsive	1
+revere	1
+revival	1
+revive	1
+revolution	1
+reward	1
+romantic	1
+saint	1
+saintly	1
+salvation	1
+sanctify	1
+sanctuary	1
+savor	1
+serenity	1
+simplify	1
+soundness	1
+sparkle	1
+splendor	1
+star	1
+succeed	1
+success	1
+successful	1
+sunny	1
+supremacy	1
+sweet	1
+sweetheart	1
+tantalizing	1
+thrill	1
+thrilling	1
+thriving	1
+tickle	1
+top	1
+treasure	1
+treat	1
+triumph	1
+triumphant	1
+ultimately	1
+unexpected	1
+uplift	1
+venerable	1
+victory	1
+vigilance	1
+visionary	1
+vow	1
+winning	1
+worship	1
+yearning	1
+zeal	1
+zest	1
 aback	0
 abacus	0
 abandon	0
@@ -59,7 +280,6 @@ abstract	0
 abstraction	0
 absurd	0
 absurdity	0
-abundance	0
 abundant	0
 abuse	0
 abutment	0
@@ -83,7 +303,6 @@ accessory	0
 accident	0
 accidental	0
 accidentally	0
-accolade	0
 accommodate	0
 accommodation	0
 accompaniment	0
@@ -121,7 +340,6 @@ ace	0
 acetic	0
 ache	0
 achieve	0
-achievement	0
 aching	0
 acid	0
 acidity	0
@@ -220,7 +438,6 @@ adopt	0
 adoption	0
 adorable	0
 adoration	0
-adore	0
 adorn	0
 adornment	0
 adrift	0
@@ -234,7 +451,6 @@ advancing	0
 advantage	0
 advantageous	0
 advent	0
-adventure	0
 adventurer	0
 adventurous	0
 adversary	0
@@ -248,7 +464,6 @@ advise	0
 advised	0
 advisement	0
 adviser	0
-advocacy	0
 advocate	0
 aegis	0
 aeration	0
@@ -401,7 +616,6 @@ allowable	0
 allowance	0
 allowed	0
 alloy	0
-allure	0
 alluring	0
 allusion	0
 alluvial	0
@@ -463,7 +677,6 @@ amnesty	0
 amorphous	0
 amortization	0
 amount	0
-amour	0
 ampersand	0
 amphetamines	0
 amphibian	0
@@ -510,7 +723,6 @@ ancillary	0
 androgen	0
 anemone	0
 anew	0
-angel	0
 angelic	0
 anger	0
 angina	0
@@ -693,7 +905,6 @@ architect	0
 architecture	0
 archive	0
 arctic	0
-ardent	0
 ardor	0
 arduous	0
 area	0
@@ -724,7 +935,6 @@ arms	0
 army	0
 aroma	0
 arousal	0
-arouse	0
 arraignment	0
 arrange	0
 arranged	0
@@ -772,8 +982,6 @@ aspartame	0
 aspect	0
 aspects	0
 asphalt	0
-aspiration	0
-aspire	0
 aspiring	0
 ass	0
 assail	0
@@ -860,7 +1068,6 @@ attachment	0
 attack	0
 attacking	0
 attain	0
-attainable	0
 attainment	0
 attempt	0
 attendance	0
@@ -902,7 +1109,6 @@ aunt	0
 aura	0
 aurora	0
 auspices	0
-auspicious	0
 austere	0
 austerity	0
 authentic	0
@@ -948,7 +1154,6 @@ avoiding	0
 await	0
 awake	0
 awaken	0
-award	0
 awe	0
 awful	0
 awkwardness	0
@@ -1308,9 +1513,7 @@ bleeding	0
 blemish	0
 blend	0
 blending	0
-bless	0
 blessed	0
-blessing	0
 blessings	0
 blight	0
 blighted	0
@@ -1336,7 +1539,6 @@ bloodless	0
 bloodshed	0
 bloodthirsty	0
 bloody	0
-bloom	0
 blossom	0
 blot	0
 blouse	0
@@ -1376,7 +1578,6 @@ boil	0
 boiler	0
 boilerplate	0
 boiling	0
-boisterous	0
 bold	0
 boldness	0
 bolster	0
@@ -1397,7 +1598,6 @@ bones	0
 bonfire	0
 bonne	0
 bonnet	0
-bonus	0
 bony	0
 boo	0
 boob	0
@@ -1451,7 +1651,6 @@ bound	0
 boundary	0
 boundless	0
 bounds	0
-bountiful	0
 bounty	0
 bouquet	0
 bourgeois	0
@@ -1531,7 +1730,6 @@ brig	0
 brigade	0
 brighten	0
 brightness	0
-brilliant	0
 brim	0
 brimming	0
 brimstone	0
@@ -1560,7 +1758,6 @@ broth	0
 brothel	0
 brother	0
 brotherhood	0
-brotherly	0
 brow	0
 brown	0
 bruise	0
@@ -1737,7 +1934,6 @@ cancel	0
 canceling	0
 cancellation	0
 cancer	0
-candid	0
 candidacy	0
 candidate	0
 candied	0
@@ -1785,7 +1981,6 @@ caps	0
 capsule	0
 captain	0
 caption	0
-captivate	0
 captivating	0
 captive	0
 captivity	0
@@ -1891,7 +2086,6 @@ caused	0
 causeway	0
 caution	0
 cautionary	0
-cautious	0
 cautiously	0
 cavalry	0
 cave	0
@@ -1905,10 +2099,7 @@ ceaseless	0
 cede	0
 ceiling	0
 celebrant	0
-celebrated	0
 celebrating	0
-celebration	0
-celebrity	0
 celestial	0
 celibacy	0
 cell	0
@@ -1963,7 +2154,6 @@ chamber	0
 chambers	0
 chameleon	0
 champagne	0
-champion	0
 chance	0
 chancellor	0
 chandelier	0
@@ -1974,7 +2164,6 @@ changed	0
 changer	0
 changing	0
 channel	0
-chant	0
 chaos	0
 chaotic	0
 chap	0
@@ -1993,7 +2182,6 @@ charge	0
 chargeable	0
 charger	0
 chariot	0
-charitable	0
 charity	0
 charm	0
 charmed	0
@@ -2022,18 +2210,15 @@ checklist	0
 cheek	0
 cheeks	0
 cheep	0
-cheer	0
 cheerful	0
 cheerfulness	0
 cheering	0
-cheery	0
 cheesecake	0
 cheetah	0
 chemise	0
 chemist	0
 chemistry	0
 cheque	0
-cherish	0
 cherry	0
 chess	0
 chest	0
@@ -2343,7 +2528,6 @@ combustible	0
 combustion	0
 comedy	0
 comet	0
-comfort	0
 comforter	0
 comic	0
 comical	0
@@ -2413,7 +2597,6 @@ compel	0
 compelled	0
 compelling	0
 compendium	0
-compensate	0
 compensation	0
 compensatory	0
 competence	0
@@ -2428,7 +2611,6 @@ complacency	0
 complacent	0
 complain	0
 complaint	0
-complement	0
 complementary	0
 completed	0
 completely	0
@@ -2445,7 +2627,6 @@ complicate	0
 complicated	0
 complication	0
 complicity	0
-compliment	0
 comply	0
 complying	0
 compo	0
@@ -2743,7 +2924,6 @@ conveyance	0
 conveyancing	0
 convict	0
 conviction	0
-convince	0
 convinced	0
 convincing	0
 convocation	0
@@ -3156,7 +3336,6 @@ data	0
 database	0
 date	0
 daughter	0
-dawn	0
 day	0
 daybreak	0
 daydreaming	0
@@ -3169,7 +3348,6 @@ deadlock	0
 deadly	0
 deafening	0
 deafness	0
-deal	0
 dealer	0
 dealing	0
 dealings	0
@@ -3248,7 +3426,6 @@ defendant	0
 defended	0
 defender	0
 defending	0
-defense	0
 defenseless	0
 defensible	0
 defensive	0
@@ -3297,9 +3474,6 @@ deliberation	0
 deliberative	0
 delicacy	0
 delicious	0
-delight	0
-delighted	0
-delightful	0
 delineate	0
 delineation	0
 delinquency	0
@@ -3410,7 +3584,6 @@ desecration	0
 desert	0
 deserted	0
 desertion	0
-deserve	0
 deserved	0
 deserving	0
 design	0
@@ -3497,7 +3670,6 @@ devote	0
 devotee	0
 devotional	0
 devour	0
-devout	0
 dew	0
 dexter	0
 dexterity	0
@@ -3582,7 +3754,6 @@ diocese	0
 diorama	0
 dip	0
 diploma	0
-diplomacy	0
 diplomat	0
 diplomatic	0
 dire	0
@@ -3660,10 +3831,8 @@ discourse	0
 discover	0
 discovery	0
 discredit	0
-discreet	0
 discrepancy	0
 discrete	0
-discretion	0
 discretionary	0
 discriminate	0
 discriminating	0
@@ -4043,8 +4212,6 @@ dynamite	0
 dynasty	0
 dysentery	0
 dyspepsia	0
-eager	0
-eagerness	0
 eagle	0
 ear	0
 earl	0
@@ -4083,8 +4250,6 @@ ecliptic	0
 economical	0
 economics	0
 economy	0
-ecstasy	0
-ecstatic	0
 ecumenical	0
 eddy	0
 edge	0
@@ -4112,7 +4277,6 @@ effeminate	0
 efficacious	0
 efficacy	0
 efficiency	0
-efficient	0
 effigy	0
 effort	0
 effusion	0
@@ -4146,7 +4310,6 @@ elector	0
 electorate	0
 electric	0
 electricity	0
-elegance	0
 elegant	0
 element	0
 elementary	0
@@ -4161,7 +4324,6 @@ elf	0
 elicit	0
 eligible	0
 elimination	0
-elite	0
 elk	0
 ell	0
 ellipse	0
@@ -4197,7 +4359,6 @@ emblematic	0
 embodiment	0
 embolism	0
 embossed	0
-embrace	0
 embroidered	0
 embroidery	0
 embroiled	0
@@ -4244,9 +4405,7 @@ enact	0
 enactment	0
 enamel	0
 encampment	0
-enchant	0
 enchanted	0
-enchanting	0
 enchantment	0
 encircle	0
 encircling	0
@@ -4305,8 +4464,6 @@ enhance	0
 enigma	0
 enigmatic	0
 enjoin	0
-enjoy	0
-enjoying	0
 enlarged	0
 enlargement	0
 enlighten	0
@@ -4334,10 +4491,7 @@ enterprise	0
 enterprising	0
 entertain	0
 entertained	0
-entertaining	0
 entertainment	0
-enthusiasm	0
-enthusiast	0
 entice	0
 entire	0
 entirety	0
@@ -4406,7 +4560,6 @@ erection	0
 ergo	0
 erode	0
 erosion	0
-erotic	0
 err	0
 errand	0
 errant	0
@@ -4501,7 +4654,6 @@ exacting	0
 exaggerate	0
 exaggerated	0
 exaggeration	0
-exalt	0
 exaltation	0
 exalted	0
 exam	0
@@ -4512,9 +4664,7 @@ exasperation	0
 excavate	0
 excavation	0
 excavator	0
-exceed	0
 exceeding	0
-excel	0
 excellence	0
 excellent	0
 excepting	0
@@ -4529,10 +4679,6 @@ excision	0
 excitability	0
 excitable	0
 excitation	0
-excite	0
-excited	0
-excitement	0
-exciting	0
 exclaim	0
 excluded	0
 excluding	0
@@ -4587,7 +4733,6 @@ expatriate	0
 expect	0
 expectancy	0
 expectant	0
-expectation	0
 expected	0
 expecting	0
 expediency	0
@@ -4711,7 +4856,6 @@ fair	0
 fairly	0
 fairway	0
 fairy	0
-faith	0
 faithful	0
 faithless	0
 fake	0
@@ -4740,9 +4884,7 @@ fan	0
 fanatic	0
 fanaticism	0
 fanciful	0
-fancy	0
 fandango	0
-fanfare	0
 fang	0
 fangs	0
 fanning	0
@@ -4782,7 +4924,6 @@ faultless	0
 faulty	0
 fauna	0
 favor	0
-favorable	0
 favorite	0
 favoritism	0
 fawn	0
@@ -4793,7 +4934,6 @@ fearing	0
 fearless	0
 feasibility	0
 feasible	0
-feat	0
 feather	0
 feature	0
 features	0
@@ -4808,7 +4948,6 @@ feeble	0
 feed	0
 feeder	0
 feel	0
-feeling	0
 feet	0
 feigned	0
 felicity	0
@@ -4891,7 +5030,6 @@ fin	0
 final	0
 finale	0
 finality	0
-finally	0
 finance	0
 financial	0
 financier	0
@@ -4935,7 +5073,6 @@ fistula	0
 fitness	0
 fits	0
 fitted	0
-fitting	0
 fittings	0
 fix	0
 fixation	0
@@ -4996,7 +5133,6 @@ flinch	0
 fling	0
 flint	0
 flipper	0
-flirt	0
 flirting	0
 float	0
 flock	0
@@ -5106,7 +5242,6 @@ forensic	0
 forerunner	0
 foresee	0
 foreseen	0
-foresight	0
 forest	0
 forethought	0
 forewarned	0
@@ -5154,7 +5289,6 @@ fortnightly	0
 fortress	0
 fortuitous	0
 fortunate	0
-fortune	0
 forty	0
 forum	0
 forward	0
@@ -5216,7 +5350,6 @@ fret	0
 friction	0
 friend	0
 friendliness	0
-friendly	0
 friendship	0
 frigate	0
 fright	0
@@ -5260,7 +5393,6 @@ fuel	0
 fugitive	0
 fulcrum	0
 fulfill	0
-fulfillment	0
 full	0
 fullness	0
 fully	0
@@ -5268,7 +5400,6 @@ fumble	0
 fume	0
 fumigation	0
 fuming	0
-fun	0
 function	0
 functional	0
 fund	0
@@ -5303,7 +5434,6 @@ gaby	0
 gag	0
 gage	0
 gaggle	0
-gain	0
 gainful	0
 gaining	0
 gait	0
@@ -5393,7 +5523,6 @@ generation	0
 generative	0
 generator	0
 generic	0
-generosity	0
 generous	0
 genesis	0
 genetic	0
@@ -5449,7 +5578,6 @@ giving	0
 glabrous	0
 glacial	0
 glacier	0
-glad	0
 glade	0
 gladiator	0
 gladness	0
@@ -5466,7 +5594,6 @@ glee	0
 glen	0
 glib	0
 glide	0
-glimmer	0
 glimpse	0
 glint	0
 glitter	0
@@ -5476,13 +5603,10 @@ globular	0
 gloom	0
 gloomy	0
 glorification	0
-glorify	0
-glory	0
 gloss	0
 glossary	0
 glossy	0
 glove	0
-glow	0
 glowing	0
 glucose	0
 glue	0
@@ -5514,10 +5638,8 @@ gondola	0
 gong	0
 gonorrhea	0
 goo	0
-good	0
 goodbye	0
 goodly	0
-goodness	0
 goods	0
 goodwill	0
 goody	0
@@ -5624,7 +5746,6 @@ grille	0
 grim	0
 grime	0
 grimy	0
-grin	0
 grind	0
 grinder	0
 grinding	0
@@ -5773,8 +5894,6 @@ haphazard	0
 happen	0
 happening	0
 happily	0
-happiness	0
-happy	0
 harass	0
 harassing	0
 harbinger	0
@@ -5873,7 +5992,6 @@ heathen	0
 heather	0
 heating	0
 heave	0
-heavenly	0
 heavens	0
 heavily	0
 heaviness	0
@@ -5937,7 +6055,6 @@ hermaphrodite	0
 hermeneutics	0
 hermit	0
 hernia	0
-hero	0
 heroic	0
 heroics	0
 heroin	0
@@ -6033,7 +6150,6 @@ honest	0
 honesty	0
 honey	0
 honeycomb	0
-honeymoon	0
 honeysuckle	0
 honor	0
 honorable	0
@@ -6047,8 +6163,6 @@ hooker	0
 hoop	0
 hoot	0
 hop	0
-hope	0
-hopeful	0
 hopeless	0
 hopelessness	0
 hopes	0
@@ -6227,7 +6341,6 @@ illicit	0
 illiterate	0
 illness	0
 illogical	0
-illuminate	0
 illumination	0
 illuminator	0
 illusion	0
@@ -6255,7 +6368,6 @@ immaturity	0
 immeasurable	0
 immeasurably	0
 immediacy	0
-immediately	0
 immemorial	0
 immense	0
 immerse	0
@@ -6317,7 +6429,6 @@ implosion	0
 imply	0
 impolite	0
 import	0
-importance	0
 important	0
 importation	0
 impose	0
@@ -6339,12 +6450,10 @@ imprisonment	0
 improbable	0
 impromptu	0
 impropriety	0
-improve	0
 improved	0
 improvement	0
 improving	0
 improvisation	0
-improvise	0
 improvised	0
 imprudent	0
 impulse	0
@@ -6454,7 +6563,6 @@ indemnity	0
 indent	0
 indentation	0
 indenture	0
-independence	0
 independent	0
 indescribable	0
 indestructible	0
@@ -6663,8 +6771,6 @@ insolvency	0
 insolvent	0
 inspect	0
 inspector	0
-inspiration	0
-inspire	0
 inspired	0
 instability	0
 install	0
@@ -6787,8 +6893,6 @@ intestinal	0
 intestine	0
 intestines	0
 intimacy	0
-intimate	0
-intimately	0
 intimation	0
 intimidate	0
 intimidation	0
@@ -7060,7 +7164,6 @@ kink	0
 kinky	0
 kiosk	0
 kirk	0
-kiss	0
 kit	0
 kitchen	0
 kite	0
@@ -7176,7 +7279,6 @@ laudable	0
 laugh	0
 laughable	0
 laughing	0
-laughter	0
 launch	0
 laundry	0
 laureate	0
@@ -7305,9 +7407,6 @@ libel	0
 libelous	0
 liberal	0
 liberalism	0
-liberate	0
-liberation	0
-liberty	0
 libido	0
 librarian	0
 library	0
@@ -7493,9 +7592,7 @@ lounge	0
 louse	0
 lovable	0
 love	0
-lovely	0
 lovemaking	0
-lover	0
 loving	0
 lower	0
 lowering	0
@@ -7506,7 +7603,6 @@ loyal	0
 loyalty	0
 lubricate	0
 lubrication	0
-luck	0
 lucky	0
 ludicrous	0
 lug	0
@@ -7568,7 +7664,6 @@ mage	0
 magenta	0
 maggot	0
 magic	0
-magical	0
 magician	0
 magistrate	0
 magma	0
@@ -7576,8 +7671,6 @@ magnate	0
 magnet	0
 magnetism	0
 magnetite	0
-magnificence	0
-magnificent	0
 magnifier	0
 magnify	0
 magnitude	0
@@ -7589,7 +7682,6 @@ main	0
 mainland	0
 mainstay	0
 maintenance	0
-majestic	0
 majesty	0
 major	0
 majority	0
@@ -7959,7 +8051,6 @@ minuscule	0
 minute	0
 minutiae	0
 mir	0
-miracle	0
 miraculous	0
 mirage	0
 mire	0
@@ -8293,7 +8384,6 @@ nautical	0
 naval	0
 nave	0
 navel	0
-navigable	0
 navigate	0
 navigation	0
 navigator	0
@@ -8478,7 +8568,6 @@ numerous	0
 nun	0
 nurse	0
 nursery	0
-nurture	0
 nutmeg	0
 nutrition	0
 nutritious	0
@@ -8488,7 +8577,6 @@ nymph	0
 oaf	0
 oak	0
 oar	0
-oasis	0
 oath	0
 oatmeal	0
 obedience	0
@@ -8504,7 +8592,6 @@ obituary	0
 object	0
 objection	0
 objectionable	0
-objective	0
 obligation	0
 obligatory	0
 oblige	0
@@ -8592,7 +8679,6 @@ official	0
 officiate	0
 offing	0
 offload	0
-offset	0
 offshoot	0
 offside	0
 oft	0
@@ -8654,7 +8740,6 @@ opium	0
 opponent	0
 opportune	0
 opportunism	0
-opportunity	0
 oppose	0
 opposed	0
 opposing	0
@@ -8668,7 +8753,6 @@ oppressor	0
 optic	0
 optical	0
 optics	0
-optimism	0
 optimist	0
 option	0
 optional	0
@@ -8744,7 +8828,6 @@ outburst	0
 outcast	0
 outcome	0
 outcry	0
-outdo	0
 outdoor	0
 outfit	0
 outgrow	0
@@ -8991,8 +9074,6 @@ passe	0
 passenger	0
 passim	0
 passing	0
-passion	0
-passionate	0
 passive	0
 passivity	0
 passport	0
@@ -9017,8 +9098,6 @@ pathetic	0
 pathology	0
 pathos	0
 pathway	0
-patience	0
-patient	0
 patio	0
 patriarch	0
 patriarchal	0
@@ -9048,9 +9127,7 @@ payback	0
 payer	0
 payment	0
 pea	0
-peace	0
 peaceable	0
-peaceful	0
 peacock	0
 peak	0
 peaked	0
@@ -9122,8 +9199,6 @@ percussion	0
 perdition	0
 peremptory	0
 perennial	0
-perfect	0
-perfection	0
 perforated	0
 perforation	0
 perforce	0
@@ -9373,7 +9448,6 @@ playmate	0
 playwright	0
 plaza	0
 plea	0
-pleasant	0
 pleased	0
 pleasurable	0
 pleat	0
@@ -9551,7 +9625,6 @@ pow	0
 powder	0
 powdered	0
 powdery	0
-powerful	0
 powerfully	0
 powerless	0
 pox	0
@@ -9565,10 +9638,8 @@ practitioner	0
 prairie	0
 praise	0
 praised	0
-praiseworthy	0
 prank	0
 praxis	0
-pray	0
 prayer	0
 preach	0
 preacher	0
@@ -9586,7 +9657,6 @@ preceptor	0
 precession	0
 precinct	0
 precincts	0
-precious	0
 precipice	0
 precipitate	0
 precipitation	0
@@ -9640,7 +9710,6 @@ preoccupied	0
 preparation	0
 preparatory	0
 prepare	0
-prepared	0
 preparedness	0
 preparer	0
 preparing	0
@@ -9679,7 +9748,6 @@ pretending	0
 pretense	0
 pretensions	0
 pretext	0
-pretty	0
 prevail	0
 prevailing	0
 prevalence	0
@@ -9789,7 +9857,6 @@ prognostic	0
 program	0
 programme	0
 programmer	0
-progress	0
 progression	0
 progressive	0
 prohibit	0
@@ -9868,7 +9935,6 @@ prospect	0
 prospective	0
 prospectively	0
 prospectus	0
-prosper	0
 prosperity	0
 prosperous	0
 prostitute	0
@@ -9889,7 +9955,6 @@ protozoa	0
 protracted	0
 protrude	0
 protrusion	0
-proud	0
 prove	0
 proven	0
 proverb	0
@@ -9958,7 +10023,6 @@ puma	0
 pump	0
 pun	0
 punch	0
-punctual	0
 punctuality	0
 punctually	0
 punctuation	0
@@ -10095,7 +10159,6 @@ racket	0
 racking	0
 racy	0
 radar	0
-radiance	0
 radiant	0
 radiate	0
 radiation	0
@@ -10152,7 +10215,6 @@ rapids	0
 rapping	0
 rapt	0
 raptors	0
-rapture	0
 rarely	0
 rarity	0
 rascal	0
@@ -10177,7 +10239,6 @@ rave	0
 raven	0
 ravenous	0
 ravine	0
-raving	0
 rawhide	0
 ray	0
 razor	0
@@ -10188,7 +10249,6 @@ read	0
 reader	0
 readership	0
 readily	0
-readiness	0
 reading	0
 readjustment	0
 ready	0
@@ -10256,7 +10316,6 @@ reclamation	0
 recline	0
 recluse	0
 recognition	0
-recognizable	0
 recognized	0
 recoil	0
 recollect	0
@@ -10267,7 +10326,6 @@ recommend	0
 recommendation	0
 recompense	0
 reconcile	0
-reconciliation	0
 reconnaissance	0
 reconsider	0
 reconsideration	0
@@ -10387,7 +10445,6 @@ regulation	0
 regulatory	0
 regurgitation	0
 rehabilitate	0
-rehabilitation	0
 rehearsal	0
 reign	0
 reimburse	0
@@ -10408,8 +10465,6 @@ reject	0
 rejected	0
 rejection	0
 rejects	0
-rejoice	0
-rejoicing	0
 rejoin	0
 rejuvenate	0
 rejuvenated	0
@@ -10452,7 +10507,6 @@ remark	0
 remarkable	0
 remarkably	0
 remedial	0
-remedy	0
 remember	0
 remembered	0
 remembering	0
@@ -10481,9 +10535,7 @@ rendition	0
 renegade	0
 renewal	0
 renounce	0
-renovate	0
 renovated	0
-renovation	0
 renown	0
 renowned	0
 rent	0
@@ -10494,7 +10546,6 @@ reorganization	0
 reorganize	0
 repair	0
 reparation	0
-repay	0
 repayment	0
 repeal	0
 repeat	0
@@ -10554,7 +10605,6 @@ requisite	0
 requisition	0
 rescind	0
 rescission	0
-rescue	0
 research	0
 resection	0
 resemblance	0
@@ -10597,7 +10647,6 @@ resonator	0
 resort	0
 resounding	0
 resources	0
-respect	0
 respectability	0
 respectable	0
 respected	0
@@ -10614,7 +10663,6 @@ respondent	0
 response	0
 responsibility	0
 responsible	0
-responsive	0
 rest	0
 restaurant	0
 restful	0
@@ -10677,7 +10725,6 @@ revels	0
 revenge	0
 revenue	0
 reverberation	0
-revere	0
 reverence	0
 reverend	0
 reverent	0
@@ -10692,19 +10739,15 @@ reviewer	0
 revise	0
 revision	0
 revisit	0
-revival	0
-revive	0
 revocation	0
 revoke	0
 revolt	0
 revolting	0
-revolution	0
 revolutionary	0
 revolutionize	0
 revolve	0
 revolver	0
 revulsion	0
-reward	0
 rhetoric	0
 rhetorical	0
 rheumatism	0
@@ -10799,7 +10842,6 @@ rollers	0
 rollicking	0
 rolling	0
 romance	0
-romantic	0
 romanticism	0
 romp	0
 roof	0
@@ -10916,8 +10958,6 @@ sage	0
 sail	0
 sailing	0
 sailor	0
-saint	0
-saintly	0
 salad	0
 salamander	0
 salary	0
@@ -10935,18 +10975,15 @@ salutary	0
 salutation	0
 salute	0
 salvage	0
-salvation	0
 salve	0
 samba	0
 sameness	0
 samurai	0
 sanctification	0
 sanctified	0
-sanctify	0
 sanction	0
 sanctioned	0
 sanctity	0
-sanctuary	0
 sand	0
 sandal	0
 sander	0
@@ -10989,7 +11026,6 @@ savanna	0
 save	0
 saving	0
 savings	0
-savor	0
 savory	0
 savvy	0
 sawdust	0
@@ -11217,7 +11253,6 @@ sequent	0
 sequestered	0
 sequestration	0
 serene	0
-serenity	0
 sergeant	0
 serial	0
 series	0
@@ -11437,7 +11472,6 @@ simmer	0
 simmering	0
 simple	0
 simples	0
-simplify	0
 simply	0
 simulate	0
 simulated	0
@@ -11731,7 +11765,6 @@ soulless	0
 soulmate	0
 sound	0
 sounding	0
-soundness	0
 soup	0
 sour	0
 source	0
@@ -11751,7 +11784,6 @@ spar	0
 spare	0
 sparingly	0
 spark	0
-sparkle	0
 sparring	0
 sparse	0
 spasm	0
@@ -11832,7 +11864,6 @@ spiteful	0
 splash	0
 spleen	0
 splendid	0
-splendor	0
 splice	0
 spline	0
 splint	0
@@ -11936,7 +11967,6 @@ standpoint	0
 standstill	0
 stanza	0
 staple	0
-star	0
 starboard	0
 starch	0
 stare	0
@@ -12216,10 +12246,7 @@ subversion	0
 subversive	0
 subvert	0
 subway	0
-succeed	0
 succeeding	0
-success	0
-successful	0
 succession	0
 successive	0
 successor	0
@@ -12280,7 +12307,6 @@ sunglasses	0
 sunk	0
 sunless	0
 sunlight	0
-sunny	0
 sunrise	0
 sunset	0
 sunshine	0
@@ -12324,7 +12350,6 @@ supposing	0
 supposition	0
 suppress	0
 suppression	0
-supremacy	0
 supreme	0
 supremely	0
 surcharge	0
@@ -12391,11 +12416,9 @@ sweater	0
 sweating	0
 sweep	0
 sweeping	0
-sweet	0
 sweeten	0
 sweetened	0
 sweetener	0
-sweetheart	0
 sweetie	0
 sweetness	0
 sweets	0
@@ -12506,7 +12529,6 @@ tangle	0
 tangled	0
 tank	0
 tanned	0
-tantalizing	0
 tantamount	0
 tap	0
 tape	0
@@ -12720,9 +12742,6 @@ threshold	0
 thrice	0
 thrift	0
 thrifty	0
-thrill	0
-thrilling	0
-thriving	0
 throat	0
 throb	0
 throbbing	0
@@ -12747,7 +12766,6 @@ tiara	0
 tick	0
 ticker	0
 ticket	0
-tickle	0
 ticklish	0
 tidal	0
 tidbit	0
@@ -12839,7 +12857,6 @@ tooth	0
 toothache	0
 toothed	0
 toothless	0
-top	0
 topaz	0
 topic	0
 topical	0
@@ -12984,10 +13001,8 @@ treachery	0
 tread	0
 treadmill	0
 treason	0
-treasure	0
 treasurer	0
 treasury	0
-treat	0
 treatise	0
 treatment	0
 treaty	0
@@ -13041,8 +13056,6 @@ tripod	0
 tripping	0
 trite	0
 tritium	0
-triumph	0
-triumphant	0
 troll	0
 trolley	0
 trombone	0
@@ -13153,7 +13166,6 @@ ugly	0
 ulcer	0
 ulterior	0
 ultimate	0
-ultimately	0
 ultimatum	0
 ultimo	0
 ultraviolet	0
@@ -13287,7 +13299,6 @@ unequivocal	0
 unequivocally	0
 uneven	0
 uneventful	0
-unexpected	0
 unexpectedly	0
 unexplained	0
 unexplored	0
@@ -13489,7 +13500,6 @@ uphill	0
 upholstery	0
 upland	0
 uplands	0
-uplift	0
 upper	0
 upright	0
 uprising	0
@@ -13600,7 +13610,6 @@ vena	0
 vendetta	0
 vendor	0
 veneer	0
-venerable	0
 veneration	0
 vengeance	0
 vengeful	0
@@ -13675,12 +13684,10 @@ victimized	0
 victor	0
 victoria	0
 victorious	0
-victory	0
 videotape	0
 vie	0
 view	0
 vigil	0
-vigilance	0
 vigilant	0
 vignette	0
 vigor	0
@@ -13726,7 +13733,6 @@ visibility	0
 visible	0
 visibly	0
 vision	0
-visionary	0
 visit	0
 visitation	0
 visiting	0
@@ -13773,7 +13779,6 @@ voting	0
 votive	0
 vouch	0
 voucher	0
-vow	0
 vowel	0
 voyage	0
 voyager	0
@@ -13989,7 +13994,6 @@ wing	0
 winged	0
 wink	0
 winner	0
-winning	0
 winnings	0
 winter	0
 wintry	0
@@ -14057,7 +14061,6 @@ worry	0
 worrying	0
 worse	0
 worsening	0
-worship	0
 worth	0
 worthless	0
 worthy	0
@@ -14116,7 +14119,6 @@ yearbook	0
 yearling	0
 yearly	0
 yearn	0
-yearning	0
 years	0
 yeast	0
 yell	0
@@ -14137,14 +14139,12 @@ yonder	0
 youth	0
 zany	0
 zap	0
-zeal	0
 zealot	0
 zealous	0
 zebra	0
 zenith	0
 zephyr	0
 zeppelin	0
-zest	0
 zip	0
 zodiac	0
 zone	0

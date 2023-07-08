@@ -17,6 +17,10 @@ from transformers import EvalPrediction
 from torchsummary import summary
 from torchview import draw_graph
 from bertviz import model_view
+from textblob import TextBlob
+
+EMP_LEXICON_PATH = "./lexicon/lexicon_EMP.csv"
+
 
 def print_model_summary(model, path):
     '''
@@ -454,6 +458,59 @@ class EMODataset(Dataset):
         if self.targets is not None:
             item['labels'] = torch.FloatTensor(self.targets[index])
         return item
+    
+def add_prompt_to_test_from_EMP_predictions(test_df, emp_predictions_path): #TODO: verificare che funzioni
+    emp_predictions = pd.read_csv(emp_predictions_path, header=None)
+
+    for idx, row in test_df.iterrows():
+        if row['gender'] == 1: gender = "male"
+        else: gender = "female"
+
+        if row['education'] == 1: education = "less than a high school diploma"
+        elif row['education'] == 2: education = "high School diploma"
+        elif row['education'] == 3: education = "technical/vocational School"
+        elif row['education'] == 4: education = "some college but no degree"
+        elif row['education'] == 5: education = "two year associate degree"
+        elif row['education'] == 6: education = "four year bachelor's degree"
+        else: education = "postgradute or professional degree"
+
+        if row['race'] == 1: ethnicity = "white"
+        elif row['race'] == 2: ethnicity = "hispanic or latino"
+        elif row['race'] == 3: ethnicity = "black or african american"
+        elif row['race'] == 4: ethnicity = "native american or american indian"
+        elif row['race'] == 5: ethnicity = "asian/pacific islander"
+        else: ethnicity = ""
+
+        text_prompt_bio = "An essay written by a {} years old {} {}, with {}, with an income of {}$.".format(
+                                        row["age"], ethnicity, gender, education, row["income"]) 
+        
+        for line in emp_predictions[idx]:
+            empathy = line.split('/')[0]
+            distress = line.split('/')[1]
+
+            if empathy < 3: emp = "The essay expresses low empathy"
+            elif empathy < 5: emp = "The essay not expresses empathy"
+            else: empathy = "The essay expresses high empathy"
+            if distress < 3: dis = "low"
+            elif distress < 5: dis = "medium"
+            else: dis = "high"
+            text_prompt_emp = " {} and {} distress level.".format(emp,  dis)
+
+        emotions = NRCLex(row["essay"]).top_emotions
+        if (sum(np.array([emo[1] for emo in emotions])))== 0:
+           emotions = {'neutral': 0}
+        n_emo = len(emotions)
+        string = ""
+        for i, emo in enumerate(emotions):
+            string += emo[0]
+            if i < n_emo-1:
+                string += ", "
+        text_prompt_emo = " Top emotions expressed by the writer are: {}.".format(string)
+
+        text_prompt = row["essay"] + '"' + text_prompt_bio + text_prompt_emp + text_prompt_emo + '"'
+        test_df["prompt"][idx] = text_prompt
+        
+    return test_df
 
 class EmotionsLabelEncoder():
     '''
@@ -576,3 +633,53 @@ class FeaturesEncoder():
             else:
                 concat_features = np.concatenate((concat_features, incomes), axis=1)
         return concat_features
+    
+
+class EMPlexicon():
+
+    def __init__(self, lexicon_path=EMP_LEXICON_PATH):
+        self.lexicon = pd.read_csv("./lexicon/lexicon_EMP.csv", sep=',')
+        self.empathy_lexicon_dict = self.lexicon.set_index('word')['empathy'].to_dict()
+        self.distress_lexicon_dict = self.lexicon.set_index('word')['distress'].to_dict()
+
+    def load_token_list(self, token_list):
+        self.text = ""
+        self.words = token_list
+        self.sentences = []
+        self.build_empathy_counter()
+
+    def load_raw_text(self, text):
+        self.text = text
+        blob = TextBlob(self.text)
+        self.words = [w.lemmatize() for w in blob.words]
+        self.sentences = list(blob.sentences)
+        self.build_empathy_counter()
+
+    def build_empathy_counter(self):
+        self.empathy_list = [] # list of empathy values for each word in sentence
+        self.empathy_dict = dict() # dict of empathy values for each word in sentence
+
+        self.distress_list = [] # list of distress values for each word in sentence
+        self.distress_dict = dict() # dict of distress values for each word in sentence
+
+        value_counts = np.zeros(2)
+        self.lexicon_keys = self.lexicon['word'].tolist()
+
+        for word in self.words:
+            if word in self.lexicon_keys:
+                self.empathy_list.append(self.empathy_lexicon_dict[word])
+                self.empathy_dict.update({word: self.empathy_lexicon_dict[word]})
+
+                self.distress_list.append(self.distress_lexicon_dict[word])
+                self.distress_dict.update({word: self.distress_lexicon_dict[word]})
+
+                value_counts[0] += self.empathy_dict[word]
+                value_counts[1] += self.distress_dict[word]
+            else:
+                self.empathy_list.append(0)
+                self.distress_list.append(0)
+
+        # dict with mean values for empathy and distress over the sentence   
+        word_in_lexicon = (np.count_nonzero(self.empathy_list) if np.count_nonzero(self.empathy_list) > 0 else 1)
+        self.empathy_sentence_mean = {'empathy': (value_counts[0] / word_in_lexicon), 
+                                 'distress': (value_counts[1] / word_in_lexicon)}

@@ -6,33 +6,17 @@ import contractions
 from nltk.stem import WordNetLemmatizer
 from nltk.stem.porter import PorterStemmer
 from textblob import TextBlob
+from nrclex import NRCLex
+from utils import EMPlexicon
 import json
 import numpy as np
 import os
-    
-def write_dict_to_json(dict, path):
-    '''
-    This function saves a dictionary to a json file.
-    
-    :param dict: dictionary to save
-    :param path: path where to save the dictionary
-    '''
-    
-    with open(path, 'w') as fp:
-        json.dump(dict, fp, indent = 1)
 
-# nltk.download('wordnet')
-# nltk.download('omw-1.4')
-
-TRAIN_DATA_PATH = "datasets/WASSA23_essay_level_with_labels_train.tsv"
-DEV_DATA_PATH = "datasets/WASSA23_essay_level_dev.tsv"
-TEST_DATA_PATH = "datasets/WASSA23_essay_level_test.tsv"
-DEV_LABELS = "datasets/goldstandard_dev.tsv"
-
-TRAIN22_DATA_PATH = "datasets/WASSA22_essay_level_with_labels_train.tsv"
-DEV22_DATA_PATH = "datasets/WASSA22_essay_level_dev.tsv"
-TEST22_DATA_PATH = "datasets/WASSA22_essay_level_test.tsv"
-DEV22_LABELS = "datasets/goldstandard_dev.tsv"
+ANTICIPATION_LEXICON_PATH = "./lexicon/anticipation.txt"
+POSITIVE_LEXICON_PATH = "./lexicon/positive.txt"
+JOY_LEXICON_PATH = "./lexicon/joy.txt"
+SUBJECTIVITY_LEXICON_PATH = "./lexicon/subjclueslen1-HLTEMNLP05.tff"
+HOPE_LEXICON_PATH = "./lexicon/hope.txt"
 
 DEV_COL_NAMES = [
     "empathy",
@@ -52,7 +36,22 @@ DEV_COL_NAMES = [
 VAL_SIZE = 0.2
 RANDOM_STATE = 42
 
-def get_stemmed_EMO_lexicon(lexicon, categories):
+# nltk.download('wordnet')
+# nltk.download('omw-1.4')
+
+    
+def write_dict_to_json(dict, path):
+    '''
+    This function saves a dictionary to a json file.
+    
+    :param dict: dictionary to save
+    :param path: path where to save the dictionary
+    '''
+    
+    with open(path, 'w') as fp:
+        json.dump(dict, fp, indent = 1)
+
+def get_stemmed_EMO_lexicon(lexicon, categories): # TODO: analogo a EMP con libreria?
     
     if (os.path.exists('./lexicon/lexicon_EMO.csv') and os.path.exists('./lexicon/stemmed_lexicon_EMO.csv')):
         stemmed_lexicon = pd.read_csv('./lexicon/stemmed_lexicon_EMO.csv', index_col='word')
@@ -77,7 +76,19 @@ def get_stemmed_EMO_lexicon(lexicon, categories):
         lexicon.to_csv('./lexicon/lexicon_EMO.csv', index_label='word')
     return stemmed_lexicon, lexicon
 
-def get_stemmed_EMP_lexicon(lexicon): # TODO: sistemare normalizzazione
+def get_stemmed_EMP_lexicon(dataset):
+    EMP_lexicon_obj = EMPlexicon()
+    dataset['empathy_count'] = ""
+    dataset['distress_count'] = ""
+
+    for essay in dataset['essay']:
+        EMP_lexicon_obj.load_raw_text(essay)
+        dataset['empathy_count'] = EMP_lexicon_obj.empathy_sentence_mean['empathy']
+        dataset['distress_count'] = EMP_lexicon_obj.empathy_sentence_mean['distress']
+
+    return dataset
+
+"""def get_stemmed_EMP_lexicon(lexicon):
     
     if (os.path.exists('./lexicon/lexicon_EMP.csv') and os.path.exists('./lexicon/stemmed_lexicon_EMP.csv')):
         stemmed_lexicon = pd.read_csv('./lexicon/stemmed_lexicon_EMP.csv', index_col='word')
@@ -105,17 +116,19 @@ def get_stemmed_EMP_lexicon(lexicon): # TODO: sistemare normalizzazione
                 ]
         stemmed_lexicon =  pd.DataFrame(stemmed_lexicon).T
         stemmed_lexicon.rename(columns={0:'empathy', 1:'distress', 2:'count'}, inplace=True)
+
         stemmed_lexicon['empathy'] = stemmed_lexicon['empathy'].astype(float) / stemmed_lexicon['count']
         stemmed_lexicon['distress'] = stemmed_lexicon['distress'].astype(float) / stemmed_lexicon['count']
         stemmed_lexicon.to_csv('./lexicon/stemmed_lexicon_EMP.csv')
         lexicon.to_csv('./lexicon/lexicon_EMP.csv', index_label='word')
     
-    return stemmed_lexicon, lexicon
+    return stemmed_lexicon, lexicon"""
 
 def read_lexicon_df(categories):
     categories_dfs = {}
     for category in categories:
-        categories_dfs[category] = pd.read_csv(f"lexicon/{category}.txt", header=None, names=['word', category], sep=None, engine='python')
+        categories_dfs[category] = pd.read_csv(f"lexicon/{category}.txt", header=None, 
+                                            names=['word', category], sep=None, engine='python')
     
     lexicon = pd.DataFrame(columns=['word'])
     
@@ -217,12 +230,6 @@ def add_counts(df, split, lexicon, stemmed_lexicon, categories):
     
     return df
 
-ANTICIPATION_LEXICON_PATH = "./lexicon/anticipation.txt"
-POSITIVE_LEXICON_PATH = "./lexicon/positive.txt"
-JOY_LEXICON_PATH = "./lexicon/joy.txt"
-SUBJECTIVITY_LEXICON_PATH = "./lexicon/subjclueslen1-HLTEMNLP05.tff"
-HOPE_LEXICON_PATH = "./lexicon/hope.txt"
-
 def read_NRC_lexicon_file(file_name):
     lexicon = {}
     with open(file_name, 'r') as file:
@@ -259,23 +266,27 @@ def build_hope_lexicon():
 
 def add_lexicon_features(train_df, dev_df, test_df):
     
+    # add lezicon features for emotions
     categories_EMO = ['anger', 'disgust', 'fear', 'joy', 'sadness', 'surprise', 'hope']
-    categories_EMP = ['empathy', 'distress']
-    
     lexicon_EMO = read_lexicon_df(categories_EMO)
-    lexicon_EMP = read_lexicon_df(categories_EMP)
-    
+
     stemmed_lexicon_EMO, lexicon_EMO = get_stemmed_EMO_lexicon(lexicon_EMO, categories_EMO)
-    stemmed_lexicon_EMP, lexicon_EMP = get_stemmed_EMP_lexicon(lexicon_EMP)
 
     train_df = add_counts(train_df, "train", lexicon_EMO, stemmed_lexicon_EMO, categories_EMO)
-    train_df = add_counts(train_df, "train",lexicon_EMP, stemmed_lexicon_EMP, categories_EMP)
-
     dev_df = add_counts(dev_df, "dev",lexicon_EMO, stemmed_lexicon_EMO, categories_EMO)
-    dev_df = add_counts(dev_df, "dev",lexicon_EMP, stemmed_lexicon_EMP, categories_EMP)
-
     test_df = add_counts(test_df, "test",lexicon_EMO, stemmed_lexicon_EMO, categories_EMO)
-    test_df = add_counts(test_df, "test",lexicon_EMP, stemmed_lexicon_EMP, categories_EMP)
+
+    # add lexicon features for empathy and distress
+    train_df = get_stemmed_EMO_lexicon(train_df)
+    dev_df = get_stemmed_EMO_lexicon(dev_df)
+    test_df = get_stemmed_EMO_lexicon(test_df)
+    
+    """categories_EMP = ['empathy', 'distress']
+    lexicon_EMP = read_lexicon_df(categories_EMP)
+    stemmed_lexicon_EMP, lexicon_EMP = get_stemmed_EMP_lexicon(lexicon_EMP)
+    train_df = add_counts(train_df, "train",lexicon_EMP, stemmed_lexicon_EMP, categories_EMP)
+    dev_df = add_counts(dev_df, "dev",lexicon_EMP, stemmed_lexicon_EMP, categories_EMP)
+    test_df = add_counts(test_df, "test",lexicon_EMP, stemmed_lexicon_EMP, categories_EMP)"""
 
     return train_df, dev_df, test_df
 
@@ -293,6 +304,58 @@ def drop_rows_with_unknown(dataframe):
 
 def add_word_count(dataframe):
     dataframe['essay_word_count'] = dataframe['essay'].apply(lambda x: len(x.split()))
+    return dataframe
+
+def add_prompt(dataframe, empathy=True):
+    dataframe["prompt"] = ""
+    for idx, row in dataframe.iterrows():
+        if row['gender'] == 1: gender = "male"
+        else: gender = "female"
+
+        if row['education'] == 1: education = "less than a high school diploma"
+        elif row['education'] == 2: education = "high School diploma"
+        elif row['education'] == 3: education = "technical/vocational School"
+        elif row['education'] == 4: education = "some college but no degree"
+        elif row['education'] == 5: education = "two year associate degree"
+        elif row['education'] == 6: education = "four year bachelor's degree"
+        else: education = "postgradute or professional degree"
+
+        if row['race'] == 1: ethnicity = "white"
+        elif row['race'] == 2: ethnicity = "hispanic or latino"
+        elif row['race'] == 3: ethnicity = "black or african american"
+        elif row['race'] == 4: ethnicity = "native american or american indian"
+        elif row['race'] == 5: ethnicity = "asian/pacific islander"
+        else: ethnicity = ""
+
+        text_prompt_bio = "An essay written by a {} years old {} {}, with {}, with an income of {}$.".format(
+                                        row["age"], ethnicity, gender, education, row["income"]) 
+        
+        if empathy:
+            if row["empathy"] < 3: emp = "The essay expresses low empathy"
+            elif row["empathy"] < 5: emp = "The essay not expresses empathy"
+            else: emp = "The essay expresses high empathy"
+            if row["distress"] < 3: dis = "low"
+            elif row["distress"] < 5: dis = "medium"
+            else: dis = "high"
+            text_prompt_emp = " {} and {} distress level.".format(emp,  dis)
+
+        emotions = NRCLex(row["essay"]).top_emotions
+        if (sum(np.array([emo[1] for emo in emotions])))== 0:
+           emotions = {'neutral': 0}
+        n_emo = len(emotions)
+        string = ""
+        for i, emo in enumerate(emotions):
+            string += emo[0]
+            if i < n_emo-1:
+                string += ", "
+        text_prompt_emo = " Top emotions expressed by the writer are: {}.".format(string)
+
+        text_prompt = row["essay"] + '"' + text_prompt_bio + text_prompt_emp + text_prompt_emo + '"'
+        dataframe["prompt"][idx] = text_prompt
+    return dataframe
+
+def remouve_space_from_essay(dataframe):
+    dataframe['essay'] = dataframe['essay'].str.replace("\r\n", " ")
     return dataframe
 
 def preprocess(year):
@@ -314,19 +377,25 @@ def preprocess(year):
 
     # drop unknown values
     train_df = drop_rows_with_unknown(train_df)
-    internal_train_df = drop_rows_with_unknown(internal_train_df)
-    internal_val_df = drop_rows_with_unknown(internal_val_df)
     dev_df = drop_rows_with_unknown(dev_df)
     test_df = drop_rows_with_unknown(test_df)
 
+    # add lexicon features
     train_df, dev_df, test_df = add_lexicon_features(train_df, dev_df, test_df)
 
     # add essay word count
     train_df = add_word_count(train_df)
-    internal_train_df = add_word_count(internal_train_df)
-    internal_val_df = add_word_count(internal_val_df)
     dev_df = add_word_count(dev_df)
     test_df = add_word_count(test_df)
+
+    if year == 23:
+        # remouve unuselful space from essay
+        test_df = remouve_space_from_essay(test_df)
+
+    # add prompt with anagraphic data
+    train_df = add_prompt(train_df)
+    dev_df = add_prompt(dev_df)
+    test_df = add_prompt(test_df, empathy=False)
     
     # splitting train data into train and validation with a stratified approach
     emotions = train_df['emotion'].unique().tolist()
@@ -355,20 +424,11 @@ def preprocess(year):
 
 def main():
     # preprocess WASSA 22 dataset
-    # preprocess(22)
-    # # preprocess WASSA 23 dataset
-    # preprocess(23)
-    year = 23
-    train_path = f"datasets/WASSA{year}_essay_level_train.tsv"
-    dev_path = f"datasets/WASSA{year}_essay_level_dev.tsv"
-    test_path = f"datasets/WASSA{year}_essay_level_test.tsv"
-    dev_labels_path = f"datasets/WASSA{year}_goldstandard_dev.tsv"
+    #preprocess(22) # TODO: non hanno gli essay_id
 
-    train_df = pd.read_csv(train_path, sep='\t')#.head(5)
-    dev_df = pd.read_csv(dev_path, sep='\t')#.head(5)
-    test_df = pd.read_csv (test_path, sep='\t')#.head(5)
-    #dev_lbl_df = pd.read_csv(dev_labels_path, sep='\t', names=DEV_COL_NAMES)
-    add_lexicon_features(train_df, dev_df, test_df)
+    # preprocess WASSA 23 dataset
+    preprocess(23)
+
 
 if __name__ == "__main__":
     main()
