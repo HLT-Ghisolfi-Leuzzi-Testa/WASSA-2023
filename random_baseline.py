@@ -22,21 +22,19 @@ def apply_dummy_clfs(train_df, test_df, split): # TODO: per class metrics?
         write_dict_to_json(mostfreq_metrics, f"mostfreq_{split}_metrics.json")
     else:
         write_EMO_predictions(mostfreq_emotions, f"mostfreq_{split}_predictions_EMO.tsv")
-    # mostfreq_preds_bin = get_predictions(clf=mostfreq_clf, X_train=train_df, y_train=y_bin, X_test=dev_df)
-    # mostfreq_emotions_bin = onehot_encoder.decode(mostfreq_preds_bin) # all 0s
-    # mostfreq_metrics_bin = compute_EMO_metrics(golds=dev_df.emotion, predictions=mostfreq_emotions_bin)
-    # write_dict_to_json(mostfreq_metrics_bin, "mostfreq_dev_metrics_bin.json")
 
     stratified_clf = DummyClassifier(strategy="stratified")
     stratified_preds_bin = get_predictions(clf=stratified_clf, X_train=train_df, y_train=y_bin, X_test=test_df) # TODO: repeat?
-    stratified_emotions = onehot_encoder.decode(stratified_preds_bin) # TODO: le labels sono i.i.d. potrebbe predirre tutti 0
-    # stratified_clf.fit(train_df, y_bin)
-    # print(stratified_preds_bin)
-    # prob = stratified_clf.predict_proba(test_df) # lista di 8 array, ciascuno di 208 coppie con 1,0
+    stratified_preds = get_predictions(clf=stratified_clf, X_train=train_df, y_train=y, X_test=test_df) # TODO: repeat?
+    stratified_emotions_bin = onehot_encoder.decode(stratified_preds_bin) # TODO: le labels sono i.i.d. potrebbe predirre tutti 0
+    stratified_emotions = ordinal_encoder.inverse_transform(stratified_preds)
     if split == "dev":
+        stratified_metrics_bin = compute_EMO_metrics(golds=test_df.emotion, predictions=stratified_emotions_bin)
         stratified_metrics = compute_EMO_metrics(golds=test_df.emotion, predictions=stratified_emotions)
+        write_dict_to_json(stratified_metrics_bin, f"stratified_{split}_metrics_bin.json")
         write_dict_to_json(stratified_metrics, f"stratified_{split}_metrics.json")
     else:
+        write_EMO_predictions(stratified_emotions_bin, f"stratified_{split}_bin_predictions_EMO.tsv")
         write_EMO_predictions(stratified_emotions, f"stratified_{split}_predictions_EMO.tsv")
 
     uniform_clf = DummyClassifier(strategy="uniform")
