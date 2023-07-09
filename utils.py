@@ -562,7 +562,7 @@ class EmotionsLabelEncoder():
         :param emotions: list of emotions
         '''
 
-        emotions = [emotion.split('/') for emotion in emotions]
+        emotions = [emotion.lower().split('/') for emotion in emotions]
         self.mlb.fit(emotions)
         self.classes = self.mlb.classes_
 
@@ -574,7 +574,7 @@ class EmotionsLabelEncoder():
         :return: numpy array with encoded emotions
         '''
 
-        emotions = [emotion.split('/') for emotion in emotions]
+        emotions = [emotion.lower().split('/') for emotion in emotions]
         encoded_emotions = self.mlb.transform(emotions)
         return encoded_emotions
 
