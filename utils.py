@@ -5,6 +5,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 from evaluation import calculatePRF_MLabel, calculate_pearson
+from nrclex import NRCLex
 from sklearn.metrics import (
     confusion_matrix, roc_auc_score, accuracy_score, jaccard_score, 
     precision_recall_fscore_support
@@ -504,6 +505,62 @@ def plot_confusion_matrix_per_emotions(gold_emotions, predicted_emotions):
     plt.tight_layout()
     plt.show()
 
+def generate_prompt(essay, gender, education, ethnicity, age, income, empathy, distress):
+    if gender == 1: gender_str = "male"
+    else: gender_str = "female"
+
+    if education == 1: education_str = "with less than a high school diploma"
+    elif education == 2: education_str = "with a high school diploma"
+    elif education == 3: education_str = "went to a technical/vocational school"
+    elif education == 4: education_str = "went to college"
+    elif education == 5: education_str = "with a two year associate degree"
+    elif education == 6: education_str = "with a four year bachelor's degree"
+    else: education_str = "postgradute or with a professional degree"
+
+    if ethnicity == 1: ethnicity_str = " white"
+    elif ethnicity == 2: ethnicity_str = " hispanic or latino"
+    elif ethnicity == 3: ethnicity_str = " black or african american"
+    elif ethnicity == 4: ethnicity_str = " native american or american indian"
+    elif ethnicity == 5: ethnicity_str = " asian/pacific islander"
+    else: ethnicity_str = ""
+
+    text_prompt_bio = "An essay written by a {} years old{} {}, {}, with an income of {}$.".format(
+        age, ethnicity_str,
+        gender_str,
+        education_str,
+        income
+        )
+    
+    if empathy is not None:
+        if empathy < 3: empathy_value = "low"
+        elif empathy < 5: empathy_value = "medium"
+        else: empathy_value = "high"
+        if distress < 3: distress_value = "low"
+        elif distress < 5: distress_value = "medium"
+        else: distress_value = "high"
+        text_prompt_emp = "The essay expresses {} empathy and {} distress levels.".format(
+            empathy_value,
+            distress_value
+            )
+
+    emotions = NRCLex(essay).top_emotions
+    if (sum(np.array([emo[1] for emo in emotions])))==0:
+        emotions = {'neutral': 1}
+    n_emo = len(emotions)
+    emo_string = ""
+    for i, emo in enumerate(emotions):
+        emo_string += emo[0]
+        if i < n_emo-1:
+            emo_string += ", "
+    text_prompt_emo = " The top emotions expressed in the essay are: {}.".format(emo_string)
+
+    if empathy is not None:
+        text_prompt = essay + '"' + text_prompt_bio + text_prompt_emp + text_prompt_emo + '"'
+    else:
+        text_prompt = essay + '"' + text_prompt_bio + text_prompt_emo + '"'
+        
+    return text_prompt
+
 def add_prompt_to_test_from_EMP_predictions(test_df, emp_predictions_path):
     emp_predictions = pd.read_csv(emp_predictions_path, header=None) #TODO: verificare che funzioni
     emp_predictions.columns = ['empathy', 'distress']
@@ -513,7 +570,7 @@ def add_prompt_to_test_from_EMP_predictions(test_df, emp_predictions_path):
             row['essay'],
             row['gender'],
             row['education'],
-            row['ethnicity'],
+            row['race'],
             row['age'],
             row['income'],
             emp_predictions['empathy'][idx],
@@ -694,55 +751,3 @@ class EMPlexicon():
         word_in_lexicon = (np.count_nonzero(self.empathy_list) if np.count_nonzero(self.empathy_list) > 0 else 1)
         self.empathy_sentence_mean = {'empathy': (value_counts[0] / word_in_lexicon), 
                                  'distress': (value_counts[1] / word_in_lexicon)}
-
-def generate_prompt(essay, gender, education, ethnicity, age, income, empathy, distress):
-    if gender == 1: gender_str = "male"
-    else: gender_str = "female"
-
-    if education == 1: education_str = "with less than a high school diploma"
-    elif education == 2: education_str = "with a high school diploma"
-    elif education == 3: education_str = "went to a technical/vocational school"
-    elif education == 4: education_str = "went to college"
-    elif education == 5: education_str = "with a two year associate degree"
-    elif education == 6: education_str = "with a four year bachelor's degree"
-    else: education_str = "postgradute or with a professional degree"
-
-    if ethnicity == 1: ethnicity_str = " white"
-    elif ethnicity == 2: ethnicity_str = " hispanic or latino"
-    elif ethnicity == 3: ethnicity_str = " black or african american"
-    elif ethnicity == 4: ethnicity_str = " native american or american indian"
-    elif ethnicity == 5: ethnicity_str = " asian/pacific islander"
-    else: ethnicity = ""
-
-    text_prompt_bio = "An essay written by a {} years old{} {}, {}, with an income of {}$.".format(
-        age, ethnicity_str,
-        gender_str,
-        education_str,
-        income
-        )
-    
-    if empathy is not None:
-        if empathy < 3: empathy_value = "low"
-        elif empathy < 5: empathy_value = "medium"
-        else: empathy_value = "high"
-        if distress < 3: distress_value = "low"
-        elif distress < 5: distress_value = "medium"
-        else: distress_value = "high"
-        text_prompt_emp = "The essay expresses {} empathy and {} distress levels.".format(
-            empathy_value,
-            distress_value
-            )
-
-    emotions = NRCLex(essay).top_emotions
-    if (sum(np.array([emo[1] for emo in emotions])))==0:
-        emotions = {'neutral': 1}
-    n_emo = len(emotions)
-    emo_string = ""
-    for i, emo in enumerate(emotions):
-        emo_string += emo[0]
-        if i < n_emo-1:
-            emo_string += ", "
-    text_prompt_emo = " The top emotions expressed in the essay are: {}.".format(emo_string)
-
-    text_prompt = essay + '"' + text_prompt_bio + text_prompt_emp + text_prompt_emo + '"'
-    return text_prompt
