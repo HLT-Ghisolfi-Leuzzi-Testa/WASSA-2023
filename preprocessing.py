@@ -380,10 +380,10 @@ def preprocess(year):
     internal_train_df['essay_id'] = ""
     count = 0
     for idx, row in internal_train_df.iterrows():
-        row['essay_id'] = count
+        internal_train_df.at[idx, 'essay_id'] = count
         count += 1
     for idx, row in internal_val_df.iterrows():
-        row['essay_id'] = count
+        internal_val_df.at[idx, 'essay_id'] = count
         count += 1
     
     # add lexicon features
