@@ -213,6 +213,30 @@ def plot_true_vs_predicted(golds, predictions, title=None, path=None):
         plt.savefig(path)
     plt.show()
 
+def plot_abs_diff_emp(golds, predictions, title=None, path=None):
+	'''
+	This function plots the absolute difference between the true and predicted
+	empathy and distress values.
+
+	:param golds: a pandas dataframe with the true empathy (first column) and 
+	distress values (second column)
+	:param predictions: a pandas dataframe with the predicted empathy (first
+	column) and distress values (second column)
+	:param title: the title of the plot
+	:param path: the path where to save the plot
+	'''
+	
+	abs_diff = np.abs(golds - predictions)
+	abs_diff.columns = ['|True Empathy - Predicted Empathy|', '|True Distress - Predicted Distress|']
+	values = np.vstack([abs_diff.iloc[:,0], abs_diff.iloc[:,1]])
+	kernel = stats.gaussian_kde(values)(values) # darker == higher density
+	ax = sns.scatterplot(x=abs_diff.columns[0], y=abs_diff.columns[1], data=abs_diff, c=kernel, cmap="crest")
+	if title:
+		ax.title(title)
+	if path:
+		ax.savefig(path)
+	ax.plot()
+
 def flatten_logits(logits, threshold):
     '''
     This function flattens the logits passed as parameter using the specified 
@@ -595,7 +619,7 @@ class EmotionsLabelEncoder():
         :param emotions: list of emotions
         '''
 
-        emotions = [emotion.split('/') for emotion in emotions]
+        emotions = [emotion.lower().split('/') for emotion in emotions]
         self.mlb.fit(emotions)
         self.classes = self.mlb.classes_
 
@@ -607,7 +631,7 @@ class EmotionsLabelEncoder():
         :return: numpy array with encoded emotions
         '''
 
-        emotions = [emotion.split('/') for emotion in emotions]
+        emotions = [emotion.lower().split('/') for emotion in emotions]
         encoded_emotions = self.mlb.transform(emotions)
         return encoded_emotions
 
