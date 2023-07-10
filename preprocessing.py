@@ -64,50 +64,51 @@ def write_dict_to_json(dict, path):
     with open(path, 'w') as fp:
         json.dump(dict, fp, indent = 1)
 
-def get_stemmed_EMO_lexicon(dataset):
+def hope_essay_frequency(essay, hope_lexicon):
+    hope_count = 0
+    total_count = 0
+    for word in essay.split():
+        if word in hope_lexicon:
+            total_count += 1
+            hope_count += int(hope_lexicon[word])
+    return (hope_count / total_count) if total_count>0 else 0
+
+def get_stemmed_EMO_lexicon(dataset, hope_lexicon):
     for emotion in NRC_emotions:
         dataset[f'{emotion}_count'] = ""
+    dataset['hope_count'] = ""
 
     for essay in dataset['essay']:
         NRC_obj = NRCLex(essay)
         for emotion in NRC_emotions:
             dataset[f'{emotion}_count'] = NRC_obj.affect_frequencies[f'{emotion}']
+        dataset['hope_count'] = hope_essay_frequency(essay, hope_lexicon)
     
     return dataset
 
-def get_stemmed_EMO_lexicon_per_word(dataset, split):
+def hope_frequencies(word, hope_lexicon):
+    if word in hope_lexicon:
+        return int(hope_lexicon[word])
+    else:
+        return 0
+
+def get_stemmed_EMO_lexicon_per_word(dataset, split, hope_lexicon, year):
     lexicon = {}
 
     for idx, row in dataset.iterrows():
         essay = row['essay']
         local_lexicon = {'fear': [], 'anger': [], 'anticip': [], 'trust': [], 'surprise': [], 'positive': [], 
-                        'negative': [], 'sadness': [], 'disgust': [], 'joy': []}
+                        'negative': [], 'sadness': [], 'disgust': [], 'joy': [], 'hope': []}
 
         for word in essay.split():
             NRC_obj = NRCLex(word)
             for emotion in NRC_emotions:
-                local_lexicon[f'{emotion}'].append(NRC_obj.affect_frequencies[f'{emotion}'])
-
-
-            """lexicon_fear.append(emotions_in_word['fear'] if 'fear' in emotions_in_word else 0)
-            lexicon_anger.append(emotions_in_word['anger'] if 'anger' in emotions_in_word else 0)
-            lexicon_anticip.append(emotions_in_word['anticip'] if 'anticip' in emotions_in_word else 0)
-            lexicon_trust.append(emotions_in_word['trust'] if 'trust' in emotions_in_word else 0)
-            lexicon_surprise.append(emotions_in_word['surprise'] if 'surprise' in emotions_in_word else 0)
-            lexicon_positive.append(emotions_in_word['positive'] if 'positive' in emotions_in_word else 0)
-            lexicon_negative.append(emotions_in_word['negative'] if 'negative' in emotions_in_word else 0)
-            lexicon_sadness.append(emotions_in_word['sadness'] if 'sadness' in emotions_in_word else 0)
-            lexicon_disgust.append(emotions_in_word['disgust'] if 'disgust' in emotions_in_word else 0)
-            lexicon_joy.append(emotions_in_word['joy'] if 'joy' in emotions_in_word else 0)
-
-        lexicon[row['essay_id']] = {'fear': lexicon_fear, 'anger': lexicon_anger, 'anticip': lexicon_anticip, 
-                            'trust': lexicon_trust, 'surprise': lexicon_surprise, 'positive': lexicon_positive, 
-                            'negative': lexicon_negative, 'sadness': lexicon_sadness, 'disgust': lexicon_disgust, 
-                            'joy': lexicon_joy}"""
+                local_lexicon[f'{emotion}'].append(1 if NRC_obj.affect_frequencies[f'{emotion}']>0 else 0)
+            local_lexicon['hope'].append(hope_frequencies(word, hope_lexicon))
         
         lexicon[row['essay_id']] = local_lexicon
     
-    path = './datasets/EMO_lexicon_per_word_' + split + '.json'
+    path = f'./datasets/EMO{year}_lexicon_per_word_' + split + '.json'
     write_dict_to_json(lexicon, path)
 
 def get_stemmed_EMP_lexicon(dataset):
@@ -122,7 +123,7 @@ def get_stemmed_EMP_lexicon(dataset):
 
     return dataset
 
-def get_stemmed_EMP_lexicon_per_word(dataset, split):
+def get_stemmed_EMP_lexicon_per_word(dataset, split, year):
     EMP_lexicon_obj = EMPlexicon()
     lexicon = {}
 
@@ -136,7 +137,7 @@ def get_stemmed_EMP_lexicon_per_word(dataset, split):
 
         lexicon[row['essay_id']] = local_lexicon
     
-    path = './datasets/EMP_lexicon_per_word_' + split + '.json'
+    path = f'./datasets/EMP{year}_lexicon_per_word_' + split + '.json'
     write_dict_to_json(lexicon, path)
 
 def read_lexicon_df(categories):
@@ -168,82 +169,21 @@ def correct_spelling(text):
     textblob = TextBlob(text)
     return textblob.correct()
 
-"""def add_counts(df, split, lexicon, stemmed_lexicon, categories):
-    lemmatizer = WordNetLemmatizer()
-    stemmer = PorterStemmer()
-    
-    for category in categories:
-        df[f'{category}_count'] = [0 for _ in range(len(df))]
-    
-    per_word_values = {}
-    
-    
-    essays_per_word_values = {}
-    for index, row in df.iterrows():
-        # remove punctuations and digits
-        per_word_values = {}
-    
-        for category in categories:
-            per_word_values[category] = [0.0 for _ in range(len(row['essay'].split()))]
-        
-        
-        essay = remove_punctuations(row['essay'])
-        essay = remove_digit(essay)
-        count = 0
-        
-        # count emotion flags of essay tokens in lexicon
-        for i, word in enumerate(essay.split()):
-            counter_word_in_lexicon = 0
-            word = word.lower()
-            if word in lexicon.index:
-                counter_word_in_lexicon += 1
-                count += 1
-                for category in categories:
-                    df.loc[index, f'{category}_count'] += lexicon.loc[word][category].astype(float)
-                    per_word_values[category][i] = lexicon.loc[word][category].astype(float)
-                                        
-            # expand contractions, correct spelling, lemmatize and stemm essay tokens
-            word = expand_contractions(word)
-            word = correct_spelling(word)
-            lemmas = [lemmatizer.lemmatize(token) for token in word.split()]
-            stemmas = [stemmer.stem(lemma) for lemma in lemmas]
-            
-            # sum the emotion flags counts of stemmed essay tokens in stemmed_lexicon
-            for stemma in stemmas:
-                if stemma in stemmed_lexicon.index:
-                    counter_word_in_lexicon += 1
-                    count += 0.5
-                    for category in categories:
-                        df.loc[index, f'{category}_count'] += stemmed_lexicon.loc[stemma][category].astype(float)
-                        per_word_values[category][i] += stemmed_lexicon.loc[stemma][category].astype(float)
-                else:
-                    if (len(categories) == 2):    
-                        per_word_values['empathy'][i] = 4.0 
-            
-            if(len(categories) == 2):
-                for category in categories:
-                    if (counter_word_in_lexicon != 0):
-                        per_word_values[category][i] /= counter_word_in_lexicon
-            else:
-                for category in categories:
-                    if (per_word_values[category][i] > 1):
-                        per_word_values[category][i] = 1.0
-        # nomalize counts
-        word_count = len(row['essay'].split())
-        for category in categories:
-            if (len(categories) == 2):
-                df.loc[index, f'{category}_count'] /= (word_count * count/100)
-            else:
-                df.loc[index, f'{category}_count'] /= (word_count/100)
-        
-        essays_per_word_values[row['essay_id']] = per_word_values
-    
-    if (len(categories) == 2):
-        write_dict_to_json(essays_per_word_values, f"./lexicon/{split}_per_word_lexicon_EMP.json")
-    else:
-        write_dict_to_json(essays_per_word_values, f"./lexicon/{split}_per_word_lexicon_EMO.json")
-    
-    return df"""
+def split_train_val(train_df):
+# splitting train data into train and validation with a stratified approach
+    emotions = train_df['emotion'].unique().tolist()
+    internal_train_df = pd.DataFrame()
+    internal_val_df = pd.DataFrame()
+    for emotion in emotions:
+        emotion_df = train_df.loc[train_df['emotion']==emotion]
+        if emotion_df.shape[0] < 2 : # if a class has a single sample it is added to the train set
+            internal_train_df = pd.concat([internal_train_df, emotion_df])
+        else:
+            t_df, v_df = train_test_split(emotion_df, test_size=VAL_SIZE, stratify=emotion_df['emotion'], shuffle=True)
+            internal_train_df = pd.concat([internal_train_df, t_df])
+            internal_val_df = pd.concat([internal_val_df, v_df])
+
+    return internal_train_df, internal_val_df
 
 def read_NRC_lexicon_file(file_name):
     lexicon = {}
@@ -266,8 +206,6 @@ def build_hope_lexicon():
     # build hope lexicon
     hope_lexicon = {}
     for word, value in anticipation_lexicon.items():
-        if word=='abundance':
-            print("ciao")
         if (value == '1' and (word in  subjectivity_lexicon or TextBlob(word).sentiment.subjectivity >= 0.5) 
             and (positive_lexicon[word]=='1' or joy_lexicon[word]=='1')):
             hope_lexicon[word] = 1
@@ -279,13 +217,14 @@ def build_hope_lexicon():
     hope_lexicon.sort_values(by=['value', 'word'], ascending=[False, True], inplace=True)
     hope_lexicon.to_csv(HOPE_LEXICON_PATH, sep='\t', header=False)
 
-def add_lexicon_features(internal_train_df, internal_val_df, dev_df, test_df):
+def add_lexicon_features(internal_train_df, internal_val_df, dev_df, test_df, year):
+    hope_lexicon = read_NRC_lexicon_file(HOPE_LEXICON_PATH)
     
     # add lexicon features for emotions
-    internal_train_df = get_stemmed_EMO_lexicon(internal_train_df)
-    internal_val_df = get_stemmed_EMO_lexicon(internal_val_df)
-    dev_df = get_stemmed_EMO_lexicon(dev_df)
-    test_df = get_stemmed_EMO_lexicon(test_df)
+    internal_train_df = get_stemmed_EMO_lexicon(internal_train_df, hope_lexicon)
+    internal_val_df = get_stemmed_EMO_lexicon(internal_val_df, hope_lexicon)
+    dev_df = get_stemmed_EMO_lexicon(dev_df, hope_lexicon)
+    test_df = get_stemmed_EMO_lexicon(test_df, hope_lexicon)
 
     # add lexicon features for empathy and distress
     internal_train_df = get_stemmed_EMP_lexicon(internal_train_df)
@@ -295,14 +234,14 @@ def add_lexicon_features(internal_train_df, internal_val_df, dev_df, test_df):
 
     # create dictionary with emotions values per word
     train_df = pd.concat([internal_train_df, internal_val_df])
-    get_stemmed_EMO_lexicon_per_word(train_df, split='train')
-    get_stemmed_EMO_lexicon_per_word(dev_df, split='dev')
-    get_stemmed_EMO_lexicon_per_word(test_df, split='test')
+    get_stemmed_EMO_lexicon_per_word(train_df, split='train', hope_lexicon=hope_lexicon, year=year)
+    get_stemmed_EMO_lexicon_per_word(dev_df, split='dev', hope_lexicon=hope_lexicon, year=year)
+    get_stemmed_EMO_lexicon_per_word(test_df, split='test', hope_lexicon=hope_lexicon, year=year)
 
     # create dictionary with empathy and distress values per word
-    get_stemmed_EMP_lexicon_per_word(train_df, split='train')
-    get_stemmed_EMP_lexicon_per_word(dev_df, split='dev')
-    get_stemmed_EMP_lexicon_per_word(test_df, split='test')
+    get_stemmed_EMP_lexicon_per_word(train_df, split='train', year=year)
+    get_stemmed_EMP_lexicon_per_word(dev_df, split='dev', year=year)
+    get_stemmed_EMP_lexicon_per_word(test_df, split='test', year=year)
     
     return internal_train_df, internal_val_df, dev_df, test_df
 
@@ -344,19 +283,27 @@ def remove_space_from_essay(dataframe):
 
 def preprocess(year):
 
-    internal_train_path = f"datasets/WASSA{year}_essay_level_internal_train.tsv"
-    internal_val_path = f"datasets/WASSA{year}_essay_level_internal_val.tsv"
+    if year == 22:
+        train_path = f"datasets/WASSA{year}_essay_level_train.tsv"
+
+        train_df = pd.read_csv(train_path, sep='\t')
+        internal_train_df, internal_val_df = split_train_val(train_df)
+    else:
+        internal_train_path = f"datasets/WASSA{year}_essay_level_internal_train.tsv"
+        internal_val_path = f"datasets/WASSA{year}_essay_level_internal_val.tsv"
+
+        internal_train_df = pd.read_csv(internal_train_path, sep='\t')
+        internal_val_df = pd.read_csv(internal_val_path, sep='\t')
+
     dev_path = f"datasets/WASSA{year}_essay_level_dev.tsv"
     test_path = f"datasets/WASSA{year}_essay_level_test.tsv"
     dev_labels_path = f"datasets/WASSA{year}_goldstandard_dev.tsv"
 
-    internal_train_df = pd.read_csv(internal_train_path, sep='\t')
-    internal_val_df = pd.read_csv(internal_val_path, sep='\t')
     dev_df = pd.read_csv(dev_path, sep='\t')
     test_df = pd.read_csv (test_path, sep='\t')
     dev_lbl_df = pd.read_csv(dev_labels_path, sep='\t', names=DEV_COL_NAMES)
     
-    #build_hope_lexicon() #TODO: serve ancora?
+    build_hope_lexicon()
 
     # merging dev labels with data
     dev_df = dev_df.merge(dev_lbl_df, left_index=True, right_index=True, how='outer')
@@ -373,8 +320,9 @@ def preprocess(year):
     dev_df = add_word_count(dev_df)
     test_df = add_word_count(test_df)
 
-    # remouve unuselful space from essay
-    test_df = remove_space_from_essay(test_df)
+    if year == 23:
+        # remouve unuselful space from essay
+        test_df = remove_space_from_essay(test_df)
 
     # add essay_id to internal train and validation sets
     internal_train_df['essay_id'] = ""
@@ -386,9 +334,23 @@ def preprocess(year):
         internal_val_df.at[idx, 'essay_id'] = count
         count += 1
     
+    if year == 22:
+        # add essay_id to dev set
+        dev_df['essay_id'] = ""
+        count = 0
+        for idx, row in dev_df.iterrows():
+            dev_df.at[idx, 'essay_id'] = count
+            count += 1
+        # add essay_id to test set
+        test_df['essay_id'] = ""
+        count = 0
+        for idx, row in test_df.iterrows():
+            test_df.at[idx, 'essay_id'] = count
+            count += 1
+    
     # add lexicon features
     internal_train_df, internal_val_df, dev_df, test_df = add_lexicon_features(internal_train_df, 
-                                                            internal_val_df, dev_df, test_df)
+                                                            internal_val_df, dev_df, test_df, year)
 
     # add prompt with anagraphic data
     internal_train_df = add_prompt(internal_train_df)
@@ -410,7 +372,7 @@ def preprocess(year):
 
 def main():
     # preprocess WASSA 22 dataset
-    #preprocess(22) # TODO: non hanno gli essay_id, se si usa anche 22 bisogna dividere
+    preprocess(22)
 
     # preprocess WASSA 23 dataset
     preprocess(23)
