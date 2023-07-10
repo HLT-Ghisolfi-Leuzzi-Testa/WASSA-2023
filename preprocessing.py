@@ -129,11 +129,12 @@ def get_stemmed_EMP_lexicon_per_word(dataset, split, year):
 
     for idx, row in dataset.iterrows():
         essay = row['essay']
-        local_lexicon = {}
+        local_lexicon = {'empathy': [], 'distress': []}
 
-        EMP_lexicon_obj.load_raw_text(essay)
-        local_lexicon['empathy'] = EMP_lexicon_obj.empathy_list
-        local_lexicon['distress'] = EMP_lexicon_obj.distress_list
+        for word in essay.split():
+            EMP_lexicon_obj.load_raw_text(word)
+            local_lexicon['empathy'].append(EMP_lexicon_obj.distress_list)
+            local_lexicon['distress'].append(EMP_lexicon_obj.distress_list)
 
         lexicon[row['essay_id']] = local_lexicon
     
