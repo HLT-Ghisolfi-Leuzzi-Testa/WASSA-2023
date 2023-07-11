@@ -22,6 +22,19 @@ from textblob import TextBlob
 
 EMP_LEXICON_PATH = "./lexicon/lexicon_EMP.csv"
 
+NRC_emotions = [
+    'fear',
+    'anger',
+    'anticipation',
+    'trust',
+    'surprise',
+    'positive',
+    'negative',
+    'sadness',
+    'disgust',
+    'joy'
+]
+
 
 def print_model_summary(model, path):
     '''

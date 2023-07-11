@@ -7,7 +7,7 @@ from nltk.stem import WordNetLemmatizer
 from nltk.stem.porter import PorterStemmer
 from textblob import TextBlob
 from nrclex import NRCLex
-from utils import EMPlexicon, generate_prompt
+from utils import EMPlexicon, generate_prompt, NRC_emotions
 import json
 import numpy as np
 import os
@@ -31,19 +31,6 @@ DEV_COL_NAMES = [
     "iri_personal_distress",
     "iri_fantasy",
     "iri_empathatic_concern"
-]
-
-NRC_emotions = [
-    'fear',
-    'anger',
-    'anticipation',
-    'trust',
-    'surprise',
-    'positive',
-    'negative',
-    'sadness',
-    'disgust',
-    'joy'
 ]
 
 VAL_SIZE = 0.2
