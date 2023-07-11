@@ -134,9 +134,12 @@ def get_stemmed_EMP_lexicon_per_word(dataset, split, year):
 
         for word in essay.split():
             EMP_lexicon_obj.load_raw_text(word)
-            if len(EMP_lexicon_obj.empathy_list)>0:
+            if len(EMP_lexicon_obj.empathy_list) > 0:
                 local_lexicon['empathy'].append(EMP_lexicon_obj.empathy_list[0])
                 local_lexicon['distress'].append(EMP_lexicon_obj.distress_list[0])
+            else:
+                local_lexicon['empathy'].append(4)
+                local_lexicon['distress'].append(0)
 
         lexicon[row['essay_id']] = local_lexicon
     
