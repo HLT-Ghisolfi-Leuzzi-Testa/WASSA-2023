@@ -36,7 +36,7 @@ DEV_COL_NAMES = [
 NRC_emotions = [
     'fear',
     'anger',
-    'anticip',
+    'anticipation',
     'trust',
     'surprise',
     'positive',
@@ -78,13 +78,17 @@ def get_stemmed_EMO_lexicon(dataset, hope_lexicon):
         dataset[f'{emotion}_count'] = ""
     dataset['hope_count'] = ""
 
-    for essay in dataset['essay']:
+    for i, essay in enumerate(dataset['essay']):
         NRC_obj = NRCLex(essay)
         for emotion in NRC_emotions:
-            dataset[f'{emotion}_count'] = NRC_obj.affect_frequencies[f'{emotion}']
+            emo_frequencies = NRC_obj.affect_frequencies
+            emo_frequencies.pop('anticip')
+            if 'anticipation' not in emo_frequencies.keys():
+                emo_frequencies['anticipation'] = 0.0
+            dataset[f'{emotion}_count'][i] = emo_frequencies[f'{emotion}']
 
         #dataset['anticip_count'] = NRC_obj.affect_frequencies['anticipation'] #TODO
-        dataset['hope_count'] = hope_essay_frequency(essay, hope_lexicon)
+        dataset['hope_count'][i] = hope_essay_frequency(essay, hope_lexicon)
     
     return dataset
 
@@ -99,13 +103,18 @@ def get_stemmed_EMO_lexicon_per_word(dataset, split, hope_lexicon, year):
 
     for idx, row in dataset.iterrows():
         essay = row['essay']
-        local_lexicon = {'fear': [], 'anger': [], 'anticip': [], 'trust': [], 'surprise': [], 'positive': [], 
+        local_lexicon = {'fear': [], 'anger': [], 'anticipation': [], 'trust': [], 'surprise': [], 'positive': [], 
                         'negative': [], 'sadness': [], 'disgust': [], 'joy': [], 'hope': []}
 
         for word in essay.split():
             NRC_obj = NRCLex(word)
             for emotion in NRC_emotions:
-                local_lexicon[f'{emotion}'].append(1 if NRC_obj.affect_frequencies[f'{emotion}']>0 else 0)
+                emo_frequencies = NRC_obj.affect_frequencies[f'{emotion}']
+                emo_frequencies.pop('anticip')
+                if 'anticipation' not in emo_frequencies.keys():
+                    emo_frequencies['anticipation'] = 0.0
+                emotion_count = [1 if emo_frequencies[f'{emotion}'] > 0 else 0]
+                local_lexicon[f'{emotion}'].append(emotion_count)
             local_lexicon['hope'].append(hope_frequencies(word, hope_lexicon))
         
         lexicon[row['essay_id']] = local_lexicon
@@ -118,10 +127,10 @@ def get_stemmed_EMP_lexicon(dataset):
     dataset['empathy_count'] = ""
     dataset['distress_count'] = ""
 
-    for essay in dataset['essay']:
+    for i, essay in enumerate(dataset['essay']):
         EMP_lexicon_obj.load_raw_text(essay)
-        dataset['empathy_count'] = EMP_lexicon_obj.empathy_sentence_mean['empathy']
-        dataset['distress_count'] = EMP_lexicon_obj.empathy_sentence_mean['distress']
+        dataset['empathy_count'][i] = EMP_lexicon_obj.empathy_sentence_mean['empathy']
+        dataset['distress_count'][i] = EMP_lexicon_obj.empathy_sentence_mean['distress']
 
     return dataset
 
@@ -135,8 +144,8 @@ def get_stemmed_EMP_lexicon_per_word(dataset, split, year):
 
         for word in essay.split():
             EMP_lexicon_obj.load_raw_text(word)
-            local_lexicon['empathy'].append(EMP_lexicon_obj.distress_list)
-            local_lexicon['distress'].append(EMP_lexicon_obj.distress_list)
+            local_lexicon['empathy'].append(EMP_lexicon_obj.empathy_list[0])
+            local_lexicon['distress'].append(EMP_lexicon_obj.distress_list[0])
 
         lexicon[row['essay_id']] = local_lexicon
     
