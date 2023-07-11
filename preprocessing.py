@@ -78,17 +78,17 @@ def get_stemmed_EMO_lexicon(dataset, hope_lexicon):
         dataset[f'{emotion}_count'] = ""
     dataset['hope_count'] = ""
 
-    for i, essay in enumerate(dataset['essay']):
+    for idx, row in dataset.iterrows():
+        essay = row['essay']
         NRC_obj = NRCLex(essay)
-        for emotion in NRC_emotions:
-            emo_frequencies = NRC_obj.affect_frequencies
+        emo_frequencies = NRC_obj.affect_frequencies
+        if 'anticip' in emo_frequencies.keys():
             emo_frequencies.pop('anticip')
-            if 'anticipation' not in emo_frequencies.keys():
-                emo_frequencies['anticipation'] = 0.0
-            dataset[f'{emotion}_count'][i] = emo_frequencies[f'{emotion}']
-
-        #dataset['anticip_count'] = NRC_obj.affect_frequencies['anticipation'] #TODO
-        dataset['hope_count'][i] = hope_essay_frequency(essay, hope_lexicon)
+        if 'anticipation' not in emo_frequencies.keys():
+            emo_frequencies['anticipation'] = 0.0
+        for emotion in NRC_emotions:
+            dataset.at[idx, f'{emotion}_count'] = emo_frequencies[f'{emotion}']
+        dataset['hope_count'][idx] = hope_essay_frequency(essay, hope_lexicon)
     
     return dataset
 
@@ -108,13 +108,13 @@ def get_stemmed_EMO_lexicon_per_word(dataset, split, hope_lexicon, year):
 
         for word in essay.split():
             NRC_obj = NRCLex(word)
+            emo_frequencies = NRC_obj.affect_frequencies
             for emotion in NRC_emotions:
-                emo_frequencies = NRC_obj.affect_frequencies[f'{emotion}']
-                emo_frequencies.pop('anticip')
+                if 'anticip' in emo_frequencies.keys():
+                    emo_frequencies.pop('anticip')
                 if 'anticipation' not in emo_frequencies.keys():
                     emo_frequencies['anticipation'] = 0.0
-                emotion_count = [1 if emo_frequencies[f'{emotion}'] > 0 else 0]
-                local_lexicon[f'{emotion}'].append(emotion_count)
+                local_lexicon[f'{emotion}'].append(1 if emo_frequencies[f'{emotion}'] > 0 else 0)
             local_lexicon['hope'].append(hope_frequencies(word, hope_lexicon))
         
         lexicon[row['essay_id']] = local_lexicon
@@ -126,11 +126,14 @@ def get_stemmed_EMP_lexicon(dataset):
     EMP_lexicon_obj = EMPlexicon()
     dataset['empathy_count'] = ""
     dataset['distress_count'] = ""
-
-    for i, essay in enumerate(dataset['essay']):
+    
+    for idx, row in dataset.iterrows():
+        essay = row['essay']
         EMP_lexicon_obj.load_raw_text(essay)
-        dataset['empathy_count'][i] = EMP_lexicon_obj.empathy_sentence_mean['empathy']
-        dataset['distress_count'][i] = EMP_lexicon_obj.empathy_sentence_mean['distress']
+        dataset.at[idx, 'empathy_count'] = EMP_lexicon_obj.empathy_sentence_mean['empathy']
+        dataset.at[idx, 'distress_count'] = EMP_lexicon_obj.empathy_sentence_mean['distress']
+        """dataset['empathy_count'][idx] = EMP_lexicon_obj.empathy_sentence_mean['empathy']
+        dataset['distress_count'][idx] = EMP_lexicon_obj.empathy_sentence_mean['distress']"""
 
     return dataset
 
@@ -144,8 +147,9 @@ def get_stemmed_EMP_lexicon_per_word(dataset, split, year):
 
         for word in essay.split():
             EMP_lexicon_obj.load_raw_text(word)
-            local_lexicon['empathy'].append(EMP_lexicon_obj.empathy_list[0])
-            local_lexicon['distress'].append(EMP_lexicon_obj.distress_list[0])
+            if len(EMP_lexicon_obj.empathy_list)>0:
+                local_lexicon['empathy'].append(EMP_lexicon_obj.empathy_list[0])
+                local_lexicon['distress'].append(EMP_lexicon_obj.distress_list[0])
 
         lexicon[row['essay_id']] = local_lexicon
     
@@ -274,10 +278,9 @@ def add_word_count(dataframe):
     return dataframe
 
 def add_prompt(dataframe, empathy=True):
-    dataframe["essay+prompt"] = ""
     dataframe["prompt"] = ""
     for idx, row in dataframe.iterrows():
-        text_essay_prompt, text_prompt = generate_prompt(
+        text_prompt = generate_prompt(
             row['essay'],
             row['gender'],
             row['education'],
@@ -287,13 +290,11 @@ def add_prompt(dataframe, empathy=True):
             row['empathy'] if empathy else None,
             row['distress'] if empathy else None
             )
-        dataframe["essay+prompt"][idx] = text_essay_prompt
-        dataframe["prompt"][idx] = text_prompt
+        dataframe.at[idx, "prompt"] = text_prompt
     return dataframe
 
 def lower_case_labels(dataset):
-    for idx, row in dataset.iterrows():
-        row['emotion'] = row['emotion'].lower()
+    dataset['emotion'] = dataset['emotion'].str.lower()
     return dataset
 
 def remove_space_from_essay(dataframe):
@@ -449,7 +450,7 @@ def preprocess(year):
 
 def main():
     # preprocess WASSA 22 dataset
-    preprocess(22)
+    #preprocess(22)
 
     # preprocess WASSA 23 dataset
     preprocess(23)

@@ -579,20 +579,18 @@ def generate_prompt(essay, gender, education, ethnicity, age, income, empathy, d
     text_prompt_emo = " The top emotions expressed in the essay are: {}.".format(emo_string)
 
     if empathy is not None:
-        text_essay_prompt = essay + "'" + text_prompt_bio + text_prompt_emp + text_prompt_emo + "'"
         text_prompt = text_prompt_bio + text_prompt_emp + text_prompt_emo
     else:
-        text_essay_prompt = essay + "'" + text_prompt_bio + text_prompt_emo + "'"
         text_prompt = text_prompt_bio + text_prompt_emo
         
-    return text_essay_prompt, text_prompt
+    return text_prompt
 
 def add_prompt_to_test_from_EMP_predictions(test_df, emp_predictions_path):
     emp_predictions = pd.read_csv(emp_predictions_path, header=None) #TODO: verificare che funzioni
     emp_predictions.columns = ['empathy', 'distress']
 
     for idx, row in test_df.iterrows():
-        text_essay_prompt, text_prompt = generate_prompt(
+        text_prompt = generate_prompt(
                                     row['essay'],
                                     row['gender'],
                                     row['education'],
@@ -602,8 +600,7 @@ def add_prompt_to_test_from_EMP_predictions(test_df, emp_predictions_path):
                                     emp_predictions['empathy'][idx],
                                     emp_predictions['distress'][idx],
                                     )
-        test_df["essay+prompt"][idx] = text_essay_prompt
-        test_df["prompt"][idx] = text_prompt
+        test_df.at[idx, "prompt"] = text_prompt
         
     return test_df
 
