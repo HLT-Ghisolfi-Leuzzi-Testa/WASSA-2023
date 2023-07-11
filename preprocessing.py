@@ -82,6 +82,8 @@ def get_stemmed_EMO_lexicon(dataset, hope_lexicon):
         NRC_obj = NRCLex(essay)
         for emotion in NRC_emotions:
             dataset[f'{emotion}_count'] = NRC_obj.affect_frequencies[f'{emotion}']
+
+        #dataset['anticip_count'] = NRC_obj.affect_frequencies['anticipation'] #TODO
         dataset['hope_count'] = hope_essay_frequency(essay, hope_lexicon)
     
     return dataset
@@ -263,9 +265,10 @@ def add_word_count(dataframe):
     return dataframe
 
 def add_prompt(dataframe, empathy=True):
+    dataframe["essay+prompt"] = ""
     dataframe["prompt"] = ""
     for idx, row in dataframe.iterrows():
-        text_prompt = generate_prompt(
+        text_essay_prompt, text_prompt = generate_prompt(
             row['essay'],
             row['gender'],
             row['education'],
@@ -275,26 +278,50 @@ def add_prompt(dataframe, empathy=True):
             row['empathy'] if empathy else None,
             row['distress'] if empathy else None
             )
+        dataframe["essay+prompt"][idx] = text_essay_prompt
         dataframe["prompt"][idx] = text_prompt
     return dataframe
+
+def lower_case_labels(dataset):
+    for idx, row in dataset.iterrows():
+        row['emotion'] = row['emotion'].lower()
+    return dataset
 
 def remove_space_from_essay(dataframe):
     dataframe['essay'] = dataframe['essay'].str.replace("\r\n", " ")
     return dataframe
 
+def match_essay_id(internal_df, original_internal_train_df, original_internal_val_df):
+    keep_cheching = True
+    for idx, row in internal_df.iterrows():
+        for idx2, row2 in original_internal_train_df.iterrows():
+            if row['essay'] == row2['essay']:
+                original_internal_train_df.at[idx2, 'essay_id'] = row['essay_id']
+                keep_cheching = False
+        if keep_cheching:
+            for idx2, row2 in original_internal_val_df.iterrows():
+                if row['essay'] == row2['essay']:
+                    original_internal_val_df.at[idx2, 'essay_id'] = row['essay_id']
+                    break
+    
+    return original_internal_train_df, original_internal_val_df
+                
 def preprocess(year):
 
     if year == 22:
-        train_path = f"datasets/WASSA{year}_essay_level_train.tsv"
+        train_path = f"datasets/WASSA22_essay_level_train.tsv"
 
         train_df = pd.read_csv(train_path, sep='\t')
         internal_train_df, internal_val_df = split_train_val(train_df)
     else:
-        internal_train_path = f"datasets/WASSA{year}_essay_level_internal_train.tsv"
-        internal_val_path = f"datasets/WASSA{year}_essay_level_internal_val.tsv"
+        internal_train_path = f"datasets/WASSA23_essay_level_internal_train.tsv"
+        internal_val_path = f"datasets/WASSA23_essay_level_internal_val.tsv"
+        original_train_path = f"datasets/WASSA23_essay_level_train_original.tsv"
 
         internal_train_df = pd.read_csv(internal_train_path, sep='\t')
         internal_val_df = pd.read_csv(internal_val_path, sep='\t')
+        original_train_df = pd.read_csv(original_train_path, sep='\t')
+        original_internal_train_df, original_internal_val_df = split_train_val(original_train_df)
 
     dev_path = f"datasets/WASSA{year}_essay_level_dev.tsv"
     test_path = f"datasets/WASSA{year}_essay_level_test.tsv"
@@ -314,12 +341,26 @@ def preprocess(year):
     internal_val_df = drop_rows_with_unknown(internal_val_df)
     dev_df = drop_rows_with_unknown(dev_df)
     test_df = drop_rows_with_unknown(test_df)
+    if year == 23:
+        original_internal_train_df = drop_rows_with_unknown(original_internal_train_df)
+        original_internal_val_df = drop_rows_with_unknown(original_internal_val_df)
 
     # add essay word count
     internal_train_df = add_word_count(internal_train_df)
     internal_val_df = add_word_count(internal_val_df)
     dev_df = add_word_count(dev_df)
     test_df = add_word_count(test_df)
+    if year == 23:
+        original_internal_train_df = add_word_count(original_internal_train_df)
+        original_internal_val_df = add_word_count(original_internal_val_df)
+    
+    # convert labels to lower case
+    internal_train_df = lower_case_labels(internal_train_df)
+    internal_val_df = lower_case_labels(internal_val_df)
+    dev_df = lower_case_labels(dev_df)
+    if year == 23:
+        original_internal_train_df = lower_case_labels(original_internal_train_df)
+        original_internal_val_df = lower_case_labels(original_internal_val_df)
 
     if year == 23:
         # remouve unuselful space from essay
@@ -334,6 +375,12 @@ def preprocess(year):
     for idx, row in internal_val_df.iterrows():
         internal_val_df.at[idx, 'essay_id'] = count
         count += 1
+    
+    if year == 23:
+        original_internal_train_df, original_internal_val_df = match_essay_id(
+            internal_train_df, original_internal_train_df, original_internal_val_df)
+        original_internal_train_df, original_internal_val_df = match_essay_id(
+            internal_val_df, original_internal_train_df, original_internal_val_df)
     
     if year == 22:
         # add essay_id to dev set
@@ -352,16 +399,31 @@ def preprocess(year):
     # add lexicon features
     internal_train_df, internal_val_df, dev_df, test_df = add_lexicon_features(internal_train_df, 
                                                             internal_val_df, dev_df, test_df, year)
+    if year == 23:
+        # add lexicon features for emotions
+        hope_lexicon = hope_lexicon = read_NRC_lexicon_file(HOPE_LEXICON_PATH)
+        original_internal_train_df = get_stemmed_EMO_lexicon(original_internal_train_df, hope_lexicon)
+        original_internal_val_df = get_stemmed_EMO_lexicon(original_internal_val_df, hope_lexicon)
+
+        # add lexicon features for empathy and distress
+        original_internal_train_df = get_stemmed_EMP_lexicon(original_internal_train_df)
+        original_internal_val_df = get_stemmed_EMP_lexicon(original_internal_val_df)
 
     # add prompt with anagraphic data
     internal_train_df = add_prompt(internal_train_df)
     internal_val_df = add_prompt(internal_val_df)
     dev_df = add_prompt(dev_df)
     test_df = add_prompt(test_df, empathy=False)
+    if year == 23:
+        original_internal_train_df = add_prompt(original_internal_train_df)
+        original_internal_val_df = add_prompt(original_internal_val_df)
 
     # get pre-processed train data (ordered by internal_train and internal_val)
     train_df = pd.concat([internal_train_df, internal_val_df])
     essay_level = pd.concat([train_df, dev_df])
+    if year == 23:
+        original_train_df = pd.concat([original_internal_train_df, original_internal_val_df])
+        original_essay_level = pd.concat([original_train_df, dev_df])
 
     # saving pre-processed data
     train_df.to_csv(f"datasets/WASSA{year}_essay_level_train_preproc.tsv", index=False, sep='\t')
@@ -370,6 +432,11 @@ def preprocess(year):
     dev_df.to_csv(f"datasets/WASSA{year}_essay_level_dev_preproc.tsv", index=False, sep='\t')
     test_df.to_csv(f"datasets/WASSA{year}_essay_level_test_preproc.tsv", index=False, sep='\t')
     essay_level.to_csv(f"datasets/WASSA{year}_essay_level_preproc.tsv", index=False, sep='\t')
+    if year == 23:
+        original_internal_train_df.to_csv(f"datasets/WASSA{year}_essay_level_original_internal_train_preproc.tsv", index=False, sep='\t')
+        original_internal_val_df.to_csv(f"datasets/WASSA{year}_essay_level_original_internal_val_preproc.tsv", index=False, sep='\t')
+        original_train_df.to_csv(f"datasets/WASSA{year}_essay_level_original_train_preproc.tsv", index=False, sep='\t')
+        original_essay_level.to_csv(f"datasets/WASSA{year}_essay_level_original_preproc.tsv", index=False, sep='\t')
 
 def main():
     # preprocess WASSA 22 dataset
