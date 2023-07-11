@@ -88,7 +88,7 @@ def get_stemmed_EMO_lexicon(dataset, hope_lexicon):
             emo_frequencies['anticipation'] = 0.0
         for emotion in NRC_emotions:
             dataset.at[idx, f'{emotion}_count'] = emo_frequencies[f'{emotion}']
-        dataset['hope_count'][idx] = hope_essay_frequency(essay, hope_lexicon)
+        dataset.at[idx, 'hope_count'] = hope_essay_frequency(essay, hope_lexicon)
     
     return dataset
 
