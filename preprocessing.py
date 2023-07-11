@@ -292,12 +292,13 @@ def remove_space_from_essay(dataframe):
     return dataframe
 
 def match_essay_id(internal_df, original_internal_train_df, original_internal_val_df):
-    keep_cheching = True
     for idx, row in internal_df.iterrows():
+        keep_cheching = True
         for idx2, row2 in original_internal_train_df.iterrows():
             if row['essay'] == row2['essay']:
                 original_internal_train_df.at[idx2, 'essay_id'] = row['essay_id']
                 keep_cheching = False
+                break
         if keep_cheching:
             for idx2, row2 in original_internal_val_df.iterrows():
                 if row['essay'] == row2['essay']:
@@ -440,7 +441,7 @@ def preprocess(year):
 
 def main():
     # preprocess WASSA 22 dataset
-    #preprocess(22)
+    preprocess(22)
 
     # preprocess WASSA 23 dataset
     preprocess(23)
