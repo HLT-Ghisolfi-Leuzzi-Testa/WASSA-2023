@@ -370,13 +370,13 @@ def compute_EMO_metrics(golds, predictions):
     
     scores_val = calculatePRF_MLabel(golds, predictions)
     scores = {
-    'micro_recall': scores_val[0],
-    'micro_precision': scores_val[1],
-    'micro_f': scores_val[2],
-    'macro_recall': scores_val[3],
-    'macro_precision': scores_val[4],
-    'macro_F': scores_val[5],
-    'accuracy': scores_val[6]
+        'macro_f1': scores_val[5],
+        'micro_f1': scores_val[2],
+        'micro_jaccard': scores_val[6],
+        'macro_precision': scores_val[4],
+        'macro_recall': scores_val[3],
+        'micro_precision': scores_val[1],
+        'micro_recall': scores_val[0]
     }
     return scores
 
