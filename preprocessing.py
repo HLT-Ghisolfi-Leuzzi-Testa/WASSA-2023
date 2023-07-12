@@ -267,20 +267,24 @@ def add_word_count(dataframe):
     dataframe['essay_word_count'] = dataframe['essay'].apply(lambda x: len(x.split()))
     return dataframe
 
-def add_prompt(dataframe, empathy=True):
-    dataframe["prompt"] = ""
+def add_prompt(dataframe):
+    dataframe["prompt_bio"] = ""
+    dataframe["prompt_emp"] = ""
+    dataframe["prompt_emo"] = ""
     for idx, row in dataframe.iterrows():
-        text_prompt = generate_prompt(
+        bio_prompt, emp_prompt, emo_prompt = generate_prompt(
             row['essay'],
             row['gender'],
             row['education'],
             row['race'],
             row['age'],
             row['income'],
-            row['empathy'] if empathy else None,
-            row['distress'] if empathy else None
+            row['empathy'] if 'empathy' in row else None,
+            row['distress'] if 'empathy' in row else None
             )
-        dataframe.at[idx, "prompt"] = text_prompt
+        dataframe.at[idx, "prompt_bio"] = bio_prompt
+        dataframe.at[idx, "prompt_emp"] = emp_prompt
+        dataframe.at[idx, "prompt_emo"] = emo_prompt
     return dataframe
 
 def lower_case_labels(dataset):
@@ -414,7 +418,7 @@ def preprocess(year):
     internal_train_df = add_prompt(internal_train_df)
     internal_val_df = add_prompt(internal_val_df)
     dev_df = add_prompt(dev_df)
-    test_df = add_prompt(test_df, empathy=False)
+    test_df = add_prompt(test_df)
     if year == 23:
         original_internal_train_df = add_prompt(original_internal_train_df)
         original_internal_val_df = add_prompt(original_internal_val_df)

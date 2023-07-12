@@ -593,13 +593,8 @@ def generate_prompt(essay, gender, education, ethnicity, age, income, empathy, d
         if i < n_emo-1:
             emo_string += ", "
     text_prompt_emo = " The top emotions expressed in the essay are: {}.".format(emo_string)
-
-    if empathy is not None:
-        text_prompt = text_prompt_bio + text_prompt_emp + text_prompt_emo
-    else:
-        text_prompt = text_prompt_bio + text_prompt_emo
-        
-    return text_prompt
+    
+    return text_prompt_bio, text_prompt_emp, text_prompt_emo
 
 def add_prompt_to_test_from_EMP_predictions(test_df, emp_predictions_path):
     emp_predictions = pd.read_csv(emp_predictions_path, header=None) #TODO: verificare che funzioni
