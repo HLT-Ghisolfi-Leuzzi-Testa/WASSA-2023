@@ -515,7 +515,7 @@ class EMODataset(Dataset):
 
 def plot_confusion_matrix_per_emotions(gold_emotions, predicted_emotions):
     # Define the desired label names
-    label_names = ['Anger', 'Disgust', 'Fear', 'Hope', 'Joy', 'Neutral', 'Sadness', 'Surprise']
+    label_names = ['anger', 'disgust', 'fear', 'hope', 'joy', 'neutral', 'sadness', 'surprise']
 
     # Compute the confusion matrix
     cm = confusion_matrix(gold_emotions, predicted_emotions, labels=label_names)
