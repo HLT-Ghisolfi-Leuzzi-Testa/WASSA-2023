@@ -46,14 +46,16 @@ def apply_dummy_clfs(train_df, test_df, split): # TODO: per class metrics?
     else:
         write_EMO_predictions(uniform_emotions, f"uniform_{split}_predictions_EMO.tsv")
 
-TRAIN_DATA_PATH = "datasets/WASSA23_essay_level_train_preproc.tsv"
-DEV_DATA_PATH = "datasets/WASSA23_essay_level_dev_preproc.tsv"
+TRAIN_DATA_PATH = "https://raw.githubusercontent.com/HLT-Ghisolfi-Leuzzi-Testa/WASSA-2023/main/datasets/WASSA23_essay_level_train_original.tsv"
+DEV_DATA_PATH = "https://raw.githubusercontent.com/HLT-Ghisolfi-Leuzzi-Testa/WASSA-2023/main//datasets/WASSA23_essay_level_dev_preproc.tsv"
+"""
 DATA_PATH = "datasets/WASSA23_essay_level_preproc.tsv"
 TEST_DATA_PATH = "datasets/WASSA23_essay_level_test_preproc.tsv"
+"""
 
 train_df = pd.read_csv(TRAIN_DATA_PATH, sep='\t')
 dev_df = pd.read_csv(DEV_DATA_PATH, sep='\t')
 apply_dummy_clfs(train_df, dev_df, "dev")
-all_df = pd.read_csv(DATA_PATH, sep='\t')
+"""all_df = pd.read_csv(DATA_PATH, sep='\t')
 test_df = pd.read_csv(TEST_DATA_PATH, sep='\t')
-apply_dummy_clfs(all_df, test_df, "test")
+apply_dummy_clfs(all_df, test_df, "test")"""
