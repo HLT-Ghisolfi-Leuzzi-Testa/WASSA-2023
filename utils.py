@@ -62,13 +62,11 @@ def plot_model_graph(model, input_data, path):
     model_graph.visual_graph.view()
 
 def plot_metric_curve(
-        train_metric,
-        eval_metric,
-        train_epochs,
-        eval_epochs,
-        metric,
+        values,
+        epochs,
+        metrics,
         title=None,
-        path=None
+        path=None,
         ):
     '''
     This function saves the plot of the training and validation metric curves.
@@ -84,21 +82,24 @@ def plot_metric_curve(
     
     sns.set(style='darkgrid')
     plt.rcParams["figure.figsize"] = (12,6)
-    if train_epochs:
-        plt.plot(train_epochs, train_metric, 'b-o', label="Training")
-    if eval_epochs:
-        plt.plot(eval_epochs, eval_metric,'r-o', label="Validation")
+
+    colors = ['r', 'g', 'b', 'c', 'm', 'y', 'w', 'k']
+
+    #plt.plot(epochs, values, 'b-o', label="Training")
+    for epoch, value, metric, color in zip(epochs, values, metrics, colors):
+      plt.plot(epoch, value, f'{color}-o', label=metric)
+    
     plt.xlabel("Epoch")
-    plt.ylabel(metric)
+    plt.ylabel("Score")
     plt.legend()
-    plt.xticks(np.arange(1, len(train_metric) + 1, 1))
+    #plt.xticks(np.arange(1, len(values) + 1, 1))
     plt.tight_layout()
     if title:
         plt.title(title)
     if path:
         plt.savefig(path)
     plt.show()
-
+		
 def plot_attentions(input_str, model, tokenizer, title=None, path=None):
     '''
     This function plots the attention weights for the string passed as parameter.
