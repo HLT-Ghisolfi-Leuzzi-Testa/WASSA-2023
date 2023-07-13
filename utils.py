@@ -611,9 +611,9 @@ def add_prompt_to_test_from_EMP_predictions(test_df, emp_predictions_path):
                                     emp_predictions['empathy'][idx],
                                     emp_predictions['distress'][idx],
                                     )
-        dataframe.at[idx, "prompt_bio"] = bio_prompt
-        dataframe.at[idx, "prompt_emp"] = emp_prompt
-        dataframe.at[idx, "prompt_emo"] = emo_prompt
+        test_df.at[idx, "prompt_bio"] = text_prompt_bio
+        test_df.at[idx, "prompt_emp"] = text_prompt_emp
+        test_df.at[idx, "prompt_emo"] = text_prompt_emo
         
     return test_df
 
