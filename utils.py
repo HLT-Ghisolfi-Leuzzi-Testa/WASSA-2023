@@ -467,6 +467,13 @@ def compute_EMP_metrics_trainer(p: EvalPrediction):
 
     return metrics
 
+def compute_metrics(golds, predictions, task):
+    if task == 'EMO':
+        return compute_EMO_metrics(golds, predictions)
+    
+    if task == 'EMP':
+        return compute_EMP_metrics(golds, predictions)
+
 class EMODataset(Dataset):
     '''
     This class is used to create a pytorch dataset for the EMO task.
