@@ -8,7 +8,7 @@ from evaluation import calculatePRF_MLabel, calculate_pearson
 from nrclex import NRCLex
 from sklearn.metrics import (
     confusion_matrix, roc_auc_score, accuracy_score, jaccard_score, 
-    precision_recall_fscore_support
+    precision_recall_fscore_support, mean_squared_error, mean_absolute_error
     )
 from scipy.stats import gaussian_kde
 from sklearn.model_selection import KFold
@@ -462,7 +462,13 @@ def compute_EMP_metrics_trainer(p: EvalPrediction):
       metrics['empathy_pearson'] = calculate_pearson(golds[:,0], predictions[:,0])
       metrics['distress_pearson'] = calculate_pearson(golds[:,1], predictions[:,1])
       metrics['avg_pearson'] = (metrics['empathy_pearson']+ metrics['distress_pearson']) / 2
+      metrics['empathy_mse'] = mean_squared_error(golds[:,0], predictions[:,0])
+      metrics['empathy_mae'] = mean_absolute_error(golds[:,0], predictions[:,0])
+      metrics['distress_mse'] = mean_squared_error(golds[:,1], predictions[:,1])
+      metrics['distress_mae'] = mean_absolute_error(golds[:,1], predictions[:,1])
     else:
+      metrics['mse'] = mean_squared_error(golds, predictions)
+      metrics['mae'] = mean_absolute_error(golds, predictions)
       metrics['pearson'] = calculate_pearson(golds, predictions)
 
     return metrics
