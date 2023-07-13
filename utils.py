@@ -601,7 +601,7 @@ def add_prompt_to_test_from_EMP_predictions(test_df, emp_predictions_path):
     emp_predictions.columns = ['empathy', 'distress']
 
     for idx, row in test_df.iterrows():
-        text_prompt = generate_prompt(
+        text_prompt_bio, text_prompt_emp, text_prompt_emo = generate_prompt(
                                     row['essay'],
                                     row['gender'],
                                     row['education'],
@@ -611,7 +611,9 @@ def add_prompt_to_test_from_EMP_predictions(test_df, emp_predictions_path):
                                     emp_predictions['empathy'][idx],
                                     emp_predictions['distress'][idx],
                                     )
-        test_df.at[idx, "prompt"] = text_prompt
+        dataframe.at[idx, "prompt_bio"] = bio_prompt
+        dataframe.at[idx, "prompt_emp"] = emp_prompt
+        dataframe.at[idx, "prompt_emo"] = emo_prompt
         
     return test_df
 
