@@ -432,11 +432,17 @@ def compute_EMP_metrics(golds, predictions):
 
     scores = {}
     if (len(predictions.shape) == 2):
-      scores['empathy_pearson'] = calculate_pearson(golds[:,0], predictions[:,0])
-      scores['distress_pearson'] = calculate_pearson(golds[:,1], predictions[:,1])
-      scores['avg_pearson'] = (scores['empathy_pearson']+ scores['distress_pearson']) / 2
+        scores['avg_pearson'] = (scores['empathy_pearson']+ scores['distress_pearson']) / 2
+        scores['empathy_pearson'] = calculate_pearson(golds[:,0], predictions[:,0])
+        scores['distress_pearson'] = calculate_pearson(golds[:,1], predictions[:,1])
+        metrics['empathy_mse'] = mean_squared_error(golds[:,0], predictions[:,0])
+        metrics['empathy_mae'] = mean_absolute_error(golds[:,0], predictions[:,0])
+        metrics['distress_mse'] = mean_squared_error(golds[:,1], predictions[:,1])
+        metrics['distress_mae'] = mean_absolute_error(golds[:,1], predictions[:,1])
     else:
-      scores['pearson'] = calculate_pearson(golds, predictions)
+        scores['pearson'] = calculate_pearson(golds, predictions)
+        metrics['mse'] = mean_squared_error(golds, predictions)
+        metrics['mae'] = mean_absolute_error(golds, predictions)
 
     return scores
 
@@ -459,17 +465,17 @@ def compute_EMP_metrics_trainer(p: EvalPrediction):
     #         bin_predictions[i][np.argmax(predictions[i])] = 1
     metrics = {}
     if (len(predictions.shape) == 2):
-      metrics['empathy_pearson'] = calculate_pearson(golds[:,0], predictions[:,0])
-      metrics['distress_pearson'] = calculate_pearson(golds[:,1], predictions[:,1])
-      metrics['avg_pearson'] = (metrics['empathy_pearson']+ metrics['distress_pearson']) / 2
-      metrics['empathy_mse'] = mean_squared_error(golds[:,0], predictions[:,0])
-      metrics['empathy_mae'] = mean_absolute_error(golds[:,0], predictions[:,0])
-      metrics['distress_mse'] = mean_squared_error(golds[:,1], predictions[:,1])
-      metrics['distress_mae'] = mean_absolute_error(golds[:,1], predictions[:,1])
+        metrics['avg_pearson'] = (metrics['empathy_pearson']+ metrics['distress_pearson']) / 2
+        metrics['empathy_pearson'] = calculate_pearson(golds[:,0], predictions[:,0])
+        metrics['distress_pearson'] = calculate_pearson(golds[:,1], predictions[:,1])  
+        metrics['empathy_mse'] = mean_squared_error(golds[:,0], predictions[:,0])
+        metrics['empathy_mae'] = mean_absolute_error(golds[:,0], predictions[:,0])
+        metrics['distress_mse'] = mean_squared_error(golds[:,1], predictions[:,1])
+        metrics['distress_mae'] = mean_absolute_error(golds[:,1], predictions[:,1])
     else:
-      metrics['mse'] = mean_squared_error(golds, predictions)
-      metrics['mae'] = mean_absolute_error(golds, predictions)
-      metrics['pearson'] = calculate_pearson(golds, predictions)
+        metrics['pearson'] = calculate_pearson(golds, predictions)
+        metrics['mse'] = mean_squared_error(golds, predictions)
+        metrics['mae'] = mean_absolute_error(golds, predictions)    
 
     return metrics
 
