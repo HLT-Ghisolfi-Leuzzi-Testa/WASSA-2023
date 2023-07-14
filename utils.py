@@ -203,6 +203,42 @@ def plot_confusion_matrix(golds, predictions, title=None, path=None):
         plt.savefig(path)
     plt.show()
 
+def plot_confusion_matrix_per_emotions(gold_emotions, predicted_emotions, title = None, path = None):
+    # Define the desired label names
+    label_names = ['anger', 'disgust', 'fear', 'hope', 'joy', 'neutral', 'sadness', 'surprise']
+
+    # Compute the confusion matrix
+    cm = confusion_matrix(gold_emotions, predicted_emotions, labels=label_names)
+
+    # Plot the confusion matrix
+    fig, ax = plt.subplots()
+    im = ax.imshow(cm, cmap='Blues')
+
+    # Customize the plot
+    ax.set_xticks(np.arange(len(label_names)))
+    ax.set_yticks(np.arange(len(label_names)))
+    ax.set_xticklabels(label_names, rotation=45)
+    ax.set_yticklabels(label_names)
+    plt.xlabel("Predicted")
+    plt.ylabel("True")
+    plt.title("Confusion Matrix")
+
+    # Add numbers in each cell
+    for i in range(len(label_names)):
+        for j in range(len(label_names)):
+            text = ax.text(j, i, cm[i, j], ha="center", va="center", color="b")
+
+    # Add colorbar
+    cbar = ax.figure.colorbar(im, ax=ax)
+
+    # Show the plot
+    plt.tight_layout()
+    if title:
+        plt.title(title)
+    if path:
+        plt.savefig(path)
+    plt.show()
+
 def plot_true_vs_predicted(golds, predictions, title=None, path=None):
     '''
     This function plots the ground true values vs the predicted values.
@@ -349,7 +385,7 @@ def write_dict_to_json(dict, path):
     with open(path, 'w') as fp:
         json.dump(dict, fp)
 
-def write_EMO_predictions(predictions, path):
+def write_predictions(predictions, path):
     '''
     This function saves the predictions of the EMO task to a tsv file.
     
@@ -531,38 +567,6 @@ class EMODataset(Dataset):
         if self.targets is not None:
             item['labels'] = torch.FloatTensor(self.targets[index])
         return item
-
-def plot_confusion_matrix_per_emotions(gold_emotions, predicted_emotions):
-    # Define the desired label names
-    label_names = ['anger', 'disgust', 'fear', 'hope', 'joy', 'neutral', 'sadness', 'surprise']
-
-    # Compute the confusion matrix
-    cm = confusion_matrix(gold_emotions, predicted_emotions, labels=label_names)
-
-    # Plot the confusion matrix
-    fig, ax = plt.subplots()
-    im = ax.imshow(cm, cmap='Blues')
-
-    # Customize the plot
-    ax.set_xticks(np.arange(len(label_names)))
-    ax.set_yticks(np.arange(len(label_names)))
-    ax.set_xticklabels(label_names, rotation=45)
-    ax.set_yticklabels(label_names)
-    plt.xlabel("Predicted")
-    plt.ylabel("True")
-    plt.title("Confusion Matrix")
-
-    # Add numbers in each cell
-    for i in range(len(label_names)):
-        for j in range(len(label_names)):
-            text = ax.text(j, i, cm[i, j], ha="center", va="center", color="b")
-
-    # Add colorbar
-    cbar = ax.figure.colorbar(im, ax=ax)
-
-    # Show the plot
-    plt.tight_layout()
-    plt.show()
 
 def generate_prompt(essay, gender, education, ethnicity, age, income, empathy, distress):
     if gender == 1: gender_str = "male"
