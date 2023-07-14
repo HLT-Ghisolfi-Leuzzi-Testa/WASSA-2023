@@ -383,7 +383,7 @@ def write_dict_to_json(dict, path):
     '''
     
     with open(path, 'w') as fp:
-        json.dump(dict, fp)
+        json.dump(dict, fp, indent = 1)
 
 def write_predictions(predictions, path):
     '''
