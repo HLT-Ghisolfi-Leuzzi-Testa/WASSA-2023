@@ -85,14 +85,16 @@ def plot_metric_curve(
 
     colors = ['r', 'g', 'b', 'c', 'm', 'y', 'w', 'k']
 
-    #plt.plot(epochs, values, 'b-o', label="Training")
-    for epoch, value, metric, color in zip(epochs, values, metrics, colors):
-      plt.plot(epoch, value, f'{color}-o', label=metric)
+    if len(epochs) == 1:
+        for value, metric, color in zip(values, metrics, colors):
+            plt.plot(epochs, value, f'{color}-o', label=metric)
+    else:
+        for epoch, value, metric, color in zip(epochs, values, metrics, colors):
+            plt.plot(epoch, value, f'{color}-o', label=metric)
     
     plt.xlabel("Epoch")
     plt.ylabel("Score")
     plt.legend()
-    #plt.xticks(np.arange(1, len(values) + 1, 1))
     plt.tight_layout()
     if title:
         plt.title(title)
