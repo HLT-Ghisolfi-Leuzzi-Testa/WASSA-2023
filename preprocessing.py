@@ -243,12 +243,12 @@ def add_lexicon_features(internal_train_df, internal_val_df, dev_df, test_df, ye
     # create dictionary with emotions values per word
     train_df = pd.concat([internal_train_df, internal_val_df])
     get_stemmed_EMO_lexicon_per_word(pd.concat([train_df, dev_df]), split="", hope_lexicon=hope_lexicon, year=year)
-    if test is not None:
+    if test_df is not None:
         get_stemmed_EMO_lexicon_per_word(test_df, split='test', hope_lexicon=hope_lexicon, year=year)
 
     # create dictionary with empathy and distress values per word
-    get_stemmed_EMP_lexicon_per_word(pd.concat([train_df, dev_df]), split="", hope_lexicon=hope_lexicon, year=year)
-    if test is not None:
+    get_stemmed_EMP_lexicon_per_word(pd.concat([train_df, dev_df]), split="", year=year)
+    if test_df is not None:
         get_stemmed_EMP_lexicon_per_word(test_df, split='test', year=year)
     
     return internal_train_df, internal_val_df, dev_df, test_df
@@ -382,8 +382,8 @@ def preprocess(year):
     for idx, row in internal_val_df.iterrows():
         internal_val_df.at[idx, 'essay_id'] = count
         count += 1
-    for idx, row in internal_dev_df.iterrows():
-        internal_val_df.at[idx, 'essay_id'] = count
+    for idx, row in dev_df.iterrows():
+        dev_df.at[idx, 'essay_id'] = count
         count += 1
     
     if year == 23:
