@@ -369,7 +369,7 @@ def dev_cross_val(train_set, dev_set, k, shuffle, seed):
     splits = []
     splitter = KFold(n_splits=k, shuffle=shuffle, random_state=seed)
     for train_idx, valid_idx in splitter.split(dev_set):
-        train_split = pd.concat([train_set, dev_set.iloc[train_idx]])
+        train_split = pd.concat([train_set, dev_set.iloc[train_idx]], ignore_index = True)
         val_split = dev_set.iloc[valid_idx]
         splits.append((train_split, val_split))
     return splits
