@@ -230,24 +230,26 @@ def add_lexicon_features(internal_train_df, internal_val_df, dev_df, test_df, ye
     internal_train_df = get_stemmed_EMO_lexicon(internal_train_df, hope_lexicon)
     internal_val_df = get_stemmed_EMO_lexicon(internal_val_df, hope_lexicon)
     dev_df = get_stemmed_EMO_lexicon(dev_df, hope_lexicon)
-    test_df = get_stemmed_EMO_lexicon(test_df, hope_lexicon)
+    if test_df is not None:
+        test_df = get_stemmed_EMO_lexicon(test_df, hope_lexicon)
 
     # add lexicon features for empathy and distress
     internal_train_df = get_stemmed_EMP_lexicon(internal_train_df)
     internal_val_df = get_stemmed_EMP_lexicon(internal_val_df)
     dev_df = get_stemmed_EMP_lexicon(dev_df)
-    test_df = get_stemmed_EMP_lexicon(test_df)
+    if test_df is not None:
+        test_df = get_stemmed_EMP_lexicon(test_df)
 
     # create dictionary with emotions values per word
     train_df = pd.concat([internal_train_df, internal_val_df])
-    get_stemmed_EMO_lexicon_per_word(train_df, split='train', hope_lexicon=hope_lexicon, year=year)
-    get_stemmed_EMO_lexicon_per_word(dev_df, split='dev', hope_lexicon=hope_lexicon, year=year)
-    get_stemmed_EMO_lexicon_per_word(test_df, split='test', hope_lexicon=hope_lexicon, year=year)
+    get_stemmed_EMO_lexicon_per_word(pd.concat([train_df, dev_df]), split="", hope_lexicon=hope_lexicon, year=year)
+    if test is not None:
+        get_stemmed_EMO_lexicon_per_word(test_df, split='test', hope_lexicon=hope_lexicon, year=year)
 
     # create dictionary with empathy and distress values per word
-    get_stemmed_EMP_lexicon_per_word(train_df, split='train', year=year)
-    get_stemmed_EMP_lexicon_per_word(dev_df, split='dev', year=year)
-    get_stemmed_EMP_lexicon_per_word(test_df, split='test', year=year)
+    get_stemmed_EMP_lexicon_per_word(pd.concat([train_df, dev_df]), split="", hope_lexicon=hope_lexicon, year=year)
+    if test is not None:
+        get_stemmed_EMP_lexicon_per_word(test_df, split='test', year=year)
     
     return internal_train_df, internal_val_df, dev_df, test_df
 
@@ -322,18 +324,18 @@ def preprocess(year):
         internal_train_path = f"datasets/WASSA23_essay_level_internal_train.tsv"
         internal_val_path = f"datasets/WASSA23_essay_level_internal_val.tsv"
         original_train_path = f"datasets/WASSA23_essay_level_train_original.tsv"
+        test_path = f"datasets/WASSA{year}_essay_level_test.tsv"
 
         internal_train_df = pd.read_csv(internal_train_path, sep='\t')
         internal_val_df = pd.read_csv(internal_val_path, sep='\t')
         original_train_df = pd.read_csv(original_train_path, sep='\t')
         original_internal_train_df, original_internal_val_df = split_train_val(original_train_df)
+        test_df = pd.read_csv (test_path, sep='\t')
 
     dev_path = f"datasets/WASSA{year}_essay_level_dev.tsv"
-    test_path = f"datasets/WASSA{year}_essay_level_test.tsv"
     dev_labels_path = f"datasets/WASSA{year}_goldstandard_dev.tsv"
 
     dev_df = pd.read_csv(dev_path, sep='\t')
-    test_df = pd.read_csv (test_path, sep='\t')
     dev_lbl_df = pd.read_csv(dev_labels_path, sep='\t', names=DEV_COL_NAMES)
     
     build_hope_lexicon()
@@ -345,8 +347,8 @@ def preprocess(year):
     internal_train_df = drop_rows_with_unknown(internal_train_df)
     internal_val_df = drop_rows_with_unknown(internal_val_df)
     dev_df = drop_rows_with_unknown(dev_df)
-    test_df = drop_rows_with_unknown(test_df)
     if year == 23:
+        test_df = drop_rows_with_unknown(test_df)
         original_internal_train_df = drop_rows_with_unknown(original_internal_train_df)
         original_internal_val_df = drop_rows_with_unknown(original_internal_val_df)
 
@@ -354,8 +356,8 @@ def preprocess(year):
     internal_train_df = add_word_count(internal_train_df)
     internal_val_df = add_word_count(internal_val_df)
     dev_df = add_word_count(dev_df)
-    test_df = add_word_count(test_df)
     if year == 23:
+        test_df = add_word_count(test_df)
         original_internal_train_df = add_word_count(original_internal_train_df)
         original_internal_val_df = add_word_count(original_internal_val_df)
     
@@ -366,18 +368,21 @@ def preprocess(year):
     if year == 23:
         original_internal_train_df = lower_case_labels(original_internal_train_df)
         original_internal_val_df = lower_case_labels(original_internal_val_df)
-
-    if year == 23:
         # remouve unuselful space from essay
         test_df = remove_space_from_essay(test_df)
 
     # add essay_id to internal train and validation sets
     internal_train_df['essay_id'] = ""
+    internal_val_df['essay_id'] = ""
+    dev_df['essay_id'] = ""
     count = 0
     for idx, row in internal_train_df.iterrows():
         internal_train_df.at[idx, 'essay_id'] = count
         count += 1
     for idx, row in internal_val_df.iterrows():
+        internal_val_df.at[idx, 'essay_id'] = count
+        count += 1
+    for idx, row in internal_dev_df.iterrows():
         internal_val_df.at[idx, 'essay_id'] = count
         count += 1
     
@@ -387,21 +392,9 @@ def preprocess(year):
         original_internal_train_df, original_internal_val_df = match_essay_id(
             internal_val_df, original_internal_train_df, original_internal_val_df)
     
-    if year == 22:
-        # add essay_id to dev set
-        dev_df['essay_id'] = ""
-        count = 0
-        for idx, row in dev_df.iterrows():
-            dev_df.at[idx, 'essay_id'] = count
-            count += 1
-        # add essay_id to test set
-        test_df['essay_id'] = ""
-        count = 0
-        for idx, row in test_df.iterrows():
-            test_df.at[idx, 'essay_id'] = count
-            count += 1
-    
     # add lexicon features
+    if year == 22:
+        test_df = None
     internal_train_df, internal_val_df, dev_df, test_df = add_lexicon_features(internal_train_df, 
                                                             internal_val_df, dev_df, test_df, year)
     if year == 23:
@@ -418,8 +411,8 @@ def preprocess(year):
     internal_train_df = add_prompt(internal_train_df)
     internal_val_df = add_prompt(internal_val_df)
     dev_df = add_prompt(dev_df)
-    test_df = add_prompt(test_df)
     if year == 23:
+        test_df = add_prompt(test_df)
         original_internal_train_df = add_prompt(original_internal_train_df)
         original_internal_val_df = add_prompt(original_internal_val_df)
 
@@ -435,9 +428,9 @@ def preprocess(year):
     internal_train_df.to_csv(f"datasets/WASSA{year}_essay_level_internal_train_preproc.tsv", index=False, sep='\t')
     internal_val_df.to_csv(f"datasets/WASSA{year}_essay_level_internal_val_preproc.tsv", index=False, sep='\t')
     dev_df.to_csv(f"datasets/WASSA{year}_essay_level_dev_preproc.tsv", index=False, sep='\t')
-    test_df.to_csv(f"datasets/WASSA{year}_essay_level_test_preproc.tsv", index=False, sep='\t')
     essay_level.to_csv(f"datasets/WASSA{year}_essay_level_preproc.tsv", index=False, sep='\t')
     if year == 23:
+        test_df.to_csv(f"datasets/WASSA{year}_essay_level_test_preproc.tsv", index=False, sep='\t')
         original_internal_train_df.to_csv(f"datasets/WASSA{year}_essay_level_original_internal_train_preproc.tsv", index=False, sep='\t')
         original_internal_val_df.to_csv(f"datasets/WASSA{year}_essay_level_original_internal_val_preproc.tsv", index=False, sep='\t')
         original_train_df.to_csv(f"datasets/WASSA{year}_essay_level_original_train_preproc.tsv", index=False, sep='\t')
