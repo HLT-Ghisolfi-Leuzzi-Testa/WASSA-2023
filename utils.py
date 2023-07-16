@@ -454,7 +454,7 @@ def compute_EMO_metrics_trainer(p: EvalPrediction):
     metrics['roc_auc_micro'] = roc_auc_score(y_true=golds, y_score=predictions, average = 'micro')
     return metrics
 
-def compute_EMO_metrics_trainer_no_max(p: EvalPrediction):
+def compute_EMO_metrics_trainer_neutral(p: EvalPrediction):
     '''
     This function is called by Trainer to compute the metrics for the EMO task.
 
