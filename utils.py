@@ -426,22 +426,47 @@ def compute_EMO_metrics_trainer(p: EvalPrediction):
     :return: dictionary of metrics
     '''
 
-    predictions = p.predictions[0] if isinstance(p.predictions, tuple) else p.predictions # TODO: ?
+    predictions = p.predictions[0] if isinstance(p.predictions, tuple) else p.predictions
     golds = p.label_ids
-
-    # NOTE: not needed if using multilabel
-    # https://szuyuchu.medium.com/multi-label-text-classification-with-bert-52fa78eddb9
-    # apply sigmoid on predictions
-    # sigmoid = torch.nn.Sigmoid()
-    # probs = sigmoid(torch.Tensor(predictions))
 
     # use a threshold to turn prediction into 0/1 values
     bin_predictions = np.where(predictions >= 0.5, 1, 0)
-    # TODO: if no emotion is predicted, set the one with highest activation
+    # if no emotion is predicted, set the one with highest activation
     for i, bin_pred in enumerate(bin_predictions):
         if np.all(bin_pred==0):
             bin_predictions[i][np.argmax(predictions[i])] = 1
     predictions = bin_predictions
+
+    # compute metrics
+    metrics = {}
+
+    prf_macro = precision_recall_fscore_support(y_true=golds, y_pred=predictions, average='macro')
+    prf_micro = precision_recall_fscore_support(y_true=golds, y_pred=predictions, average='micro')
+
+    metrics['macro_f1'] = prf_macro[2]
+    metrics['micro_f1'] = prf_micro[2]
+    metrics['micro_jaccard'] = jaccard_score(y_true=golds, y_pred=predictions, average='micro')
+    metrics['macro_precision'] = prf_macro[0]
+    metrics['macro_recall'] = prf_macro[1]
+    metrics['micro_precision'] = prf_micro[0]
+    metrics['micro_recall'] = prf_micro[1]
+    metrics['sklearn_accuracy'] = accuracy_score(y_true=golds, y_pred=predictions)
+    metrics['roc_auc_micro'] = roc_auc_score(y_true=golds, y_score=predictions, average = 'micro')
+    return metrics
+
+def compute_EMO_metrics_trainer_no_max(p: EvalPrediction):
+    '''
+    This function is called by Trainer to compute the metrics for the EMO task.
+
+    :param p: EvalPrediction object
+    :return: dictionary of metrics
+    '''
+
+    predictions = p.predictions[0] if isinstance(p.predictions, tuple) else p.predictions
+    golds = p.label_ids
+
+    # use a threshold to turn prediction into 0/1 values
+    predictions = np.where(predictions >= 0.5, 1, 0)
 
     # compute metrics
     metrics = {}
@@ -686,6 +711,57 @@ class EmotionsLabelEncoder():
 
         labels = self.mlb.inverse_transform(np.array(encoded_emotions))
         emotions = ["/".join(emotion) for emotion in labels]
+        return emotions
+    
+class EmotionsLabelEncoderNeutral():
+    '''
+    This class is used to one-hot encode and decode the emotions labels.
+    '''
+
+    def __init__(self):
+        self.mlb = MultiLabelBinarizer()
+
+    def fit(self, emotions):
+        '''
+        This function fits the encoder to the emotions passed as parameters.
+
+        :param emotions: list of emotions
+        '''
+
+        emotions = [emotion.lower().split('/') for emotion in emotions]
+        new_emotions = []
+        for i in range(len(emotions)):
+          if 'neutral' not in emotions[i]:
+            new_emotions.append(emotions[i])
+          elif 'neutral' in emotions[i] and len(emotions[i])>1:
+            emotions[i].remove('neutral')
+            new_emotions.append(emotions[i])
+        self.mlb.fit(new_emotions)
+        self.classes = self.mlb.classes_
+
+    def encode(self, emotions):
+        '''
+        This method one-hot encodes the emotions passed as parameters.
+
+        :param emotions: list of emotions
+        :return: numpy array with encoded emotions
+        '''
+
+        emotions = [emotion.lower().split('/') for emotion in emotions]
+        encoded_emotions = self.mlb.transform(emotions)
+        return encoded_emotions
+
+    def decode(self, encoded_emotions):
+        '''
+        This method decodes the one-hot encoded emotions passed as parameters.
+
+        :param encoded_emotions: list of one-hot encoded emotions
+        :return: strings list of decoded emotions
+        '''
+
+        labels = self.mlb.inverse_transform(np.array(encoded_emotions))
+        emotions = ["/".join(emotion) for emotion in labels]
+        emotions = ["neutral" if emo == '' else emo for emo in emotions]
         return emotions
 
 class FeaturesEncoder():
