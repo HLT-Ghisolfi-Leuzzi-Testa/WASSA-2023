@@ -438,13 +438,13 @@ def compute_EMO_metrics(golds, predictions):
     
     scores_val = calculatePRF_MLabel(golds, predictions)
     scores = {
-        'macro_f1': scores_val[5],
-        'micro_f1': scores_val[2],
-        'micro_jaccard': scores_val[6],
-        'macro_precision': scores_val[4],
-        'macro_recall': scores_val[3],
-        'micro_precision': scores_val[1],
-        'micro_recall': scores_val[0]
+        'macro_f1': float(scores_val[5]),
+        'micro_f1': float(scores_val[2]),
+        'micro_jaccard': float(scores_val[6]),
+        'macro_precision': float(scores_val[4]),
+        'macro_recall': float(scores_val[3]),
+        'micro_precision': float(scores_val[1]),
+        'micro_recall': float(scores_val[0])
     }
     return scores
 
@@ -563,17 +563,17 @@ def compute_EMP_metrics(golds, predictions):
 
     scores = {}
     if (predictions.shape[1] != 1):
-        scores['empathy_pearson'] = calculate_pearson(golds[:,0], predictions[:,0])
-        scores['distress_pearson'] = calculate_pearson(golds[:,1], predictions[:,1])
-        scores['avg_pearson'] = (scores['empathy_pearson']+ scores['distress_pearson']) / 2
-        scores['empathy_mse'] = mean_squared_error(golds[:,0], predictions[:,0])
-        scores['empathy_mae'] = mean_absolute_error(golds[:,0], predictions[:,0])
-        scores['distress_mse'] = mean_squared_error(golds[:,1], predictions[:,1])
-        scores['distress_mae'] = mean_absolute_error(golds[:,1], predictions[:,1])
+        scores['empathy_pearson'] = float(calculate_pearson(golds[:,0], predictions[:,0]))
+        scores['distress_pearson'] = float(calculate_pearson(golds[:,1], predictions[:,1]))
+        scores['avg_pearson'] = float((scores['empathy_pearson']+ scores['distress_pearson']) / 2)
+        scores['empathy_mse'] = float(mean_squared_error(golds[:,0], predictions[:,0]))
+        scores['empathy_mae'] = float(mean_absolute_error(golds[:,0], predictions[:,0]))
+        scores['distress_mse'] = float(mean_squared_error(golds[:,1], predictions[:,1]))
+        scores['distress_mae'] = float(mean_absolute_error(golds[:,1], predictions[:,1]))
     else:
-        scores['pearson'] = calculate_pearson(golds, predictions)
-        scores['mse'] = mean_squared_error(golds, predictions)
-        scores['mae'] = mean_absolute_error(golds, predictions)
+        scores['pearson'] = float(calculate_pearson(golds, predictions))
+        scores['mse'] = float(mean_squared_error(golds, predictions))
+        scores['mae'] = float(mean_absolute_error(golds, predictions))
 
     return scores
 
