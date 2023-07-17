@@ -11,7 +11,7 @@ from sklearn.metrics import (
     precision_recall_fscore_support, mean_squared_error, mean_absolute_error
     )
 from scipy.stats import gaussian_kde
-from sklearn.model_selection import KFold
+from sklearn.model_selection import KFold, StratifiedKFold
 from sklearn.preprocessing import MultiLabelBinarizer, LabelEncoder, LabelBinarizer
 from torch.utils.data import Dataset
 from transformers import EvalPrediction
@@ -369,7 +369,7 @@ def dev_cross_val(train_set, dev_set, k, shuffle, seed):
     '''
 
     splits = []
-    splitter = KFold(n_splits=k, shuffle=shuffle, random_state=seed)
+    splitter = StratifiedKFold(n_splits=k, shuffle=shuffle, random_state=seed)
     for train_idx, valid_idx in splitter.split(dev_set):
         train_split = pd.concat([train_set, dev_set.iloc[train_idx]], ignore_index = True)
         val_split = dev_set.iloc[valid_idx]
@@ -428,6 +428,44 @@ def compute_EMO_metrics_trainer(p: EvalPrediction):
 
     predictions = p.predictions[0] if isinstance(p.predictions, tuple) else p.predictions
     golds = p.label_ids
+
+    # use a threshold to turn prediction into 0/1 values
+    bin_predictions = np.where(predictions >= 0.5, 1, 0)
+    # if no emotion is predicted, set the one with highest activation
+    for i, bin_pred in enumerate(bin_predictions):
+        if np.all(bin_pred==0):
+            bin_predictions[i][np.argmax(predictions[i])] = 1
+    predictions = bin_predictions
+
+    # compute metrics
+    metrics = {}
+
+    prf_macro = precision_recall_fscore_support(y_true=golds, y_pred=predictions, average='macro')
+    prf_micro = precision_recall_fscore_support(y_true=golds, y_pred=predictions, average='micro')
+
+    metrics['macro_f1'] = prf_macro[2]
+    metrics['micro_f1'] = prf_micro[2]
+    metrics['micro_jaccard'] = jaccard_score(y_true=golds, y_pred=predictions, average='micro')
+    metrics['macro_precision'] = prf_macro[0]
+    metrics['macro_recall'] = prf_macro[1]
+    metrics['micro_precision'] = prf_micro[0]
+    metrics['micro_recall'] = prf_micro[1]
+    metrics['sklearn_accuracy'] = accuracy_score(y_true=golds, y_pred=predictions)
+    metrics['roc_auc_micro'] = roc_auc_score(y_true=golds, y_score=predictions, average = 'micro')
+    return metrics
+
+def compute_EMO_metrics_trainer_label(p: EvalPrediction):
+    '''
+    This function is called by Trainer to compute the metrics for the EMO task.
+
+    :param p: EvalPrediction object
+    :return: dictionary of metrics
+    '''
+
+    predictions = p.predictions[0] if isinstance(p.predictions, tuple) else p.predictions
+    golds = p.label_ids
+    golds = np.where(golds >= 0.5, 1, 0)
+    golds = golds.astype(int)
 
     # use a threshold to turn prediction into 0/1 values
     bin_predictions = np.where(predictions >= 0.5, 1, 0)
