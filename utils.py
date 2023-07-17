@@ -242,7 +242,7 @@ def plot_confusion_matrix_per_emotions(gold_emotions, predicted_emotions, title 
     # Add numbers in each cell
     for i in range(len(label_names)):
         for j in range(len(label_names)):
-            text = ax.text(j, i, cm[i, j], ha="center", va="center", color="b")
+            text = ax.text(j, i, cm[i, j], ha="center", va="center", color="k")
 
     # Add colorbar
     cbar = ax.figure.colorbar(im, ax=ax)
@@ -715,8 +715,10 @@ def generate_prompt(essay, gender, education, ethnicity, age, income, empathy, d
     hope_lexicon = read_NRC_lexicon_file(HOPE_LEXICON_PATH)
     our_emotions_scores = {}
     for emo in our_emotions:
-        if emo != 'hope' and emo != 'neutral':
+        if emo != 'hope' and emo != 'neutral' and emo != 'fear':
             our_emotions_scores[emo] = obj.affect_frequencies[emo]
+        if emo == 'fear':
+            our_emotions_scores[emo] = obj.affect_frequencies[emo]*0.8
     our_emotions_scores['hope'] = hope_essay_frequency(essay, hope_lexicon)
     max=0
     emo_string=""
@@ -1033,6 +1035,11 @@ class EMPlexicon():
                 self.empathy_list.append(4)
                 self.distress_list.append(0)
 
+        
+        high_emp_count *= 4
+        high_dist_count *= 4
+        low_emp_count *= 1.2
+        low_dist_count *= 1.2
         if low_emp_count > medium_emp_count and low_emp_count > high_emp_count:
             emp_level = 'low'
         elif medium_emp_count > low_emp_count and medium_emp_count > high_emp_count:
