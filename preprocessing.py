@@ -281,8 +281,8 @@ def add_prompt(dataframe):
             row['race'],
             row['age'],
             row['income'],
-            row['empathy'] if 'empathy' in row else None,
-            row['distress'] if 'empathy' in row else None
+            row['empathy_count'] if 'empathy' in row else None,
+            row['distress_count'] if 'empathy' in row else None
             )
         dataframe.at[idx, "prompt_bio"] = bio_prompt
         dataframe.at[idx, "prompt_emp"] = emp_prompt
