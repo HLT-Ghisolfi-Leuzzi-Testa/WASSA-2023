@@ -1,5 +1,4 @@
 import pandas as pd
-from sklearn.model_selection import train_test_split
 import nltk
 import re
 import contractions
@@ -33,7 +32,6 @@ DEV_COL_NAMES = [
     "iri_empathatic_concern"
 ]
 
-VAL_SIZE = 0.2
 RANDOM_STATE = 42
 
 # nltk.download('wordnet')
@@ -168,22 +166,6 @@ def expand_contractions(text):
 def correct_spelling(text):
     textblob = TextBlob(text)
     return textblob.correct()
-
-def split_train_val(train_df):
-# splitting train data into train and validation with a stratified approach
-    emotions = train_df['emotion'].unique().tolist()
-    internal_train_df = pd.DataFrame()
-    internal_val_df = pd.DataFrame()
-    for emotion in emotions:
-        emotion_df = train_df.loc[train_df['emotion']==emotion]
-        if emotion_df.shape[0] < 2 : # if a class has a single sample it is added to the train set
-            internal_train_df = pd.concat([internal_train_df, emotion_df])
-        else:
-            t_df, v_df = train_test_split(emotion_df, test_size=VAL_SIZE, stratify=emotion_df['emotion'], shuffle=True)
-            internal_train_df = pd.concat([internal_train_df, t_df])
-            internal_val_df = pd.concat([internal_val_df, v_df])
-
-    return internal_train_df, internal_val_df
 
 def build_hope_lexicon():
     # read NRC lexicon files

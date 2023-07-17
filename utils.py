@@ -11,7 +11,7 @@ from sklearn.metrics import (
     precision_recall_fscore_support, mean_squared_error, mean_absolute_error
     )
 from scipy.stats import gaussian_kde
-from sklearn.model_selection import KFold, StratifiedKFold
+from sklearn.model_selection import KFold, StratifiedKFold, train_test_split
 from sklearn.preprocessing import MultiLabelBinarizer, LabelEncoder, LabelBinarizer
 from torch.utils.data import Dataset
 from transformers import EvalPrediction
@@ -22,6 +22,8 @@ from textblob import TextBlob
 
 EMP_LEXICON_PATH = "./lexicon/lexicon_EMP.csv"
 HOPE_LEXICON_PATH = "./lexicon/hope.txt"
+
+VAL_SIZE = 0.2
 
 NRC_emotions = [
     'fear',
@@ -388,6 +390,22 @@ def dev_cross_val(train_set, dev_set, k, shuffle, seed):
         splits.append((train_split, val_split))
     return splits
 
+def split_train_val(train_df):
+# splitting train data into train and validation with a stratified approach
+    emotions = train_df['emotion'].unique().tolist()
+    internal_train_df = pd.DataFrame()
+    internal_val_df = pd.DataFrame()
+    for emotion in emotions:
+        emotion_df = train_df.loc[train_df['emotion']==emotion]
+        if emotion_df.shape[0] < 2 : # if a class has a single sample it is added to the train set
+            internal_train_df = pd.concat([internal_train_df, emotion_df])
+        else:
+            t_df, v_df = train_test_split(emotion_df, test_size=VAL_SIZE, stratify=emotion_df['emotion'], shuffle=True)
+            internal_train_df = pd.concat([internal_train_df, t_df])
+            internal_val_df = pd.concat([internal_val_df, v_df])
+
+    return internal_train_df, internal_val_df
+
 def write_dict_to_json(dict, path):
     '''
     This function saves a dictionary to a json file.
@@ -697,7 +715,8 @@ def generate_prompt(essay, gender, education, ethnicity, age, income, empathy, d
     hope_lexicon = read_NRC_lexicon_file(HOPE_LEXICON_PATH)
     our_emotions_scores = {}
     for emo in our_emotions:
-        our_emotions_scores[emo] = obj.emo_frequencies[emo]
+        if emo != 'hope' and emo != 'neutral':
+            our_emotions_scores[emo] = obj.affect_frequencies[emo]
     our_emotions_scores['hope'] = hope_essay_frequency(essay, hope_lexicon)
     max=0
     emo_string=""
