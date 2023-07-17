@@ -21,6 +21,7 @@ from transformers import EvalPrediction
 from textblob import TextBlob
 
 EMP_LEXICON_PATH = "./lexicon/lexicon_EMP.csv"
+HOPE_LEXICON_PATH = "./lexicon/hope.txt"
 
 NRC_emotions = [
     'fear',
@@ -33,6 +34,17 @@ NRC_emotions = [
     'sadness',
     'disgust',
     'joy'
+]
+
+our_emotions = [
+    'fear',
+    'anger',
+    'surprise',
+    'sadness',
+    'disgust',
+    'joy',
+    'hope',
+    'neutral'
 ]
 
 
@@ -632,6 +644,23 @@ class EMODataset(Dataset):
         if self.targets is not None:
             item['labels'] = torch.FloatTensor(self.targets[index])
         return item
+    
+def read_NRC_lexicon_file(file_name):
+    lexicon = {}
+    with open(file_name, 'r') as file:
+        for line in file:
+            word, value = line.strip().split()
+            lexicon[word] = value
+    return lexicon
+
+def hope_essay_frequency(essay, hope_lexicon):
+    hope_count = 0
+    total_count = 0
+    for word in essay.split():
+        if word in hope_lexicon:
+            total_count += 1
+            hope_count += int(hope_lexicon[word])
+    return (hope_count / total_count) if total_count>0 else 0
 
 def generate_prompt(essay, gender, education, ethnicity, age, income, empathy, distress):
     if gender == 1: gender_str = "male"
@@ -659,18 +688,29 @@ def generate_prompt(essay, gender, education, ethnicity, age, income, empathy, d
         income
         )
     
-    if empathy is not None:
-        if empathy < 3: empathy_value = "low"
-        elif empathy < 5: empathy_value = "medium"
-        else: empathy_value = "high"
-        if distress < 3: distress_value = "low"
-        elif distress < 5: distress_value = "medium"
-        else: distress_value = "high"
-        text_prompt_emp = "The essay expresses {} empathy and {} distress levels.".format(
-            empathy_value,
-            distress_value
-            )
+    text_prompt_emp = "The essay expresses {} empathy and {} distress levels.".format(
+        empathy,
+        distress
+        )
 
+    obj = NRCLex(essay)
+    hope_lexicon = read_NRC_lexicon_file(HOPE_LEXICON_PATH)
+    our_emotions_scores = {}
+    for emo in our_emotions:
+        our_emotions_scores[emo] = obj.emo_frequencies[emo]
+    our_emotions_scores['hope'] = hope_essay_frequency(essay, hope_lexicon)
+    max=0
+    emo_string=""
+    for key, value in our_emotions_scores.items():
+        if value==max and max != 0:
+            emo_string += ", " + key
+        if value>max:
+            max=value
+            emo_string=key
+    if max==0:
+        emo_string = 'neutral'
+
+    """
     emotions = NRCLex(essay).top_emotions
     if (sum(np.array([emo[1] for emo in emotions])))==0:
         emotions = {'neutral': 1}
@@ -680,16 +720,16 @@ def generate_prompt(essay, gender, education, ethnicity, age, income, empathy, d
         emo_string += emo[0]
         if i < n_emo-1:
             emo_string += ", "
+    """
     text_prompt_emo = " The top emotions expressed in the essay are: {}.".format(emo_string)
     
-    if empathy is not None:
-        return text_prompt_bio, text_prompt_emp, text_prompt_emo
-    else:
-        return text_prompt_bio, "", text_prompt_emo
+    return text_prompt_bio, text_prompt_emp, text_prompt_emo
 
 def add_prompt_to_test_from_EMP_predictions(test_df, emp_predictions_path):
     emp_predictions = pd.read_csv(emp_predictions_path, header=None) #TODO: verificare che funzioni
     emp_predictions.columns = ['empathy', 'distress']
+
+    test_df = get_emp_levels(test_df, emp_predictions['empathy'], emp_predictions['distress'])
 
     for idx, row in test_df.iterrows():
         text_prompt_bio, text_prompt_emp, text_prompt_emo = generate_prompt(
@@ -699,13 +739,40 @@ def add_prompt_to_test_from_EMP_predictions(test_df, emp_predictions_path):
                                     row['race'],
                                     row['age'],
                                     row['income'],
-                                    emp_predictions['empathy'][idx],
-                                    emp_predictions['distress'][idx],
+                                    row['empathy_level'][idx],
+                                    row['distress_level'][idx],
                                     )
         test_df.at[idx, "prompt_bio"] = text_prompt_bio
         test_df.at[idx, "prompt_emp"] = text_prompt_emp
         test_df.at[idx, "prompt_emo"] = text_prompt_emo
         
+    return test_df
+
+def get_emp_levels(test_df, empathy, distress): # colonne df
+    test_df['empathy_level'] = ""
+    test_df['distress_level'] = ""
+
+    for idx, row in test_df.iterrows():
+        emp_value = empathy[idx]
+        distress_value = distress[idx]
+
+        if emp_value < 3:
+            emp_level = 'low'
+        elif emp_value < 5:
+            emp_level = 'medium'
+        else:
+            emp_level = 'high'
+
+        if distress_value < 3:
+            dist_level = 'low'
+        elif distress_value < 5:
+            dist_level = 'medium'
+        else:
+            dist_level = 'high'
+        
+        test_df.at[idx, "empathy_level"] = emp_level
+        test_df.at[idx, "distress_level"] = dist_level
+    
     return test_df
 
 class EmotionsLabelEncoder():
@@ -912,6 +979,13 @@ class EMPlexicon():
         value_counts = np.zeros(2)
         self.lexicon_keys = self.lexicon['word'].tolist()
 
+        low_emp_count = 0
+        medium_emp_count = 0
+        high_emp_count = 0
+        low_dist_count = 0
+        medium_dist_count = 0
+        high_dist_count = 0
+
         for word in self.words:
             if word in self.lexicon_keys:
                 self.empathy_list.append(self.empathy_lexicon_dict[word])
@@ -920,13 +994,47 @@ class EMPlexicon():
                 self.distress_list.append(self.distress_lexicon_dict[word])
                 self.distress_dict.update({word: self.distress_lexicon_dict[word]})
 
+                if self.empathy_lexicon_dict[word] < 3:
+                    low_emp_count += 1
+                elif self.empathy_lexicon_dict[word] < 5:
+                    medium_emp_count += 1
+                else:
+                    high_emp_count += 1
+
+                if self.distress_lexicon_dict[word] < 3:
+                    low_dist_count += 1
+                elif self.distress_lexicon_dict[word] < 5:
+                    medium_dist_count += 1
+                else:
+                    high_dist_count += 1
+
                 value_counts[0] += self.empathy_dict[word]
                 value_counts[1] += self.distress_dict[word]
             else:
                 self.empathy_list.append(4)
                 self.distress_list.append(0)
 
-        # dict with mean values for empathy and distress over the sentence   
+        if low_emp_count > medium_emp_count and low_emp_count > high_emp_count:
+            emp_level = 'low'
+        elif medium_emp_count > low_emp_count and medium_emp_count > high_emp_count:
+            emp_level = 'medium'
+        elif high_emp_count > low_emp_count and high_emp_count > medium_emp_count:
+            emp_level = 'high'
+        else:
+            emp_level = 'medium'
+        if low_dist_count > medium_dist_count and low_dist_count > high_dist_count:
+            dist_level = 'low'
+        elif medium_dist_count > low_dist_count and medium_dist_count > high_dist_count:
+            dist_level = 'medium'
+        elif high_dist_count > low_dist_count and high_dist_count > medium_dist_count:
+            dist_level = 'high'
+        else:
+            dist_level = 'medium'
+        # dict with mean values for empathy and distress over the sentence
         word_in_lexicon = (np.count_nonzero(self.empathy_list) if np.count_nonzero(self.empathy_list) > 0 else 1)
-        self.empathy_sentence_mean = {'empathy': (value_counts[0] / word_in_lexicon), 
-                                 'distress': (value_counts[1] / word_in_lexicon)}
+        self.empathy_sentence_mean = {
+            'empathy': (value_counts[0] / word_in_lexicon),
+            'empathy_level': emp_level,
+            'distress': (value_counts[1] / word_in_lexicon),
+            'distress_level': dist_level
+        }

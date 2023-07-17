@@ -7,7 +7,7 @@ from nltk.stem import WordNetLemmatizer
 from nltk.stem.porter import PorterStemmer
 from textblob import TextBlob
 from nrclex import NRCLex
-from utils import EMPlexicon, generate_prompt, NRC_emotions
+from utils import EMPlexicon, generate_prompt, NRC_emotions, read_NRC_lexicon_file, hope_essay_frequency
 import json
 import numpy as np
 import os
@@ -39,7 +39,22 @@ RANDOM_STATE = 42
 # nltk.download('wordnet')
 # nltk.download('omw-1.4')
 
+def read_lexicon_df(categories):
+    categories_dfs = {}
+    for category in categories:
+        categories_dfs[category] = pd.read_csv(f"lexicon/{category}.txt", header=None, 
+                                            names=['word', category], sep=None, engine='python')
     
+    lexicon = pd.DataFrame(columns=['word'])
+    
+    for category in categories:
+        lexicon = pd.merge(lexicon, categories_dfs[category], on='word', how='outer')
+
+    lexicon.dropna(inplace=True) # row with empty string
+    lexicon.sort_values(by='word', inplace=True, ignore_index=True)
+    lexicon.set_index('word', inplace=True)
+    return lexicon
+
 def write_dict_to_json(dict, path):
     '''
     This function saves a dictionary to a json file.
@@ -50,15 +65,6 @@ def write_dict_to_json(dict, path):
     
     with open(path, 'w') as fp:
         json.dump(dict, fp, indent = 1)
-
-def hope_essay_frequency(essay, hope_lexicon):
-    hope_count = 0
-    total_count = 0
-    for word in essay.split():
-        if word in hope_lexicon:
-            total_count += 1
-            hope_count += int(hope_lexicon[word])
-    return (hope_count / total_count) if total_count>0 else 0
 
 def get_stemmed_EMO_lexicon(dataset, hope_lexicon):
     for emotion in NRC_emotions:
@@ -113,12 +119,16 @@ def get_stemmed_EMP_lexicon(dataset):
     EMP_lexicon_obj = EMPlexicon()
     dataset['empathy_count'] = ""
     dataset['distress_count'] = ""
+    dataset['empathy_level'] = ""
+    dataset['distress_level'] = ""
     
     for idx, row in dataset.iterrows():
         essay = row['essay']
         EMP_lexicon_obj.load_raw_text(essay)
         dataset.at[idx, 'empathy_count'] = EMP_lexicon_obj.empathy_sentence_mean['empathy']
         dataset.at[idx, 'distress_count'] = EMP_lexicon_obj.empathy_sentence_mean['distress']
+        dataset.at[idx, 'empathy_level'] = EMP_lexicon_obj.empathy_sentence_mean['empathy_level']
+        dataset.at[idx, 'distress_level'] = EMP_lexicon_obj.empathy_sentence_mean['distress_level']
         """dataset['empathy_count'][idx] = EMP_lexicon_obj.empathy_sentence_mean['empathy']
         dataset['distress_count'][idx] = EMP_lexicon_obj.empathy_sentence_mean['distress']"""
 
@@ -145,22 +155,6 @@ def get_stemmed_EMP_lexicon_per_word(dataset, split, year):
     
     path = f'./datasets/EMP{year}_lexicon_per_word_' + split + '.json'
     write_dict_to_json(lexicon, path)
-
-def read_lexicon_df(categories):
-    categories_dfs = {}
-    for category in categories:
-        categories_dfs[category] = pd.read_csv(f"lexicon/{category}.txt", header=None, 
-                                            names=['word', category], sep=None, engine='python')
-    
-    lexicon = pd.DataFrame(columns=['word'])
-    
-    for category in categories:
-        lexicon = pd.merge(lexicon, categories_dfs[category], on='word', how='outer')
-
-    lexicon.dropna(inplace=True) # row with empty string
-    lexicon.sort_values(by='word', inplace=True, ignore_index=True)
-    lexicon.set_index('word', inplace=True)
-    return lexicon
 
 def remove_punctuations(text):
     return re.sub(r'[^\w\s]', '', text)
@@ -190,14 +184,6 @@ def split_train_val(train_df):
             internal_val_df = pd.concat([internal_val_df, v_df])
 
     return internal_train_df, internal_val_df
-
-def read_NRC_lexicon_file(file_name):
-    lexicon = {}
-    with open(file_name, 'r') as file:
-        for line in file:
-            word, value = line.strip().split()
-            lexicon[word] = value
-    return lexicon
 
 def build_hope_lexicon():
     # read NRC lexicon files
@@ -281,8 +267,8 @@ def add_prompt(dataframe):
             row['race'],
             row['age'],
             row['income'],
-            row['empathy_count'] if 'empathy' in row else None,
-            row['distress_count'] if 'empathy' in row else None
+            row['empathy_level'],
+            row['distress_level']
             )
         dataframe.at[idx, "prompt_bio"] = bio_prompt
         dataframe.at[idx, "prompt_emp"] = emp_prompt
