@@ -267,7 +267,7 @@ def plot_true_vs_predicted(golds, predictions, title=None, path=None):
 
     xy = np.vstack([golds, predictions])
     kernel = gaussian_kde(xy)(xy)
-    plt.scatter(golds, predictions, c=kernel)
+    plt.scatter(golds, predictions, c=kernel, cmap="crest")
     plt.xlabel("Actual")
     plt.ylabel("Predicted")
     xpoints = ypoints = plt.xlim()
@@ -293,15 +293,14 @@ def plot_abs_diff_emp(golds, predictions, title=None, path=None):
 	'''
 	
 	abs_diff = np.abs(golds - predictions)
-	abs_diff.columns = ['|True Empathy - Predicted Empathy|', '|True Distress - Predicted Distress|']
-	values = np.vstack([abs_diff.iloc[:,0], abs_diff.iloc[:,1]])
-	kernel = stats.gaussian_kde(values)(values) # darker == higher density
-	ax = sns.scatterplot(x=abs_diff.columns[0], y=abs_diff.columns[1], data=abs_diff, c=kernel, cmap="crest")
+	values = np.vstack([abs_diff[:,0], abs_diff[:,1]])
+	kernel = gaussian_kde(values)(values) # darker == higher density
+	sns.scatterplot(x=abs_diff[:,0], y=abs_diff[:,1], c=kernel, cmap="crest")
 	if title:
-		ax.title(title)
+		plt.title(title)
 	if path:
-		ax.savefig(path)
-	ax.plot()
+		plt.savefig(path)
+	plt.plot()
 
 def flatten_logits(logits, threshold):
     '''
