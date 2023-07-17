@@ -565,7 +565,7 @@ def compute_EMP_metrics_trainer(p: EvalPrediction):
     #     if np.all(bin_pred==0):
     #         bin_predictions[i][np.argmax(predictions[i])] = 1
     metrics = {}
-    if (len(predictions.shape[1]) != 1):
+    if (predictions.shape[1] != 1):
         metrics['empathy_pearson'] = calculate_pearson(golds[:,0], predictions[:,0])
         metrics['distress_pearson'] = calculate_pearson(golds[:,1], predictions[:,1])  
         metrics['avg_pearson'] = (metrics['empathy_pearson']+ metrics['distress_pearson']) / 2
