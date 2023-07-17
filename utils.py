@@ -532,7 +532,7 @@ def compute_EMP_metrics(golds, predictions):
     '''
 
     scores = {}
-    if (len(predictions.shape) == 2):
+    if (predictions.shape[1] != 1):
         scores['empathy_pearson'] = calculate_pearson(golds[:,0], predictions[:,0])
         scores['distress_pearson'] = calculate_pearson(golds[:,1], predictions[:,1])
         scores['avg_pearson'] = (scores['empathy_pearson']+ scores['distress_pearson']) / 2
