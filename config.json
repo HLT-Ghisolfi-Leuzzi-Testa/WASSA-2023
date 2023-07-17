@@ -1,7 +1,7 @@
 {
     "num_labels": 2,
     "model_id": "roberta_emp",
-    "model_class_string": "RobertaPretrainedModel",
+    "model_class_string": "RobertaPreTrainedModel",
     "model_name": "bdotloh/roberta-base-empathy",
     "emo_count_global": true,
     "empathy_count_global": true,
