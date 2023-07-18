@@ -391,7 +391,7 @@ def dev_cross_val(train_set, dev_set, k, shuffle, seed):
         splits.append((train_split, val_split))
     return splits
 
-def split_train_val(train_df):
+def split_train_val(train_df, val_size=0.2):
 # splitting train data into train and validation with a stratified approach
     emotions = train_df['emotion'].unique().tolist()
     internal_train_df = pd.DataFrame()
@@ -401,7 +401,7 @@ def split_train_val(train_df):
         if emotion_df.shape[0] < 2 : # if a class has a single sample it is added to the train set
             internal_train_df = pd.concat([internal_train_df, emotion_df], ignore_index=True)
         else:
-            t_df, v_df = train_test_split(emotion_df, test_size=VAL_SIZE, stratify=emotion_df['emotion'], shuffle=True)
+            t_df, v_df = train_test_split(emotion_df, test_size=val_size, stratify=emotion_df['emotion'], shuffle=True)
             internal_train_df = pd.concat([internal_train_df, t_df], ignore_index=True)
             internal_val_df = pd.concat([internal_val_df, v_df], ignore_index=True)
 
