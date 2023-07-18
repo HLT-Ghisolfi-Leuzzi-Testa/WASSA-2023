@@ -681,7 +681,7 @@ def hope_essay_frequency(essay, hope_lexicon):
             hope_count += int(hope_lexicon[word])
     return (hope_count / total_count) if total_count>0 else 0
 
-def generate_prompt(essay, gender, education, ethnicity, age, income, empathy, distress):
+def generate_prompt(essay, article_id, gender, education, ethnicity, age, income, empathy, distress):
     if gender == 1: gender_str = "male"
     else: gender_str = "female"
 
@@ -700,7 +700,8 @@ def generate_prompt(essay, gender, education, ethnicity, age, income, empathy, d
     elif ethnicity == 5: ethnicity_str = " asian/pacific islander"
     else: ethnicity_str = ""
 
-    text_prompt_bio = "An essay written by a {} years old{} {}, {}, with an income of {}$.".format(
+    text_prompt_bio = "An essay about the article {}, written by a {} years old{} {}, {}, with an income of {}$.".format(
+        article_id,
         age, ethnicity_str,
         gender_str,
         education_str,
@@ -743,7 +744,7 @@ def generate_prompt(essay, gender, education, ethnicity, age, income, empathy, d
         if i < n_emo-1:
             emo_string += ", "
     """
-    text_prompt_emo = " The top emotions expressed in the essay are: {}.".format(emo_string)
+    text_prompt_emo = " The top emotions expressed in the essay, according to the NRC lexicon, are: {}.".format(emo_string)
     
     return text_prompt_bio, text_prompt_emp, text_prompt_emo
 
@@ -756,6 +757,7 @@ def add_prompt_to_test_from_EMP_predictions(test_df, emp_predictions_path):
     for idx, row in test_df.iterrows():
         text_prompt_bio, text_prompt_emp, text_prompt_emo = generate_prompt(
                                     row['essay'],
+                                    row['article_id'],
                                     row['gender'],
                                     row['education'],
                                     row['race'],

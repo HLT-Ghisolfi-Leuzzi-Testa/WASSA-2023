@@ -244,6 +244,7 @@ def add_prompt(dataframe):
     for idx, row in dataframe.iterrows():
         bio_prompt, emp_prompt, emo_prompt = generate_prompt(
             row['essay'],
+            row['article_id'],
             row['gender'],
             row['education'],
             row['race'],
