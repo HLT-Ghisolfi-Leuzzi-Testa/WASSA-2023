@@ -399,11 +399,11 @@ def split_train_val(train_df):
     for emotion in emotions:
         emotion_df = train_df.loc[train_df['emotion']==emotion]
         if emotion_df.shape[0] < 2 : # if a class has a single sample it is added to the train set
-            internal_train_df = pd.concat([internal_train_df, emotion_df])
+            internal_train_df = pd.concat([internal_train_df, emotion_df], ignore_index=True)
         else:
             t_df, v_df = train_test_split(emotion_df, test_size=VAL_SIZE, stratify=emotion_df['emotion'], shuffle=True)
-            internal_train_df = pd.concat([internal_train_df, t_df])
-            internal_val_df = pd.concat([internal_val_df, v_df])
+            internal_train_df = pd.concat([internal_train_df, t_df], ignore_index=True)
+            internal_val_df = pd.concat([internal_val_df, v_df], ignore_index=True)
 
     return internal_train_df, internal_val_df
 
