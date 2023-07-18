@@ -6,7 +6,7 @@ from nltk.stem import WordNetLemmatizer
 from nltk.stem.porter import PorterStemmer
 from textblob import TextBlob
 from nrclex import NRCLex
-from utils import EMPlexicon, generate_prompt, NRC_emotions, read_NRC_lexicon_file, hope_essay_frequency
+from utils import EMPlexicon, generate_prompt, NRC_emotions, read_NRC_lexicon_file, hope_essay_frequency, split_train_val
 import json
 import numpy as np
 import os
