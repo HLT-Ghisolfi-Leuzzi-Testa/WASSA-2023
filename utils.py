@@ -296,6 +296,8 @@ def plot_abs_diff_emp(golds, predictions, title=None, path=None):
 	values = np.vstack([abs_diff[:,0], abs_diff[:,1]])
 	kernel = gaussian_kde(values)(values) # darker == higher density
 	sns.scatterplot(x=abs_diff[:,0], y=abs_diff[:,1], c=kernel, cmap="crest")
+	plt.xlabel("|True empathy - Predicted empathy|")
+	plt.ylabel("|True distress - Predicted distress|")
 	if title:
 		plt.title(title)
 	if path:
