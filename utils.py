@@ -775,17 +775,22 @@ def add_emp_dist_levels(df):
         df.at[idx, f'true_{target}_level_5'] = 'high'
   return df
 
-def add_prompt(df, EMP_levels):
-  for idx, _ in df.iterrows():
-    if EMP_levels == "3":
-      emp_level = df['true_empathy_level_3'].loc[idx]
-      dist_level = df['true_distress_level_3'].loc[idx]
-      df.at[idx, 'prompt_emp'] = f'This essay expresses {emp_level} level of empathy and a {dist_level} level of distress'
+def add_prompt(df, TASK, EMP_levels=None):
+    if TASK == 'EMP':
+        for idx, _ in df.iterrows():
+            if EMP_levels == "3":
+                emp_level = df['true_empathy_level_3'].loc[idx]
+                dist_level = df['true_distress_level_3'].loc[idx]
+                df.at[idx, 'prompt_emp'] = f'This essay expresses {emp_level} level of empathy and a {dist_level} level of distress'
+            else:
+                emp_level = df['true_empathy_level_5'].loc[idx]
+                dist_level = df['true_distress_level_5'].loc[idx]
+                df.at[idx, 'prompt_emp'] = f'This essay expresses {emp_level} level of empathy and a {dist_level} level of distress'
     else:
-      emp_level = df['true_empathy_level_5'].loc[idx]
-      dist_level = df['true_distress_level_5'].loc[idx]
-      df.at[idx, 'prompt_emp'] = f'This essay expresses {emp_level} level of empathy and a {dist_level} level of distress'
-  return df
+        for idx, row in df.iterrows():
+            emotions_str = row[emotions].replace("/", ", ")
+            df.at[idx, 'prompt_emo'] = f'The emotions expressed in the essay, are: {emotions_str}.'
+    return df
 
 def add_prompt_to_test_from_EMP_predictions(test_df, emp_predictions_path):
     emp_predictions = pd.read_csv(emp_predictions_path, header=None) #TODO: verificare che funzioni
