@@ -788,7 +788,7 @@ def add_prompt(df, TASK, EMP_levels=None):
                 df.at[idx, 'prompt_emp'] = f'This essay expresses {emp_level} level of empathy and a {dist_level} level of distress'
     else:
         for idx, row in df.iterrows():
-            emotions_str = row[emotions].replace("/", ", ")
+            emotions_str = row[emotion].replace("/", ", ")
             df.at[idx, 'prompt_emo'] = f'The emotions expressed in the essay, are: {emotions_str}.'
     return df
 
