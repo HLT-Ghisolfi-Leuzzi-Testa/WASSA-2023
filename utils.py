@@ -17,7 +17,7 @@ from torch.utils.data import Dataset
 from transformers import EvalPrediction
 #from torchsummary import summary
 #from torchview import draw_graph
-#from bertviz import model_view
+from bertviz import model_view
 from textblob import TextBlob
 
 EMP_LEXICON_PATH = "./lexicon/lexicon_EMP.csv"
@@ -50,7 +50,7 @@ our_emotions = [
 ]
 
 
-def print_model_summary(model, path):
+"""def print_model_summary(model, path):
     '''
     This function saves a textual summary of the pytorch model passed as input.
 
@@ -73,7 +73,7 @@ def plot_model_graph(model, input_data, path):
     '''
     model_graph = draw_graph(model, input_data=input_data)
     model_graph.visual_graph.render(filename=path)
-    model_graph.visual_graph.view()
+    model_graph.visual_graph.view()"""
 
 def plot_metric_curve(
         values,
@@ -747,6 +747,45 @@ def generate_prompt(essay, article_id, gender, education, ethnicity, age, income
     text_prompt_emo = " The top emotions expressed in the essay, according to the NRC lexicon, are: {}.".format(emo_string)
     
     return text_prompt_bio, text_prompt_emp, text_prompt_emo
+
+def add_emp_dist_levels(df):
+  targets = ['empathy', 'distress']
+  df['true_empathy_level_3']=''
+  df['true_distress_level_3']=''
+  df['true_empathy_level_5']=''
+  df['true_distress_level_5']=''
+
+  for idx, _ in df.iterrows():
+    for target in targets:
+      if df.at[idx, target] < 3:
+        df.at[idx, f'true_{target}_level_3'] = 'low'
+      elif df.at[idx, target] < 5:
+        df.at[idx, f'true_{target}_level_3'] = 'medium'
+      else:
+        df.at[idx, f'true_{target}_level_3'] = 'high'
+      if df.at[idx, target] < 2.2:
+        df.at[idx, f'true_{target}_level_5'] = 'low'
+      elif df.at[idx, target] < 3.4:
+        df.at[idx, f'true_{target}_level_5'] = 'low-medium'
+      elif df.at[idx, target] < 4.6:
+        df.at[idx, f'true_{target}_level_5'] = 'medium'
+      elif df.at[idx, target] < 5.8:
+        df.at[idx, f'true_{target}_level_5'] = 'medium-high'
+      else:
+        df.at[idx, f'true_{target}_level_5'] = 'high'
+  return df
+
+def add_prompt(df, EMP_levels):
+  for idx, _ in df.iterrows():
+    if EMP_levels == "3":
+      emp_level = df['true_empathy_level_3'].loc[idx]
+      dist_level = df['true_distress_level_3'].loc[idx]
+      df.at[idx, 'prompt_emp'] = f'This essay expresses {emp_level} level of empathy and a {dist_level} level of distress'
+    else:
+      emp_level = df['true_empathy_level_5'].loc[idx]
+      dist_level = df['true_distress_level_5'].loc[idx]
+      df.at[idx, 'prompt_emp'] = f'This essay expresses {emp_level} level of empathy and a {dist_level} level of distress'
+  return df
 
 def add_prompt_to_test_from_EMP_predictions(test_df, emp_predictions_path):
     emp_predictions = pd.read_csv(emp_predictions_path, header=None) #TODO: verificare che funzioni
