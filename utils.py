@@ -789,7 +789,7 @@ def add_prompt(df, TASK, EMP_levels=None):
     else:
         for idx, row in df.iterrows():
             emotions_str = row['emotion'].replace("/", ", ")
-            df.at[idx, 'prompt_emo'] = f'{emotions_str}'
+            df.at[idx, 'prompt_emo'] = f'This essays exprsses {emotions_str}'
     return df
 
 def add_prompt_to_test_from_EMP_predictions(test_df, emp_predictions_path):
