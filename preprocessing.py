@@ -237,11 +237,13 @@ def add_word_count(dataframe):
     dataframe['essay_word_count'] = dataframe['essay'].apply(lambda x: len(x.split()))
     return dataframe
 
-def add_prompt(dataframe):
+def add_prompt(dataframe, int_train=False):
     dataframe["prompt_bio"] = ""
     dataframe["prompt_emp"] = ""
     dataframe["prompt_emo"] = ""
     for idx, row in dataframe.iterrows():
+        if int_train:
+            row['article_id'] = " "
         bio_prompt, emp_prompt, emo_prompt = generate_prompt(
             row['essay'],
             row['article_id'],
@@ -377,12 +379,12 @@ def preprocess(year):
         original_internal_val_df = get_stemmed_EMP_lexicon(original_internal_val_df)
 
     # add prompt with anagraphic data
-    internal_train_df = add_prompt(internal_train_df)
+    internal_train_df = add_prompt(internal_train_df, int_train=True)
     internal_val_df = add_prompt(internal_val_df)
     dev_df = add_prompt(dev_df)
     if year == 23:
         test_df = add_prompt(test_df)
-        original_internal_train_df = add_prompt(original_internal_train_df)
+        original_internal_train_df = add_prompt(original_internal_train_df, int_train=True)
         original_internal_val_df = add_prompt(original_internal_val_df)
 
     # get pre-processed train data (ordered by internal_train and internal_val)
