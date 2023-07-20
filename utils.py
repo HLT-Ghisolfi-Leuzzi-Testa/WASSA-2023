@@ -682,22 +682,22 @@ def hope_essay_frequency(essay, hope_lexicon):
     return (hope_count / total_count) if total_count>0 else 0
 
 def generate_prompt(essay, article_id, gender, education, ethnicity, age, income, empathy, distress):
-    if gender == 1: gender_str = "male"
+    if gender == "1": gender_str = "male"
     else: gender_str = "female"
 
-    if education == 1: education_str = "with less than a high school diploma"
-    elif education == 2: education_str = "with a high school diploma"
-    elif education == 3: education_str = "went to a technical/vocational school"
-    elif education == 4: education_str = "went to college"
-    elif education == 5: education_str = "with a two year associate degree"
-    elif education == 6: education_str = "with a four year bachelor's degree"
+    if education == "1": education_str = "with less than a high school diploma"
+    elif education == "2": education_str = "with a high school diploma"
+    elif education == "3": education_str = "went to a technical/vocational school"
+    elif education == "4": education_str = "went to college"
+    elif education == "5": education_str = "with a two year associate degree"
+    elif education == "6": education_str = "with a four year bachelor's degree"
     else: education_str = "postgradute or with a professional degree"
 
-    if ethnicity == 1: ethnicity_str = " white"
-    elif ethnicity == 2: ethnicity_str = " hispanic or latino"
-    elif ethnicity == 3: ethnicity_str = " black or african american"
-    elif ethnicity == 4: ethnicity_str = " native american or american indian"
-    elif ethnicity == 5: ethnicity_str = " asian/pacific islander"
+    if ethnicity == "1": ethnicity_str = " white"
+    elif ethnicity == "2": ethnicity_str = " hispanic or latino"
+    elif ethnicity == "3": ethnicity_str = " black or african american"
+    elif ethnicity == "4": ethnicity_str = " native american or american indian"
+    elif ethnicity == "5": ethnicity_str = " asian/pacific islander"
     else: ethnicity_str = ""
 
     text_prompt_bio = "An essay about the article {}, written by a {} years old{} {}, {}, with an income of {}$.".format(
