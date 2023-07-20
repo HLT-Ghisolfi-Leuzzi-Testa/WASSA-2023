@@ -17,7 +17,7 @@ from torch.utils.data import Dataset
 from transformers import EvalPrediction
 #from torchsummary import summary
 #from torchview import draw_graph
-from bertviz import model_view
+#from bertviz import model_view
 from textblob import TextBlob
 
 EMP_LEXICON_PATH = "./lexicon/lexicon_EMP.csv"
@@ -682,22 +682,22 @@ def hope_essay_frequency(essay, hope_lexicon):
     return (hope_count / total_count) if total_count>0 else 0
 
 def generate_prompt(essay, article_id, gender, education, ethnicity, age, income, empathy, distress):
-    if gender == 1: gender_str = "male"
+    if gender == "1": gender_str = "male"
     else: gender_str = "female"
 
-    if education == 1: education_str = "with less than a high school diploma"
-    elif education == 2: education_str = "with a high school diploma"
-    elif education == 3: education_str = "went to a technical/vocational school"
-    elif education == 4: education_str = "went to college"
-    elif education == 5: education_str = "with a two year associate degree"
-    elif education == 6: education_str = "with a four year bachelor's degree"
+    if education == "1": education_str = "with less than a high-school diploma"
+    elif education == "2": education_str = "with a high-school diploma"
+    elif education == "3": education_str = "went to a technical/vocational school"
+    elif education == "4": education_str = "went to college"
+    elif education == "5": education_str = "with a two year associate degree"
+    elif education == "6": education_str = "with a four year bachelor's degree"
     else: education_str = "postgradute or with a professional degree"
 
-    if ethnicity == 1: ethnicity_str = " white"
-    elif ethnicity == 2: ethnicity_str = " hispanic or latino"
-    elif ethnicity == 3: ethnicity_str = " black or african american"
-    elif ethnicity == 4: ethnicity_str = " native american or american indian"
-    elif ethnicity == 5: ethnicity_str = " asian/pacific islander"
+    if ethnicity == "1": ethnicity_str = " white"
+    elif ethnicity == "2": ethnicity_str = " hispanic or latino"
+    elif ethnicity == "3": ethnicity_str = " black or african american"
+    elif ethnicity == "4": ethnicity_str = " native american or american indian"
+    elif ethnicity == "5": ethnicity_str = " asian/pacific islander"
     else: ethnicity_str = ""
 
     text_prompt_bio = "An essay about the article {}, written by a {} years old{} {}, {}, with an income of {}$.".format(
@@ -775,7 +775,7 @@ def add_emp_dist_levels(df):
         df.at[idx, f'true_{target}_level_5'] = 'high'
   return df
 
-def add_prompt(df, TASK, EMP_levels=None):
+def add_prompt_truth(df, TASK, EMP_levels=None):
     if TASK == 'EMP':
         for idx, _ in df.iterrows():
             if EMP_levels == "3":
@@ -789,7 +789,7 @@ def add_prompt(df, TASK, EMP_levels=None):
     else:
         for idx, row in df.iterrows():
             emotions_str = row['emotion'].replace("/", ", ")
-            df.at[idx, 'prompt_emo'] = f'The emotions expressed in the essay, are: {emotions_str}.'
+            df.at[idx, 'prompt_emo'] = f'This essays exprsses {emotions_str}'
     return df
 
 def add_prompt_to_test_from_EMP_predictions(test_df, emp_predictions_path):
