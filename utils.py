@@ -17,7 +17,7 @@ from torch.utils.data import Dataset
 from transformers import EvalPrediction
 #from torchsummary import summary
 #from torchview import draw_graph
-from bertviz import model_view
+#from bertviz import model_view
 from textblob import TextBlob
 
 EMP_LEXICON_PATH = "./lexicon/lexicon_EMP.csv"
@@ -685,8 +685,8 @@ def generate_prompt(essay, article_id, gender, education, ethnicity, age, income
     if gender == "1": gender_str = "male"
     else: gender_str = "female"
 
-    if education == "1": education_str = "with less than a high school diploma"
-    elif education == "2": education_str = "with a high school diploma"
+    if education == "1": education_str = "with less than a high-school diploma"
+    elif education == "2": education_str = "with a high-school diploma"
     elif education == "3": education_str = "went to a technical/vocational school"
     elif education == "4": education_str = "went to college"
     elif education == "5": education_str = "with a two year associate degree"
@@ -775,7 +775,7 @@ def add_emp_dist_levels(df):
         df.at[idx, f'true_{target}_level_5'] = 'high'
   return df
 
-def add_prompt(df, TASK, EMP_levels=None):
+def add_prompt_truth(df, TASK, EMP_levels=None):
     if TASK == 'EMP':
         for idx, _ in df.iterrows():
             if EMP_levels == "3":
