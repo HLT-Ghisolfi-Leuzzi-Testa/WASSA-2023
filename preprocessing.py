@@ -2,14 +2,15 @@ import pandas as pd
 import nltk
 import re
 import contractions
+import json
+import numpy as np
+import os
 from nltk.stem import WordNetLemmatizer
 from nltk.stem.porter import PorterStemmer
 from textblob import TextBlob
 from nrclex import NRCLex
 from utils import EMPlexicon, generate_prompt, NRC_emotions, read_NRC_lexicon_file, hope_essay_frequency, split_train_val
-import json
-import numpy as np
-import os
+
 
 ANTICIPATION_LEXICON_PATH = "./lexicon/anticipation.txt"
 POSITIVE_LEXICON_PATH = "./lexicon/positive.txt"
@@ -34,10 +35,9 @@ DEV_COL_NAMES = [
 
 RANDOM_STATE = 42
 
-# nltk.download('wordnet')
-# nltk.download('omw-1.4')
 
 def read_lexicon_df(categories):
+    """reads the lexicon files and returns a dataframe with the words for each category"""
     categories_dfs = {}
     for category in categories:
         categories_dfs[category] = pd.read_csv(f"lexicon/{category}.txt", header=None, 
@@ -54,17 +54,12 @@ def read_lexicon_df(categories):
     return lexicon
 
 def write_dict_to_json(dict, path):
-    '''
-    This function saves a dictionary to a json file.
-    
-    :param dict: dictionary to save
-    :param path: path where to save the dictionary
-    '''
-    
+    """saves a dictionary to a json file"""
     with open(path, 'w') as fp:
         json.dump(dict, fp, indent = 1)
 
 def get_stemmed_EMO_lexicon(dataset, hope_lexicon):
+    """add lexicon features for emptions for each essay in the dataset"""
     for emotion in NRC_emotions:
         dataset[f'{emotion}_count'] = ""
     dataset['hope_count'] = ""
@@ -84,12 +79,14 @@ def get_stemmed_EMO_lexicon(dataset, hope_lexicon):
     return dataset
 
 def hope_frequencies(word, hope_lexicon):
+    """returns the frequency of the word in the hope lexicon"""
     if word in hope_lexicon:
         return int(hope_lexicon[word])
     else:
         return 0
 
 def get_stemmed_EMO_lexicon_per_word(dataset, split, hope_lexicon, year):
+    """saves a dictionary with the values of the NRC emotions and hope for each word in the essay"""
     lexicon = {}
 
     for idx, row in dataset.iterrows():
@@ -114,6 +111,7 @@ def get_stemmed_EMO_lexicon_per_word(dataset, split, hope_lexicon, year):
     write_dict_to_json(lexicon, path)
 
 def get_stemmed_EMP_lexicon(dataset):
+    """add lexicon features for empathy and distress for each essay in the dataset"""
     EMP_lexicon_obj = EMPlexicon()
     dataset['empathy_count'] = ""
     dataset['distress_count'] = ""
@@ -127,12 +125,11 @@ def get_stemmed_EMP_lexicon(dataset):
         dataset.at[idx, 'distress_count'] = EMP_lexicon_obj.empathy_sentence_mean['distress']
         dataset.at[idx, 'empathy_level'] = EMP_lexicon_obj.empathy_sentence_mean['empathy_level']
         dataset.at[idx, 'distress_level'] = EMP_lexicon_obj.empathy_sentence_mean['distress_level']
-        """dataset['empathy_count'][idx] = EMP_lexicon_obj.empathy_sentence_mean['empathy']
-        dataset['distress_count'][idx] = EMP_lexicon_obj.empathy_sentence_mean['distress']"""
 
     return dataset
 
 def get_stemmed_EMP_lexicon_per_word(dataset, split, year):
+    """saves a dictionary with the values of the empathy and distress for each word in the essay"""
     EMP_lexicon_obj = EMPlexicon()
     lexicon = {}
 
@@ -154,20 +151,8 @@ def get_stemmed_EMP_lexicon_per_word(dataset, split, year):
     path = f'./datasets/EMP{year}_lexicon_per_word_' + split + '.json'
     write_dict_to_json(lexicon, path)
 
-def remove_punctuations(text):
-    return re.sub(r'[^\w\s]', '', text)
-
-def remove_digit(text):
-    return re.sub('\d+', '', text)
-
-def expand_contractions(text):
-    return contractions.fix(text)
-
-def correct_spelling(text):
-    textblob = TextBlob(text)
-    return textblob.correct()
-
 def build_hope_lexicon():
+    """builds the hope lexicon using the NRC lexicon and the subjectivity lexicon"""
     # read NRC lexicon files
     anticipation_lexicon = read_NRC_lexicon_file(ANTICIPATION_LEXICON_PATH)
     joy_lexicon = read_NRC_lexicon_file(JOY_LEXICON_PATH)
@@ -192,6 +177,7 @@ def build_hope_lexicon():
     hope_lexicon.to_csv(HOPE_LEXICON_PATH, sep='\t', header=False)
 
 def add_lexicon_features(internal_train_df, internal_val_df, dev_df, test_df, year):
+    """add global and local lexicon features to the dataset"""
     hope_lexicon = read_NRC_lexicon_file(HOPE_LEXICON_PATH)
     
     # add lexicon features for emotions
@@ -222,22 +208,18 @@ def add_lexicon_features(internal_train_df, internal_val_df, dev_df, test_df, ye
     return internal_train_df, internal_val_df, dev_df, test_df
 
 def drop_rows_with_unknown(dataframe):
-    '''
-    This function drops the rows with 'unknow' value in the dataframe passed as parameter.
-
-    :param dataframe: pandas dataframe
-    :return: pandas dataframe without rows with 'unknow' value
-    '''
-
+    """drops the rows with 'unknow' value in the dataframe"""
     for column in dataframe.columns:
         dataframe = dataframe[dataframe[column] != 'unknown']
     return dataframe
 
 def add_word_count(dataframe):
+    """add the word count of the essay to the dataframe"""
     dataframe['essay_word_count'] = dataframe['essay'].apply(lambda x: len(x.split()))
     return dataframe
 
 def add_prompt(dataframe, int_train=False):
+    """add prompts about biographycal and lexical features to the dataframe"""
     dataframe["prompt_bio"] = ""
     dataframe["prompt_emp"] = ""
     dataframe["prompt_emo"] = ""
@@ -261,14 +243,17 @@ def add_prompt(dataframe, int_train=False):
     return dataframe
 
 def lower_case_labels(dataset):
+    """converts the labels to lower case"""
     dataset['emotion'] = dataset['emotion'].str.lower()
     return dataset
 
 def remove_space_from_essay(dataframe):
+    """remouve unuselful space from essay"""
     dataframe['essay'] = dataframe['essay'].str.replace("\r\n", " ")
     return dataframe
 
 def match_essay_id(internal_df, original_internal_train_df, original_internal_val_df):
+    """match the essay_id of the internal dataset splits with the original dataset"""
     for idx, row in internal_df.iterrows():
         keep_cheching = True
         for idx2, row2 in original_internal_train_df.iterrows():
