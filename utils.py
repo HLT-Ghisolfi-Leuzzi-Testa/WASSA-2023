@@ -753,7 +753,7 @@ def add_emp_dist_levels(df): # TODO: true levels
                 df.at[idx, f'true_{target}_level_5'] = 'high'
     return df
 
-def get_emp_levels(test_df, empathy, distress): # TODO: passed levels
+def get_emp_levels(test_df, empathy, distress): # TODO: passed levels, predictions
     '''
     This function adds the empathy and distress levels to the dataframe passed as
     parameter.
@@ -817,30 +817,6 @@ def add_prompt_truth(df, TASK, EMP_levels=None): # TODO: truth
                 emotions_str = row['emotion'].replace("/", ", ")         
             df.at[idx, 'prompt_emo'] = f'This essay expresses {emotions_str}'
     return df
-
-def add_prompt_to_test_from_EMP_predictions(test_df, emp_predictions_path):
-    emp_predictions = pd.read_csv(emp_predictions_path, header=None) #TODO: togliere?
-    emp_predictions.columns = ['empathy', 'distress']
-
-    test_df = get_emp_levels(test_df, emp_predictions['empathy'], emp_predictions['distress'])
-
-    for idx, row in test_df.iterrows():
-        text_prompt_bio, text_prompt_emp, text_prompt_emo = generate_prompt(
-            row['essay'],
-            row['article_id'],
-            row['gender'],
-            row['education'],
-            row['race'],
-            row['age'],
-            row['income'],
-            row['empathy_level'][idx],
-            row['distress_level'][idx],
-            )
-        test_df.at[idx, "prompt_bio"] = text_prompt_bio
-        test_df.at[idx, "prompt_emp"] = text_prompt_emp
-        test_df.at[idx, "prompt_emo"] = text_prompt_emo
-        
-    return test_df
 
 class EMPlexicon():
     '''
