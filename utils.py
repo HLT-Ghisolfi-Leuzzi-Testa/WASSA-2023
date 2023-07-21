@@ -812,7 +812,9 @@ def add_prompt_truth(df, TASK, EMP_levels=None): # TODO: truth
                 df.at[idx, 'prompt_emp'] = f'This essay expresses {emp_level} level of empathy and a {dist_level} level of distress'
     else:
         for idx, row in df.iterrows():
-            emotions_str = row['emotion'].replace("/", ", ")
+            emotions_str = "neutral"
+            if 'emotion' in row:        
+                emotions_str = row['emotion'].replace("/", ", ")         
             df.at[idx, 'prompt_emo'] = f'This essay expresses {emotions_str}'
     return df
 
