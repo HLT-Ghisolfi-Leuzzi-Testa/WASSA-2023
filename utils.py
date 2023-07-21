@@ -283,6 +283,18 @@ def plot_abs_diff_emp(golds, predictions, title=None, path=None):
 		plt.savefig(path)
 	plt.plot()
 
+def predict_emotions(label_encoder, results, neutral_zero):
+
+  binarized_predictions = np.where(results >= 0.5, 1, 0)
+
+  if not neutral_zero:
+    for i, bin_pred in enumerate(binarized_predictions):
+      if np.all(bin_pred==0):
+        binarized_predictions[i][np.argmax(results[i])] = 1
+
+  predicted_emotions = label_encoder.decode(binarized_predictions)
+  return predicted_emotions
+
 def flatten_logits(logits, threshold):
     '''
     This function flattens the logits passed as parameter using the specified 
