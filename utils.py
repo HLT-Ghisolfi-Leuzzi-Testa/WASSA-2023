@@ -125,7 +125,7 @@ def plot_attentions(input_str, model, tokenizer, title=None, path=None):
         plt.savefig(path)
     plt.show()
 
-def plot_model_view( # TODO: keep?
+def plot_model_view(
         model,
         tokenizer,
         sentence_a,
@@ -717,10 +717,10 @@ def generate_prompt(
     
     return text_prompt_bio, text_prompt_emp, text_prompt_emo
 
-def add_emp_dist_levels(df): # TODO: true levels
+def add_emp_dist_levels(df):
     '''
-    This function adds the empathy and distress levels to the dataframe passed as
-    parameter.
+    This function adds the empathy and distress truth levels to the dataframe 
+    passed as parameter.
 
     :param df: dataframe to which to add the empathy and distress levels
     :return: dataframe with empathy and distress levels
@@ -753,10 +753,10 @@ def add_emp_dist_levels(df): # TODO: true levels
                 df.at[idx, f'true_{target}_level_5'] = 'high'
     return df
 
-def get_emp_levels(test_df, empathy, distress): # TODO: passed levels, predictions
+def get_emp_levels(test_df, empathy, distress):
     '''
-    This function adds the empathy and distress levels to the dataframe passed as
-    parameter.
+    This function adds the empathy and distress levels passed as parameter to 
+    the dataframe test_df.
 
     :param test_df: dataframe to which to add the empathy and distress levels
     :param empathy: empathy values
@@ -790,7 +790,7 @@ def get_emp_levels(test_df, empathy, distress): # TODO: passed levels, predictio
     
     return test_df
 
-def add_prompt_truth(df, TASK, EMP_levels=None): # TODO: truth
+def add_prompt_truth(df, TASK, EMP_levels=None):
     '''
     This function adds the task text prompt to the dataframe passed as parameter.
 
