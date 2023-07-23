@@ -1,3 +1,3 @@
 # WASSA-2023
 
-[Google Doc](https://docs.google.com/document/d/1NoKx3zf034Yg_1C2cfUQVzhxgXYl6BvcHBBbz6lY2QY/edit?usp=sharing)
+This repository contains the code that our team developed to participate in the WASSA 2023 Shared Task on Empathy Detection, Emotion Classification, and Personality Detection in Interactions.
